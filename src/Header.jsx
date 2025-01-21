@@ -94,6 +94,7 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
         className="hidden box-content header-5:block w-[22px] h-[22px] pl-[4px] pr-[4px] header-4:pl-[8px] header-4:pr-[6px]"
       />
 
+
       <input
         className="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-silkway-green text-white transition-all duration-200 w-full"
         value={query}
