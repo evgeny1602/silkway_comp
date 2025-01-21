@@ -88,8 +88,7 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
   return (
     <div
       className="has-[:focus]:bg-white/5 h-[36px] header-4:h-[48px] hidden header-8:flex items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-[300px] header-3:w-[484px] header-7:w-[380px] relative"
-    >
-      
+    >      
       <img
         src={searchIconImg}
         className="hidden box-content header-5:block w-[22px] h-[22px] pl-[4px] pr-[4px] header-4:pl-[8px] header-4:pr-[6px]"
