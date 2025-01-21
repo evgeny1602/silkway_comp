@@ -43,9 +43,7 @@ export function TopMenu({ items }) {
     <ul
       className="hidden header-4:flex gap-x-[30px] font-sans text-white text-sm items-start"
     >
-      {items.map(
-        item => <TopMenuItem key={item.url} item={item} />
-      )}
+      {items.map(item => <TopMenuItem key={item.url} item={item} />)}
     </ul>
   )
 }
@@ -95,11 +93,7 @@ export function SearchFormButton() {
       className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans"
     >
       <SearchFormIconRight />
-      <span
-        className="hidden header-5:inline"
-      >
-        Найти
-      </span>
+      <span className="hidden header-5:inline">Найти</span>
     </button>
   )
 }
@@ -179,9 +173,7 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
 export function CitySelectWrapper({ children }) {
 
   return (
-    <div
-      className="h-[20px] flex gap-[10px]"
-    >
+    <div className="h-[20px] flex gap-[10px]">
       {children}
     </div>
   )
@@ -220,10 +212,7 @@ export function CitySelect({ initVal }) {
 export function HeaderPhone({ phone }) {
 
   return (
-    <a
-      href={`tel:${phone}`}
-      className="font-sans text-2xl text-white"
-    >
+    <a href={`tel:${phone}`} className="font-sans text-2xl text-white">
       {phone}
     </a>
   )
@@ -241,11 +230,7 @@ export function LoginAccountButton({ text, url }) {
         alt={text}
         className="box-content block h-[20px] w-[21px] header-4:h-[26px] header-4:w-[28px]"
       />
-      <span
-        className="hidden header-4:inline"
-      >
-        {text}
-      </span>
+      <span className="hidden header-4:inline">{text}</span>
     </a>
   )
 }
@@ -275,12 +260,8 @@ export function CartTitle() {
 
   return (
     <>
-      <span className="hidden header-2:inline">
-        Моя корзина
-      </span>
-      <span className="header-2:hidden inline">
-        Корзина
-      </span>
+      <span className="hidden header-2:inline">Моя корзина</span>
+      <span className="header-2:hidden inline">Корзина</span>
     </>
   )
 }
@@ -288,9 +269,7 @@ export function CartTitle() {
 export function CartSum({amount}) {
 
   return (
-    <span className="font-semibold">
-      {formatMoney(amount)} ₽
-    </span>
+    <span className="font-semibold">{formatMoney(amount)} ₽</span>
   )
 }
 
@@ -370,9 +349,7 @@ export function HeaderCenterSection({ children }) {
 export function HeaderCenterSubSection({ children }) {
 
   return (
-    <div
-      className="flex flex-nowrap gap-[14px] ml-auto header-4:ml-0"
-    >
+    <div className="flex flex-nowrap gap-[14px] ml-auto header-4:ml-0">
       {children}
     </div>
   )
@@ -392,9 +369,7 @@ export function HeaderRightSection({ children }) {
 export function HeaderRightButtonsSection({ children }) {
 
   return (
-    <div
-      className="flex flex-nowrap gap-[10px] ml-auto header-1:ml-0"
-    >
+    <div className="flex flex-nowrap gap-[10px] ml-auto header-1:ml-0">
       {children}
     </div>
   )
