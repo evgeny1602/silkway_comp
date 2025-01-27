@@ -43,10 +43,7 @@ export function FooterMenuSectionHeader({ children }) {
 export function FooterMenuSectionItem({ item }) {
 
   return (
-    <li
-      key={item.url + item.text}
-      className="mb-1 text-center footer-1:text-left"
-    >
+    <li className="mb-1 text-center footer-1:text-left">
       <a
         className="text-xs footer-1.7:text-sm hover:text-silkway-gray transition-all duration-200"            
         href={item.url}
@@ -66,7 +63,7 @@ export function FooterMenuSection({ section }) {
       </FooterMenuSectionHeader>
       <ul>
         {section.items.map(
-          item => <FooterMenuSectionItem item={item} />
+          item => <FooterMenuSectionItem key={item.url + item.text} item={item} />
         )}
       </ul>      
     </FooterMenuSectionWrapper>
@@ -159,7 +156,9 @@ export function Footer() {
     <FooterBackground>          
       <FooterWrapper>
         <FooterLogo storeName={storeName} storeDescription={storeDescription} />
-        {menuSections.map(s => <FooterMenuSection section={s} />)}
+        {menuSections.map(
+          s => <FooterMenuSection key={s.title} section={s} />
+        )}
         <Contacts address={address} phone={phone} email={email} />
       </FooterWrapper>  
     </FooterBackground>

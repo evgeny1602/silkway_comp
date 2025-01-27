@@ -5,7 +5,7 @@ import loginIconImg from './assets/login_icon.svg'
 import cartIconImg from './assets/cart_icon.svg'
 import menuIconImg from './assets/menu_icon.svg'
 import { itemsCountPostfix, formatMoney} from './utils'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDebounce } from './hooks/useDebounce'
 
 export function HeaderLogo({ storeName }) {
@@ -86,13 +86,14 @@ export function SearchFormIcon() {
   )
 }
 
-export function SearchFormButton() {
+export function SearchFormButton({ onClick }) {
 
   return (
     <button
-      className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans"
-    >
+      onClick={onClick}
+      className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans">
       <SearchFormIconRight />
+
       <span className="hidden header-5:inline">Найти</span>
     </button>
   )
@@ -108,26 +109,43 @@ export function SearchFormIconRight() {
   )
 }
 
-export function SearchFormInput({value, onChange}) {
+export function SearchFormResultsItem({ url, title }) {
 
+  return (
+    <a
+      className="px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
+      href={url}
+    >
+      {title}
+    </a>
+  )
+}
+
+export function SearchFormResults({ results }) {
+
+  return (
+    <div className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col">
+      {results.map(
+        ({url, title}) => <SearchFormResultsItem url={url} title={title} key={url} />
+      )}
+    </div>
+  )
+}
+
+export function SearchFormInput({value, onChange, onEnter}) {
+  const handleKeyDown = e => {
+    if (e.key == 'Enter') {
+      onEnter(e)
+    }
+  }
+  
   return (
     <input
       className="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-silkway-green text-white transition-all duration-200 w-full"
       value={value}
       onChange={onChange}
-    />
-  )
-}
-
-export function SearchFormResults({ results }) {
-  if (results.length == 0) return null
-
-  return (
-    <div
-      className="bg-white rounded shadow-md p-[15px] z-10 absolute left-0 top-[55px]"
-    >
-      {JSON.stringify(results)}
-    </div>
+      onKeyDown={handleKeyDown}
+    />    
   )
 }
 
@@ -148,11 +166,18 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
         body
       })
       const data = await resp.json()
-      setResults(data.items)
+      setResults(data.items)        
     }
 
     autocomplete(debouncedQuery)
   }, [debouncedQuery])
+
+  const handleSearchClick = () => {
+    if (query == '') return
+
+    const url = searchUrl.replace('{{search_query}}', query)
+    location.href = url
+  }
 
   return (
     <SearchFormWrapper>      
@@ -160,12 +185,13 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
 
       <SearchFormInput
         value={query}
-        onChange={e => {setQuery(e.target.value)}}
+        onChange={e => setQuery(e.target.value)}
+        onEnter={handleSearchClick}        
       />
 
-      <SearchFormResults results={results} />
+      <SearchFormButton onClick={handleSearchClick} />
 
-      <SearchFormButton />
+      {(results.length > 0) && <SearchFormResults results={results} />}
     </SearchFormWrapper>
   )
 }
