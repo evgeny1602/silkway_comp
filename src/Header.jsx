@@ -9,6 +9,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useDebounce } from './hooks/useDebounce'
 import { useOutsideClick } from './hooks/useOutsideClick'
 import { useGlobalData } from './hooks/useGlobalData'
+import { useSearchAutocomplete } from './hooks/useSearchAutocomplete'
+import { useSearch } from './hooks/useSearch'
 
 export function HeaderLogo({ storeName }) {
 
@@ -151,45 +153,18 @@ export function SearchFormInput({value, onChange, onEnter, onClick}) {
   )
 }
 
-export function SearchForm({ searchUrl, autocompleteUrl }) {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
-  const [areResultsVisible, setAreResultsVisible] = useState(false)
-  const debouncedQuery = useDebounce(query, 500)
+export function SearchForm({ searchUrl, autocompleteUrl }) { 
+  const debounceDelayMs = 500
+
   const searchResultsRef = useRef(null)
 
-  useEffect(() => {
-    const autocomplete = async q => {
-      if (query.length < 3) {
-        setResults([])  
-        return
-      }
+  const [areResultsVisible, setAreResultsVisible] = useState(true)    
+  const [query, setQuery] = useState('')
 
-      const body = new FormData()
-      body.append('SEARCH_QUERY', q)
-
-      const resp = await fetch(autocompleteUrl, {
-        method: 'POST',
-        body
-      })
-      const data = await resp.json()
-      setResults(data.items)    
-      setAreResultsVisible(true)
-    }
-
-    autocomplete(debouncedQuery)
-  }, [debouncedQuery])
-
-  const handleSearchClick = () => {
-    if (query.length == '') return
-
-    const url = searchUrl.replace('{{search_query}}', query)
-    location.href = url
-  }
-
-  useOutsideClick(searchResultsRef, () => {
-    setAreResultsVisible(false)
-  })
+  const debouncedQuery = useDebounce(query, debounceDelayMs)  
+  const { results } = useSearchAutocomplete(autocompleteUrl, debouncedQuery)
+  const { doSearch } = useSearch(searchUrl, query)
+  useOutsideClick(searchResultsRef, () => setAreResultsVisible(false))
 
   return (
     <SearchFormWrapper>      
@@ -198,11 +173,11 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
       <SearchFormInput
         value={query}
         onChange={e => setQuery(e.target.value)}
-        onEnter={handleSearchClick}    
+        onEnter={doSearch}    
         onClick={() => setAreResultsVisible(true)}    
       />
 
-      <SearchFormButton onClick={handleSearchClick} />
+      <SearchFormButton onClick={doSearch} />
 
       {areResultsVisible && (results.length > 0) && (
         <SearchFormResults
@@ -324,7 +299,7 @@ export function CartSum({amount}) {
   )
 }
 
-export function itemsCountLabel({ itemsCount, postfixVariants }) {
+export function ItemsCountLabel({ itemsCount, postfixVariants }) {
   const postfix = itemsCountPostfix(itemsCount, postfixVariants)
 
   return (
@@ -347,7 +322,7 @@ export function CartButton({ cartItems }) {
         <br />
         <CartSum amount={cartSum} />
         <br />
-        <itemsCountLabel
+        <ItemsCountLabel
           itemsCount={cartItems.length}
           postfixVariants={['товар', 'товара', 'товаров']}
         />
