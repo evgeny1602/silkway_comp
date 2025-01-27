@@ -7,6 +7,8 @@ import menuIconImg from './assets/menu_icon.svg'
 import { itemsCountPostfix, formatMoney} from './utils'
 import { useState, useEffect, useRef } from 'react'
 import { useDebounce } from './hooks/useDebounce'
+import { useOutsideClick } from './hooks/useOutsideClick'
+import { useGlobalData } from './hooks/useGlobalData'
 
 export function HeaderLogo({ storeName }) {
 
@@ -23,15 +25,14 @@ export function HeaderLogo({ storeName }) {
 }
 
 export function TopMenuItem({ item }) {
-  const { url, text } = item
 
   return (
     <li>
       <a
-        href={url}
+        href={item.url}
         className="hover:text-silkway-orange transition-all duration-200"
       >        
-        {text}
+        {item.text}
       </a>
     </li>
   )
@@ -40,10 +41,10 @@ export function TopMenuItem({ item }) {
 export function TopMenu({ items }) {
 
   return (
-    <ul
-      className="hidden header-4:flex gap-x-[30px] font-sans text-white text-sm items-start"
-    >
-      {items.map(item => <TopMenuItem key={item.url} item={item} />)}
+    <ul className="hidden header-4:flex gap-x-[30px] font-sans text-white text-sm items-start">
+      {items.map(
+        item => <TopMenuItem key={item.url} item={item} />
+      )}
     </ul>
   )
 }
@@ -68,9 +69,7 @@ export function CatalogButton({ url }) {
 export function SearchFormWrapper({ children }) {
 
   return (
-    <div
-      className="has-[:focus]:bg-white/5 h-[36px] header-4:h-[48px] hidden header-8:flex items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-[300px] header-3:w-[484px] header-7:w-[380px] relative"
-    >
+    <div className="has-[:focus]:bg-white/5 h-[36px] header-4:h-[48px] hidden header-8:flex items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-[300px] header-3:w-[484px] header-7:w-[380px] relative">
       {children}
     </div>
   )
@@ -121,10 +120,12 @@ export function SearchFormResultsItem({ url, title }) {
   )
 }
 
-export function SearchFormResults({ results }) {
+export function SearchFormResults({ results, selfRef }) {
 
   return (
-    <div className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col">
+    <div
+      ref={selfRef}
+      className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col">
       {results.map(
         ({url, title}) => <SearchFormResultsItem url={url} title={title} key={url} />
       )}
@@ -132,7 +133,7 @@ export function SearchFormResults({ results }) {
   )
 }
 
-export function SearchFormInput({value, onChange, onEnter}) {
+export function SearchFormInput({value, onChange, onEnter, onClick}) {
   const handleKeyDown = e => {
     if (e.key == 'Enter') {
       onEnter(e)
@@ -145,6 +146,7 @@ export function SearchFormInput({value, onChange, onEnter}) {
       value={value}
       onChange={onChange}
       onKeyDown={handleKeyDown}
+      onClick={onClick}
     />    
   )
 }
@@ -152,11 +154,16 @@ export function SearchFormInput({value, onChange, onEnter}) {
 export function SearchForm({ searchUrl, autocompleteUrl }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
+  const [areResultsVisible, setAreResultsVisible] = useState(false)
   const debouncedQuery = useDebounce(query, 500)
+  const searchResultsRef = useRef(null)
 
   useEffect(() => {
     const autocomplete = async q => {
-      if (q == '') return
+      if (query.length < 3) {
+        setResults([])  
+        return
+      }
 
       const body = new FormData()
       body.append('SEARCH_QUERY', q)
@@ -166,18 +173,23 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
         body
       })
       const data = await resp.json()
-      setResults(data.items)        
+      setResults(data.items)    
+      setAreResultsVisible(true)
     }
 
     autocomplete(debouncedQuery)
   }, [debouncedQuery])
 
   const handleSearchClick = () => {
-    if (query == '') return
+    if (query.length == '') return
 
     const url = searchUrl.replace('{{search_query}}', query)
     location.href = url
   }
+
+  useOutsideClick(searchResultsRef, () => {
+    setAreResultsVisible(false)
+  })
 
   return (
     <SearchFormWrapper>      
@@ -186,12 +198,18 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
       <SearchFormInput
         value={query}
         onChange={e => setQuery(e.target.value)}
-        onEnter={handleSearchClick}        
+        onEnter={handleSearchClick}    
+        onClick={() => setAreResultsVisible(true)}    
       />
 
       <SearchFormButton onClick={handleSearchClick} />
 
-      {(results.length > 0) && <SearchFormResults results={results} />}
+      {areResultsVisible && (results.length > 0) && (
+        <SearchFormResults
+          results={results}
+          selfRef={searchResultsRef}
+        />
+      )}
     </SearchFormWrapper>
   )
 }
@@ -217,9 +235,7 @@ export function CitySelectCurrent({ city }) {
 export function CitySelectButton() {
 
   return (
-    <button
-      className="font-sans text-xs text-white w-[77px] h-[20px] rounded bg-white/20 hover:bg-white/30 transition-all duration-200"
-    >
+    <button className="font-sans text-xs text-white w-[77px] h-[20px] rounded bg-white/20 hover:bg-white/30 transition-all duration-200">
       Изменить
     </button>
   )
@@ -230,6 +246,7 @@ export function CitySelect({ initVal }) {
   return (
     <CitySelectWrapper>
       <CitySelectCurrent city={initVal} />
+
       <CitySelectButton />
     </CitySelectWrapper>
   )
@@ -238,7 +255,10 @@ export function CitySelect({ initVal }) {
 export function HeaderPhone({ phone }) {
 
   return (
-    <a href={`tel:${phone}`} className="font-sans text-2xl text-white">
+    <a
+      href={`tel:${phone}`}
+      className="font-sans text-2xl text-white"
+    >
       {phone}
     </a>
   )
@@ -264,9 +284,7 @@ export function LoginAccountButton({ text, url }) {
 export function CartButtonWrapper({ children }) {
 
   return (
-    <button
-      className="bg-silkway-orange hover:bg-silkway-light-orange transition-all duration-200 text-silkway-dark-chocolate rounded px-[8px] header-4:px-[15px] py-[5px] header-4:py-[10px] items-center text-xs header-4:text-sm shadow-inner shadow-white/45 border border-silkway-dark-orange whitespace-nowrap flex flex-nowrap order-first header-4:order-2 h-[40px] header-4:h-[84px] leading-[1.2]"
-    >
+    <button className="bg-silkway-orange hover:bg-silkway-light-orange transition-all duration-200 text-silkway-dark-chocolate rounded px-[8px] header-4:px-[15px] py-[5px] header-4:py-[10px] items-center text-xs header-4:text-sm shadow-inner shadow-white/45 border border-silkway-dark-orange whitespace-nowrap flex flex-nowrap order-first header-4:order-2 h-[40px] header-4:h-[84px] leading-[1.2]">
       {children}
     </button>
   )
@@ -276,9 +294,9 @@ export function CartIcon() {
 
   return (
     <img
-        src={cartIconImg}
-        className="w-[20px] h-[25px] header-4:w-[27px] header-4:h-[34px] box-content block py-[0px] header-2:py-[10px] header-2:pl-[4px] pl-[0px] header-2:mr-[10px] pr-[8px] header-2:pr-[15px] header-2:border-r-[1px] border-silkway-dark-orange"
-      />
+      src={cartIconImg}
+      className="w-[20px] h-[25px] header-4:w-[27px] header-4:h-[34px] box-content block py-[0px] header-2:py-[10px] header-2:pl-[4px] pl-[0px] header-2:mr-[10px] pr-[8px] header-2:pr-[15px] header-2:border-r-[1px] border-silkway-dark-orange"
+    />
   )
 }
 
@@ -286,32 +304,37 @@ export function CartTitle() {
 
   return (
     <>
-      <span className="hidden header-2:inline">Моя корзина</span>
-      <span className="header-2:hidden inline">Корзина</span>
+      <span className="hidden header-2:inline">
+        Моя корзина
+      </span>
+      <span className="header-2:hidden inline">
+        Корзина
+      </span>
     </>
   )
 }
 
 export function CartSum({amount}) {
+  const formattedAmount = formatMoney(amount)
 
   return (
-    <span className="font-semibold">{formatMoney(amount)} ₽</span>
+    <span className="font-semibold">
+      {formattedAmount} ₽
+    </span>
   )
 }
 
-export function CartProductsCount({ productsCount }) {
-  const postfixes = ['товар', 'товара', 'товаров']
+export function itemsCountLabel({ itemsCount, postfixVariants }) {
+  const postfix = itemsCountPostfix(itemsCount, postfixVariants)
 
   return (
     <span className="hidden header-2:inline">
-      {productsCount} {itemsCountPostfix(productsCount, postfixes)}
+      {itemsCount} {postfix}
     </span>
   )
 }
 
 export function CartButton({ cartItems }) {
-  
-
   const cartSum = cartItems
     .map(item => item.quantity * item.price)
     .reduce((s, x) => s + x, 0)
@@ -324,7 +347,10 @@ export function CartButton({ cartItems }) {
         <br />
         <CartSum amount={cartSum} />
         <br />
-        <CartProductsCount productsCount={cartItems.length} />
+        <itemsCountLabel
+          itemsCount={cartItems.length}
+          postfixVariants={['товар', 'товара', 'товаров']}
+        />
       </div>      
     </CartButtonWrapper>
   )
@@ -333,9 +359,7 @@ export function CartButton({ cartItems }) {
 export function MenuButton() {
 
   return (
-    <button
-      className="w-[40px] h-[40px] rounded border border-white flex header-4:hidden justify-center items-center hover:bg-white/10 transition-all duration-200"
-    >
+    <button className="w-[40px] h-[40px] rounded border border-white flex header-4:hidden justify-center items-center hover:bg-white/10 transition-all duration-200">
       <img src={menuIconImg} />
     </button>
   )
@@ -353,9 +377,7 @@ export function HeaderBackground({ children }) {
 export function HeaderContainer({ children }) {
 
   return (
-    <div
-      className="max-w-[1670px] h-[80px] header-4:h-[206px] m-auto flex flex-nowrap items-center justify-start gap-[5px] header-9:gap-[30px] p-[10px] header-4:p-[50px] px-[10px] header-9:px-[20px] header-5:px-[50px]"
-    >
+    <div className="max-w-[1670px] h-[80px] header-4:h-[206px] m-auto flex flex-nowrap items-center justify-start gap-[5px] header-9:gap-[30px] p-[10px] header-4:p-[50px] px-[10px] header-9:px-[20px] header-5:px-[50px]">
       {children}
     </div>
   )
@@ -364,9 +386,7 @@ export function HeaderContainer({ children }) {
 export function HeaderCenterSection({ children }) {
 
   return (
-    <div
-      className="flex flex-nowrap flex-col justify-center header-4:justify-between gap-[14px] h-full header-4:h-[82px] ml-auto header-4:ml-0"
-    >
+    <div className="flex flex-nowrap flex-col justify-center header-4:justify-between gap-[14px] h-full header-4:h-[82px] ml-auto header-4:ml-0">
       {children}
     </div>
   )
@@ -384,9 +404,7 @@ export function HeaderCenterSubSection({ children }) {
 export function HeaderRightSection({ children }) {
 
   return (
-    <div
-      className="flex-col h-[80px] justify-between ml-auto hidden header-1:flex"
-    >
+    <div className="flex-col h-[80px] justify-between ml-auto hidden header-1:flex">
       {children}
     </div>
   )
@@ -416,7 +434,10 @@ export function Header() {
       accountUrl,
       loginUrl,
       isLoggedIn
-    } = window.headerData
+    } = useGlobalData('headerData')
+
+    const loginButtonUrl = isLoggedIn ? accountUrl : loginUrl
+    const loginButtonText = isLoggedIn ? firstName : 'Войти'
 
     return (
       <HeaderBackground>
@@ -443,10 +464,7 @@ export function Header() {
           </HeaderRightSection>
 
           <HeaderRightButtonsSection>
-            <LoginAccountButton
-              url={isLoggedIn ? accountUrl : loginUrl}
-              text={isLoggedIn ? firstName : 'Войти'}
-            />
+            <LoginAccountButton url={loginButtonUrl} text={loginButtonText} />
 
             <CartButton cartItems={cartItems} />
 

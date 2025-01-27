@@ -14,7 +14,7 @@ export function formatMoney(amount) {
     return result
 }
 
-export function itemsCountPostfix(itemsCount, postfixes) {
+export function itemsCountPostfix(itemsCount, postfixVariants) {
     // const postfixes = [
     //     'товар',
     //     'товара',
@@ -25,15 +25,15 @@ export function itemsCountPostfix(itemsCount, postfixes) {
     const lastTwoDigits = parseInt(`0${itemsCount}`.slice(-2))
 
     if ( (lastTwoDigits > 4) && (lastTwoDigits < 21) ) {
-        return postfixes[2]
+        return postfixVariants[2]
     }
     if (lastOneDigit == 0) {
-        return postfixes[2]
+        return postfixVariants[2]
     }
     if (lastOneDigit == 1) {
-        return postfixes[0]
+        return postfixVariants[0]
     }
     if ([2, 3, 4].includes(lastOneDigit)) {
-        return postfixes[1]
+        return postfixVariants[1]
     }
 }

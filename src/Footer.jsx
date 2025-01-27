@@ -1,4 +1,5 @@
 import footerLogoImg from './assets/logo.png'
+import { useGlobalData } from './hooks/useGlobalData'
 
 export function FooterLogoWrapper({ children }) {
 
@@ -150,7 +151,7 @@ export function Footer() {
     address,
     phone,
     email
-  } = window.footerData
+  } = useGlobalData('footerData')
 
   return (
     <FooterBackground>          
