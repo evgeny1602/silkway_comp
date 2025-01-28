@@ -5,12 +5,12 @@ import loginIconImg from './assets/login_icon.svg'
 import cartIconImg from './assets/cart_icon.svg'
 import menuIconImg from './assets/menu_icon.svg'
 import { itemsCountPostfix, formatMoney} from './utils'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useDebounce } from './hooks/useDebounce'
 import { useOutsideClick } from './hooks/useOutsideClick'
-import { useGlobalData } from './hooks/useGlobalData'
 import { useSearchAutocomplete } from './hooks/useSearchAutocomplete'
-import { useSearch } from './hooks/useSearch'
+import { getLobalData } from './utils'
+import { searchProduct } from './utils'
 
 export function HeaderLogo({ storeName }) {
 
@@ -95,7 +95,9 @@ export function SearchFormButton({ onClick }) {
       className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans">
       <SearchFormIconRight />
 
-      <span className="hidden header-5:inline">Найти</span>
+      <span className="hidden header-5:inline">
+        Найти
+      </span>
     </button>
   )
 }
@@ -127,7 +129,7 @@ export function SearchFormResults({ results, selfRef }) {
   return (
     <div
       ref={selfRef}
-      className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col">
+      className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col flex-nowrap">
       {results.map(
         ({url, title}) => <SearchFormResultsItem url={url} title={title} key={url} />
       )}
@@ -162,9 +164,10 @@ export function SearchForm({ searchUrl, autocompleteUrl }) {
   const [query, setQuery] = useState('')
 
   const debouncedQuery = useDebounce(query, debounceDelayMs)  
-  const { results } = useSearchAutocomplete(autocompleteUrl, debouncedQuery)
-  const { doSearch } = useSearch(searchUrl, query)
+  const { results } = useSearchAutocomplete(autocompleteUrl, debouncedQuery)  
   useOutsideClick(searchResultsRef, () => setAreResultsVisible(false))
+
+  const { doSearch } = searchProduct(searchUrl, query)
 
   return (
     <SearchFormWrapper>      
@@ -221,7 +224,6 @@ export function CitySelect({ initVal }) {
   return (
     <CitySelectWrapper>
       <CitySelectCurrent city={initVal} />
-
       <CitySelectButton />
     </CitySelectWrapper>
   )
@@ -251,7 +253,9 @@ export function LoginAccountButton({ text, url }) {
         alt={text}
         className="box-content block h-[20px] w-[21px] header-4:h-[26px] header-4:w-[28px]"
       />
-      <span className="hidden header-4:inline">{text}</span>
+      <span className="hidden header-4:inline">
+        {text}
+      </span>
     </a>
   )
 }
@@ -268,10 +272,13 @@ export function CartButtonWrapper({ children }) {
 export function CartIcon() {
 
   return (
+    <div className="flex flex-col justify-center box-content h-full w-full mr-[10px] border-0 header-2:border-r-[1px] header-2:border-silkway-dark-orange header-2:pr-[12px]">
     <img
-      src={cartIconImg}
-      className="w-[20px] h-[25px] header-4:w-[27px] header-4:h-[34px] box-content block py-[0px] header-2:py-[10px] header-2:pl-[4px] pl-[0px] header-2:mr-[10px] pr-[8px] header-2:pr-[15px] header-2:border-r-[1px] border-silkway-dark-orange"
-    />
+        src={cartIconImg}
+        className="w-[20px] h-[25px] header-4:w-[27px] header-4:h-[34px] box-content block"
+      />
+    </div>
+    
   )
 }
 
@@ -317,11 +324,11 @@ export function CartButton({ cartItems }) {
   return (
     <CartButtonWrapper>
       <CartIcon />
-      <div className="text-left">
+      <div className="text-left flex flex-col">
         <CartTitle />
-        <br />
+
         <CartSum amount={cartSum} />
-        <br />
+
         <ItemsCountLabel
           itemsCount={cartItems.length}
           postfixVariants={['товар', 'товара', 'товаров']}
@@ -409,7 +416,7 @@ export function Header() {
       accountUrl,
       loginUrl,
       isLoggedIn
-    } = useGlobalData('headerData')
+    } = getLobalData('headerData')
 
     const loginButtonUrl = isLoggedIn ? accountUrl : loginUrl
     const loginButtonText = isLoggedIn ? firstName : 'Войти'

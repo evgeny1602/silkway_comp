@@ -37,3 +37,20 @@ export function itemsCountPostfix(itemsCount, postfixVariants) {
         return postfixVariants[1]
     }
 }
+
+export function getLobalData(k) {
+    if (k in window) {
+        return window[k]
+    }
+
+    return {}
+}
+
+export function searchProduct(searchUrl, query) {
+    const doSearch = () => {
+        if (query.length == '') return
+        location.href = searchUrl.replace('{{search_query}}', query)
+    }
+
+    return { doSearch } 
+}
