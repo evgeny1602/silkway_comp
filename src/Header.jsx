@@ -281,10 +281,10 @@ export function CitySelectModal({ onCloseClick, onSubmit }) {
   )   
 }
 
-export function CitySelect() {
+export function CitySelect({ initCityName }) {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [cityId, setCityId] = useState(null)
-  const [cityName, setCityName] = useState(null)
+  const [cityName, setCityName] = useState((initCityName != '') ? initCityName : null)
 
   const { geoData, isLoading, error } = UseGeoData()  
 
@@ -507,7 +507,8 @@ export function Header() {
       catalogUrl,
       accountUrl,
       loginUrl,
-      isLoggedIn
+      isLoggedIn,
+      cityName
     } = getLobalData('headerData')
 
     const loginButtonUrl = isLoggedIn ? accountUrl : loginUrl
@@ -528,7 +529,7 @@ export function Header() {
           </HeaderCenterSection>
 
           <HeaderRightSection>
-            <CitySelect />
+            <CitySelect initCityName={cityName} />
 
             <HeaderPhone phone={phone} />
           </HeaderRightSection>
