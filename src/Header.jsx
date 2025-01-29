@@ -5,16 +5,15 @@ import loginIconImg from './assets/login_icon.svg'
 import cartIconImg from './assets/cart_icon.svg'
 import menuIconImg from './assets/menu_icon.svg'
 import crossIconImg from './assets/cross_icon.svg'
-import { itemsCountPostfix, formatMoney} from './utils'
-import { useState, useRef } from 'react'
-import { getLobalData } from './utils'
+import { itemsCountPostfix, formatMoney, getLobalData, searchProduct, disableDocumentScroll, enableDocumentScroll} from './utils'
+import { useState } from 'react'
 import { Button } from './Button'
 import { SearchAutocomplete } from './SearchAutocomplete'
 import { autocomplete as cityAutocomplete } from "./api/city"
 import { autocomplete as productAutocomplete } from './api/product'
 import { searchProductRedirectUrl } from './config'
-import { searchProduct } from './utils'
 import { ModalOverlay } from './ModalOverlay'
+import { UseGeoData } from './hooks/useGeoData'
 
 export function HeaderLogo({ storeName }) {
 
@@ -225,12 +224,13 @@ export function ProductSearchAutocomplete() {
         onEnter={handleEnter}
         onChange={e => setQuery(e.target.value)}
       />
+      
       <SearchFormButton onClick={handleEnter} />
     </>
   )
 }
 
-export function CitySearchAutocomplete() {
+export function CitySearchAutocomplete({onChange, onItemClick}) {
 
   return (
     <SearchAutocomplete
@@ -238,11 +238,14 @@ export function CitySearchAutocomplete() {
       inputClassname="border-silkway-light-gray border-[1px] rounded focus:outline-none px-2 py-1 w-full"
       dropdownClassname="w-full top-[100px] h-[150px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
       dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
+      onChange={onChange}
+      onItemClick={onItemClick}
     />
   )
 }
 
-export function CitySelectModal({ onCloseClick }) {
+export function CitySelectModal({ onCloseClick, onSubmit }) {
+  const [city, setCity] = useState('')
 
   return (
     <>
@@ -252,11 +255,24 @@ export function CitySelectModal({ onCloseClick }) {
         <ModalContentContainer>
           <ModalHeader>Ваш город</ModalHeader>
 
-          <CitySearchAutocomplete />
+          <CitySearchAutocomplete
+            onChange={e => setCity(e.target.value)}
+            onItemClick={e => setCity(e.target.dataset.title)}
+          />
 
           <ModalButtonsContainer>
-            <Button variant='ghost' onClick={onCloseClick}>Отменить</Button>
-            <Button variant='primary'>Сохранить</Button> 
+            <Button 
+              variant='ghost'
+              onClick={onCloseClick}
+            >
+              Отменить
+            </Button>
+            <Button
+              variant='primary'
+              onClick={() => onSubmit(city)}
+            >
+              Сохранить
+            </Button> 
           </ModalButtonsContainer>                     
         </ModalContentContainer>  
         
@@ -266,27 +282,37 @@ export function CitySelectModal({ onCloseClick }) {
   )   
 }
 
-export function CitySelect({ initVal }) {
+export function CitySelect() {
   const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const { geoData, isLoading, error } = UseGeoData()  
 
   const showModal = () => {
     setIsModalVisible(true)
-    document.body.classList.add("overflow-y-hidden")
+    disableDocumentScroll()
   }
 
   const hideModal = () => {
     setIsModalVisible(false)
-    document.body.classList.remove("overflow-y-hidden")
+    enableDocumentScroll()
+  }
+
+  const handleCitySubmit = city => {
+    setIsModalVisible(false)
+    console.log(`Submited "${city}"`)
   }
 
   return (
     <CitySelectWrapper>
-      <CitySelectCurrent city={initVal} />
+      <CitySelectCurrent city={geoData?.city.name || 'Определение...'} />
 
       <CitySelectButton onClick={showModal} />
 
       {isModalVisible && (
-        <CitySelectModal onCloseClick={hideModal} />
+        <CitySelectModal
+          onCloseClick={hideModal}
+          onSubmit={handleCitySubmit}
+        />
       )}
     </CitySelectWrapper>
   )
@@ -496,7 +522,7 @@ export function Header() {
           </HeaderCenterSection>
 
           <HeaderRightSection>
-            <CitySelect initVal="Рубцовск" />
+            <CitySelect />
 
             <HeaderPhone phone={phone} />
           </HeaderRightSection>

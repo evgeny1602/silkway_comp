@@ -53,3 +53,11 @@ export function searchProduct(query, searchUrl) {
 
     location.href = searchUrl.replace('{{search_query}}', query)
 }
+
+export function disableDocumentScroll() {
+    document.body.classList.add("overflow-y-hidden")
+}
+
+export function enableDocumentScroll() {
+    document.body.classList.remove("overflow-y-hidden")
+}

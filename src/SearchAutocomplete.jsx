@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { useOutsideClick } from "./hooks/useOutsideClick"
-import { useAutocomplete } from "./hooks/useAutocomplete"
+import { useFetch } from "./hooks/useFetch"
 import { useDebounce } from "./hooks/useDebounce"
 import { debounceDelayMs } from "./config"
 
@@ -9,9 +9,9 @@ export function SearchAutocomplete({
     inputClassname,
     dropdownClassname,
     dropdownItemClassname,
-    onChange,
+    onChange=null,
     onItemClick=null,
-    onEnter=null
+    onEnter=null    
 }) {
     const [query, setQuery] = useState('')   
     const [areResultsVisible, setAreResultsVisible] = useState(true)
@@ -20,7 +20,7 @@ export function SearchAutocomplete({
     
     const resultsRef = useRef(null)    
 
-    const { results } = useAutocomplete(fetcher, debouncedQuery)
+    const { results } = useFetch(fetcher, debouncedQuery)
 
     useOutsideClick(resultsRef, () => setAreResultsVisible(false))
 
@@ -35,7 +35,7 @@ export function SearchAutocomplete({
     const handleChange = e => {
         setQuery(e.target.value)
         setAreResultsVisible(true)
-        onChange(e)
+        if (onChange) onChange(e)
     }
 
     const handleKeyDown = e => {
