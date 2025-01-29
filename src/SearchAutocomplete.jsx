@@ -58,6 +58,8 @@ export function SearchAutocomplete({
                 <div className={dropdownClassname} ref={resultsRef}>
                     {results.map(item => 
                         <div
+                            data-city={item.city || null}
+                            data-city-id={item.cityId || null}
                             data-url={item.url || null}
                             data-title={item.title}
                             key={item.title}

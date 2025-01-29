@@ -10,10 +10,12 @@ import { useState } from 'react'
 import { Button } from './Button'
 import { SearchAutocomplete } from './SearchAutocomplete'
 import { autocomplete as cityAutocomplete } from "./api/city"
+import { set as citySet } from "./api/city"
 import { autocomplete as productAutocomplete } from './api/product'
 import { searchProductRedirectUrl } from './config'
 import { ModalOverlay } from './ModalOverlay'
 import { UseGeoData } from './hooks/useGeoData'
+import { useFetch } from './hooks/useFetch'
 
 export function HeaderLogo({ storeName }) {
 
@@ -224,7 +226,7 @@ export function ProductSearchAutocomplete() {
         onEnter={handleEnter}
         onChange={e => setQuery(e.target.value)}
       />
-      
+
       <SearchFormButton onClick={handleEnter} />
     </>
   )
@@ -245,7 +247,13 @@ export function CitySearchAutocomplete({onChange, onItemClick}) {
 }
 
 export function CitySelectModal({ onCloseClick, onSubmit }) {
-  const [city, setCity] = useState('')
+  const [cityId, setCityId] = useState(null)
+  const [cityName, setCityName] = useState(null)
+
+  const handleItemClick = e => {
+    setCityId(e.target.dataset.cityId)
+    setCityName(e.target.dataset.city)
+  }
 
   return (
     <>
@@ -255,22 +263,13 @@ export function CitySelectModal({ onCloseClick, onSubmit }) {
         <ModalContentContainer>
           <ModalHeader>Ваш город</ModalHeader>
 
-          <CitySearchAutocomplete
-            onChange={e => setCity(e.target.value)}
-            onItemClick={e => setCity(e.target.dataset.title)}
-          />
+          <CitySearchAutocomplete onItemClick={handleItemClick} />
 
           <ModalButtonsContainer>
-            <Button 
-              variant='ghost'
-              onClick={onCloseClick}
-            >
+            <Button variant='ghost' onClick={onCloseClick}>
               Отменить
             </Button>
-            <Button
-              variant='primary'
-              onClick={() => onSubmit(city)}
-            >
+            <Button variant='primary' onClick={() => onSubmit(cityId, cityName)}>
               Сохранить
             </Button> 
           </ModalButtonsContainer>                     
@@ -284,8 +283,12 @@ export function CitySelectModal({ onCloseClick, onSubmit }) {
 
 export function CitySelect() {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [cityId, setCityId] = useState(null)
+  const [cityName, setCityName] = useState(null)
 
   const { geoData, isLoading, error } = UseGeoData()  
+
+  const { results } = useFetch(citySet, cityId)
 
   const showModal = () => {
     setIsModalVisible(true)
@@ -297,14 +300,17 @@ export function CitySelect() {
     enableDocumentScroll()
   }
 
-  const handleCitySubmit = city => {
+  const handleCitySubmit = (submittedCityId, submittedCityName) => {
     setIsModalVisible(false)
-    console.log(`Submited "${city}"`)
+    setCityId(submittedCityId)
+    setCityName(submittedCityName)
   }
 
   return (
     <CitySelectWrapper>
-      <CitySelectCurrent city={geoData?.city.name || 'Определение...'} />
+      <CitySelectCurrent
+        city={cityName || geoData?.city.name || 'Определение...'}
+      />
 
       <CitySelectButton onClick={showModal} />
 
