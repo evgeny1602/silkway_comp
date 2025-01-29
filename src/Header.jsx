@@ -4,13 +4,17 @@ import searchIconImg from './assets/search_icon.svg'
 import loginIconImg from './assets/login_icon.svg'
 import cartIconImg from './assets/cart_icon.svg'
 import menuIconImg from './assets/menu_icon.svg'
+import crossIconImg from './assets/cross_icon.svg'
 import { itemsCountPostfix, formatMoney} from './utils'
 import { useState, useRef } from 'react'
-import { useDebounce } from './hooks/useDebounce'
-import { useOutsideClick } from './hooks/useOutsideClick'
-import { useSearchAutocomplete } from './hooks/useSearchAutocomplete'
 import { getLobalData } from './utils'
+import { Button } from './Button'
+import { SearchAutocomplete } from './SearchAutocomplete'
+import { autocomplete as cityAutocomplete } from "./api/city"
+import { autocomplete as productAutocomplete } from './api/product'
+import { searchProductRedirectUrl } from './config'
 import { searchProduct } from './utils'
+import { ModalOverlay } from './ModalOverlay'
 
 export function HeaderLogo({ storeName }) {
 
@@ -92,12 +96,10 @@ export function SearchFormButton({ onClick }) {
   return (
     <button
       onClick={onClick}
-      className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans">
+      className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans"
+    >
       <SearchFormIconRight />
-
-      <span className="hidden header-5:inline">
-        Найти
-      </span>
+      <span className="hidden header-5:inline">Найти</span>
     </button>
   )
 }
@@ -112,82 +114,12 @@ export function SearchFormIconRight() {
   )
 }
 
-export function SearchFormResultsItem({ url, title }) {
-
-  return (
-    <a
-      className="px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
-      href={url}
-    >
-      {title}
-    </a>
-  )
-}
-
-export function SearchFormResults({ results, selfRef }) {
-
-  return (
-    <div
-      ref={selfRef}
-      className="bg-white w-full h-[200px] overflow-y-auto rounded shadow-md p-2 z-10 absolute left-0 top-[55px] flex flex-col flex-nowrap">
-      {results.map(
-        ({url, title}) => <SearchFormResultsItem url={url} title={title} key={url} />
-      )}
-    </div>
-  )
-}
-
-export function SearchFormInput({value, onChange, onEnter, onClick}) {
-  const handleKeyDown = e => {
-    if (e.key == 'Enter') {
-      onEnter(e)
-    }
-  }
-  
-  return (
-    <input
-      className="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-silkway-green text-white transition-all duration-200 w-full"
-      value={value}
-      onChange={onChange}
-      onKeyDown={handleKeyDown}
-      onClick={onClick}
-    />    
-  )
-}
-
-export function SearchForm({ searchUrl, autocompleteUrl }) { 
-  const debounceDelayMs = 500
-
-  const searchResultsRef = useRef(null)
-
-  const [areResultsVisible, setAreResultsVisible] = useState(true)    
-  const [query, setQuery] = useState('')
-
-  const debouncedQuery = useDebounce(query, debounceDelayMs)  
-  const { results } = useSearchAutocomplete(autocompleteUrl, debouncedQuery)  
-  useOutsideClick(searchResultsRef, () => setAreResultsVisible(false))
-
-  const { doSearch } = searchProduct(searchUrl, query)
+export function SearchForm() { 
 
   return (
     <SearchFormWrapper>      
       <SearchFormIcon />
-
-      <SearchFormInput
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        onEnter={doSearch}    
-        onClick={() => setAreResultsVisible(true)}    
-      />
-
-      <SearchFormButton onClick={doSearch} />
-
-      {areResultsVisible && (results.length > 0) && (
-        <SearchFormResults
-          results={results}
-          selfRef={searchResultsRef}
-        />
-      )}
+      <ProductSearchAutocomplete />      
     </SearchFormWrapper>
   )
 }
@@ -210,21 +142,142 @@ export function CitySelectCurrent({ city }) {
   )
 }
 
-export function CitySelectButton() {
+export function CitySelectButton({ onClick }) {
 
   return (
-    <button className="font-sans text-xs text-white w-[77px] h-[20px] rounded bg-white/20 hover:bg-white/30 transition-all duration-200">
+    <button
+      onClick={onClick}
+      className="font-sans text-xs text-white w-[77px] h-[20px] rounded bg-white/20 hover:bg-white/30 transition-all duration-200"
+    >
       Изменить
     </button>
   )
 }
 
+export function CloseModalButton({ onClick }) {
+
+  return (
+    <div className="w-full flex flex-nowrap justify-end">
+      <img
+        onClick={onClick}
+        src={crossIconImg}
+        className="-mt-4 -mr-4 cursor-pointer hover:bg-silkway-milk p-2 rounded transition-colors duration-200"
+      />
+    </div>
+  )
+}
+
+export function ModalContainer({ children }) {
+
+  return (
+    <div className="p-6 bg-white rounded shadow-md h-[200px] w-[90vw] max-w-[400px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+      {children}
+    </div>
+  )
+}
+
+export function ModalContentContainer({ children }) {
+
+  return (
+    <div className="flex flex-col justify-between h-full -mt-5 relative">
+      {children}
+    </div>
+  )
+}
+
+export function ModalHeader({ children }) {
+
+  return (
+    <h3 className="font-sans font-semibold text-xl text-center">
+      {children}
+    </h3>
+  )
+}
+
+export function ModalButtonsContainer({ children }) {
+
+  return (
+    <div className="flex flex-nowrap justify-center gap-[25px]">
+      {children}
+    </div>
+  )
+}
+
+export function ProductSearchAutocomplete() {
+  const [query, setQuery] = useState('')
+
+  const handleItemClick = e => {
+    location.href = e.target.dataset.url
+  }
+
+  const handleEnter = () => {
+    searchProduct(query, searchProductRedirectUrl)
+  }
+
+  return (
+    <>
+      <SearchAutocomplete
+        fetcher={productAutocomplete}
+        inputClassname="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-silkway-green text-white transition-all duration-200 w-full"
+        dropdownClassname="h-[200px] w-full left-0 top-[55px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
+        dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
+        onItemClick={handleItemClick}
+        onEnter={handleEnter}
+        onChange={e => setQuery(e.target.value)}
+      />
+      <SearchFormButton onClick={handleEnter} />
+    </>
+  )
+}
+
+export function CitySearchAutocomplete() {
+
+  return (
+    <SearchAutocomplete
+      fetcher={cityAutocomplete}
+      inputClassname="border-silkway-light-gray border-[1px] rounded focus:outline-none px-2 py-1 w-full"
+      dropdownClassname="w-full top-[100px] h-[150px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
+      dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
+    />
+  )
+}
+
+export function CitySelectModal({ onCloseClick }) {
+
+  return (
+    <>
+      <ModalContainer>
+        <CloseModalButton onClick={onCloseClick} />
+
+        <ModalContentContainer>
+          <ModalHeader>Ваш город</ModalHeader>
+
+          <CitySearchAutocomplete />
+
+          <ModalButtonsContainer>
+            <Button variant='ghost' onClick={onCloseClick}>Отменить</Button>
+            <Button variant='primary'>Сохранить</Button> 
+          </ModalButtonsContainer>                     
+        </ModalContentContainer>  
+        
+      </ModalContainer>
+      <ModalOverlay />
+    </>
+  )   
+}
+
 export function CitySelect({ initVal }) {
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   return (
     <CitySelectWrapper>
       <CitySelectCurrent city={initVal} />
-      <CitySelectButton />
+
+      <CitySelectButton onClick={() => setIsModalVisible(true)} />
+
+      {isModalVisible && (
+        <CitySelectModal onCloseClick={() => setIsModalVisible(false)} />
+      )}
     </CitySelectWrapper>
   )
 }
@@ -273,7 +326,7 @@ export function CartIcon() {
 
   return (
     <div className="flex flex-col justify-center box-content h-full w-full mr-[10px] border-0 header-2:border-r-[1px] header-2:border-silkway-dark-orange header-2:pr-[12px]">
-    <img
+      <img
         src={cartIconImg}
         className="w-[20px] h-[25px] header-4:w-[27px] header-4:h-[34px] box-content block"
       />
@@ -297,11 +350,10 @@ export function CartTitle() {
 }
 
 export function CartSum({amount}) {
-  const formattedAmount = formatMoney(amount)
 
   return (
     <span className="font-semibold">
-      {formattedAmount} ₽
+      {formatMoney(amount)} ₽
     </span>
   )
 }
@@ -321,6 +373,8 @@ export function CartButton({ cartItems }) {
     .map(item => item.quantity * item.price)
     .reduce((s, x) => s + x, 0)
 
+  const postfixVariants = ['товар', 'товара', 'товаров']
+
   return (
     <CartButtonWrapper>
       <CartIcon />
@@ -331,7 +385,7 @@ export function CartButton({ cartItems }) {
 
         <ItemsCountLabel
           itemsCount={cartItems.length}
-          postfixVariants={['товар', 'товара', 'товаров']}
+          postfixVariants={postfixVariants}
         />
       </div>      
     </CartButtonWrapper>
@@ -409,10 +463,6 @@ export function Header() {
       phone,
       topMenuItems,
       catalogUrl,
-      searchCityAutocompleteUrl,
-      setCityUrl,
-      searchProductAutocompleteUrl,
-      searchProductUrl,
       accountUrl,
       loginUrl,
       isLoggedIn
@@ -431,11 +481,7 @@ export function Header() {
 
             <HeaderCenterSubSection>
               <CatalogButton url={catalogUrl} />
-
-              <SearchForm 
-                searchUrl={searchProductUrl}
-                autocompleteUrl={searchProductAutocompleteUrl}
-              />
+              <SearchForm />
             </HeaderCenterSubSection>
           </HeaderCenterSection>
 

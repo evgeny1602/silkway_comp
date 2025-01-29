@@ -46,11 +46,10 @@ export function getLobalData(k) {
     return {}
 }
 
-export function searchProduct(searchUrl, query) {
-    const doSearch = () => {
-        if (query.length == '') return
-        location.href = searchUrl.replace('{{search_query}}', query)
+export function searchProduct(query, searchUrl) {
+    if (query.length < 3) {
+        return
     }
 
-    return { doSearch } 
+    location.href = searchUrl.replace('{{search_query}}', query)
 }

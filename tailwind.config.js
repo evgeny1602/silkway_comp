@@ -14,6 +14,7 @@ export default {
         'silkway-orange': '#D4B07B',
         'silkway-dark-orange': '#AE8F64',
         'silkway-gray': '#777777',
+        'silkway-light-gray': '#DFE1E3',
         'silkway-dark-chocolate': '#362102',
         'silkway-light-chocolate': '#583C21',
         'silkway-green': '#004741',
