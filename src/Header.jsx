@@ -238,7 +238,7 @@ export function CitySearchAutocomplete({onChange, onItemClick}) {
     <SearchAutocomplete
       fetcher={cityAutocomplete}
       inputClassname="border-silkway-light-gray border-[1px] rounded focus:outline-none px-2 py-1 w-full"
-      dropdownClassname="w-full top-[100px] h-[150px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
+      dropdownClassname="w-full top-[100px] h-max-[150px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
       dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
       onChange={onChange}
       onItemClick={onItemClick}
