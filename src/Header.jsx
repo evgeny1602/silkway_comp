@@ -170,7 +170,7 @@ export function CloseModalButton({ onClick }) {
 export function ModalContainer({ children }) {
 
   return (
-    <div className="p-6 bg-white rounded shadow-md h-[200px] w-[90vw] max-w-[400px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+    <div className="p-6 bg-white rounded shadow-md h-[200px] w-[90vw] max-w-[400px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
       {children}
     </div>
   )
@@ -269,14 +269,24 @@ export function CitySelectModal({ onCloseClick }) {
 export function CitySelect({ initVal }) {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
+  const showModal = () => {
+    setIsModalVisible(true)
+    document.body.classList.add("overflow-y-hidden")
+  }
+
+  const hideModal = () => {
+    setIsModalVisible(false)
+    document.body.classList.remove("overflow-y-hidden")
+  }
+
   return (
     <CitySelectWrapper>
       <CitySelectCurrent city={initVal} />
 
-      <CitySelectButton onClick={() => setIsModalVisible(true)} />
+      <CitySelectButton onClick={showModal} />
 
       {isModalVisible && (
-        <CitySelectModal onCloseClick={() => setIsModalVisible(false)} />
+        <CitySelectModal onCloseClick={hideModal} />
       )}
     </CitySelectWrapper>
   )
