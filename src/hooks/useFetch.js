@@ -17,7 +17,7 @@ export function useFetch(fetcher, query) {
         setError(error)
       }
     }
-    console.log(fetcher.name, query)
+    
     manageFetching()
   }, [query])
 
