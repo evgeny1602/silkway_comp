@@ -668,7 +668,7 @@ function CartItemsDropdown({ cartItems, dropdownRef }) {
 }
 
 function CartWithDropdown({ cartItems }) {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(true)
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false)
 
   const dropdownRef = useRef(null)
 
@@ -678,7 +678,7 @@ function CartWithDropdown({ cartItems }) {
     <div className="relative order-first header-4:order-2">
       <CartButton
         cartItems={cartItems}
-        onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+        onClick={() => setIsDropdownVisible((prev) => !prev)}
       />
 
       {isDropdownVisible && (
