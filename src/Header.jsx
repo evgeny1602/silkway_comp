@@ -529,7 +529,7 @@ function CartDropdownContainer({ children, dropdownRef }) {
   return (
     <div
       ref={dropdownRef}
-      className="max-[650px]:fixed max-[650px]:top-0 max-[650px]:mt-[65px] mx-auto max-[650px]:max-h-[300px] max-[650px]:translate-y-0 max-[650px]:left-0 max-h-[400px] right-0 bottom-0 -mb-1 translate-y-[100%] max-w-[500px] w-[90vw] min-h-[200px] absolute bg-white rounded shadow-md flex flex-nowrap flex-col justify-between"
+      className="max-[650px]:fixed max-[650px]:top-0 max-[650px]:mt-[65px] mx-auto max-[650px]:max-h-[300px] max-[650px]:translate-y-0 max-[650px]:left-0 max-h-[400px] right-0 bottom-0 -mb-1 translate-y-[100%] max-w-[500px] w-[90vw] min-h-[200px] absolute bg-white rounded shadow-md flex flex-nowrap flex-col justify-between z-50"
     >
       {children}
     </div>
