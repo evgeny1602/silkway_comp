@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    transitionDuration: {
+      DEFAULT: '200ms'
+    },
     fontFamily: {
       sans: ['Manrope', 'sans-serif'],
     },
