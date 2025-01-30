@@ -1,21 +1,1286 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
 
-    <div id="new-design-header"></div>
-    <div id="footer"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React</title>
+</head>
 
-    <script>      
-	    window.headerData = JSON.parse('{"cityName":"Барнаул","firstName":"Админ","storeName":"Шёлковый путь","cartItems":[{"id":"90","productId":"198613","quantity":1,"price":"280.0000","name":"\u0421\u0435\u0440\u044c\u0433\u0438 \u04210674"},{"id":"91","productId":"209377","quantity":1,"price":"460.0000","name":"\u0421\u0435\u0440\u044c\u0433\u0438 \u0423\u04210588"},{"id":"109","productId":"213686","quantity":1,"price":"435.0000","name":"\u0421\u0435\u0440\u044c\u0433\u0438 \u04210457"},{"id":"110","productId":"198633","quantity":1,"price":"285.0000","name":"\u0421\u0435\u0440\u044c\u0433\u0438 \u04210682"},{"id":"114","productId":"213456","quantity":2,"price":"1110.0000","name":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u041a\u0422694 (16,5, 50)"},{"id":"115","productId":"205232","quantity":1,"price":"1045.0000","name":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u041a\u0422673 (16,5)"},{"id":"116","productId":"191019","quantity":1,"price":"605.0000","name":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u041a\u0422777 (18,5)"},{"id":"117","productId":"191480","quantity":1,"price":"645.0000","name":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u041a\u0422712 (20,5)"},{"id":"118","productId":"192996","quantity":1,"price":"820.0000","name":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u041a\u0422780 (19,5)"},{"id":"120","productId":"210981","quantity":2,"price":"210.0000","name":"\u041c\u0443\u0436\u0441\u043a\u043e\u0435 \u043a\u043e\u043b\u044c\u0446\u043e \u0423\u041c\u041a042 (20)"},{"id":"121","productId":"202500","quantity":1,"price":"370.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u041a087 (19)"},{"id":"123","productId":"191093","quantity":1,"price":"110.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u0423\u041a852 (19,5)"},{"id":"124","productId":"191380","quantity":1,"price":"210.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u0423\u041a006 (18,5)"},{"id":"125","productId":"193695","quantity":1,"price":"180.0000","name":"\u041c\u0443\u0436\u0441\u043a\u043e\u0435 \u043a\u043e\u043b\u044c\u0446\u043e \u0423\u041c\u041a011 (18)"},{"id":"127","productId":"191086","quantity":1,"price":"260.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u041a812 (18,5)"},{"id":"128","productId":"211488","quantity":1,"price":"235.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u041a774 (21,5)"},{"id":"129","productId":"190766","quantity":1,"price":"210.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u0423\u041a010 (16,5)"},{"id":"130","productId":"208454","quantity":1,"price":"210.0000","name":"\u041a\u043e\u043b\u044c\u0446\u043e \u0423\u041a009 (17)"}],"phone":"+7 (800) 777-75-31","topMenuItems":[{"text":"\u041e \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438","url":"about\/"},{"text":"\u041e\u043f\u0442\u043e\u0432\u044b\u0435 \u0443\u0441\u043b\u043e\u0432\u0438\u044f","url":"about\/optovie-uslovia\/"},{"text":"\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430","url":"about\/delivery\/"},{"text":"\u041e\u0442\u0437\u044b\u0432\u044b","url":"reviews\/"},{"text":"\u041d\u043e\u0432\u043e\u0441\u0442\u0438","url":"news\/"},{"text":"\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b","url":"about\/contacts\/"}],"catalogUrl":"\/catalog","searchCityAutocompleteUrl":"\/bitrix\/components\/dresscode\/sale.geo.positiion\/ajax.php?act=locSearch&query={{search_query}}","setCityUrl":"\/bitrix\/components\/dresscode\/sale.geo.positiion\/ajax.php?act=setLocation&locationID={{city_id}}","searchProductAutocompleteUrl":"\/bitrix\/components\/dresscode\/search.line\/ajax.php","searchProductUrl":"\/search\/?q={{search_query}}&send=\u041d\u0430\u0439\u0442\u0438&r=Y","accountUrl":"\/personal","loginUrl":"\/login","isLoggedIn":true}')
+<body>
 
-      
-	    window.footerData = JSON.parse('{"storeName":"\u0428\u0451\u043b\u043a\u043e\u0432\u044b\u0439 \u043f\u0443\u0442\u044c","storeDescription":"\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043c\u0430\u0433\u0430\u0437\u0438\u043d \u0431\u0438\u0436\u0443\u0442\u0435\u0440\u0438\u0438","address":["658200, \u0410\u043b\u0442\u0430\u0439\u0441\u043a\u0438\u0439 \u043a\u0440\u0430\u0439, \u0433. \u0420\u0443\u0431\u0446\u043e\u0432\u0441\u043a,","\u041f\u0440\u043e\u0441\u043f\u0435\u043a\u0442 \u041b\u0435\u043d\u0438\u043d\u0430 30"],"email":"silkroad-market@yandex.ru","phone":"+7 (800) 777-75-31","menuSections":[{"title":"\u041a\u0430\u0442\u0430\u043b\u043e\u0433","items":[{"text":"\u0421\u0435\u0440\u044c\u0433\u0438","url":"\/catalog\/sergi\/"},{"text":"\u041a\u043e\u043b\u044c\u0446\u0430","url":"\/catalog\/koltsa\/"},{"text":"\u0411\u0440\u0430\u0441\u043b\u0435\u0442\u044b","url":"\/catalog\/braslety\/"},{"text":"\u041a\u043e\u0440\u043e\u0431\u043e\u0447\u043a\u0438","url":"\/catalog\/korobochki\/"},{"text":"\u0426\u0435\u043f\u043e\u0447\u043a\u0438","url":"\/catalog\/tsepochki\/"},{"text":"\u041a\u0443\u043b\u043e\u043d\u044b","url":"\/catalog\/kulony\/"},{"text":"\u0422\u0440\u0435\u043d\u0434\u043e\u0432\u044b\u0435 \u043d\u043e\u0432\u0438\u043d\u043a\u0438","url":"\/catalog\/trendovye_novinki\/"},{"text":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442\u044b","url":"\/catalog\/komplekty\/"}]},{"title":"\u0421\u0435\u0440\u0432\u0438\u0441\u044b","items":[{"text":"\u041b\u0438\u0447\u043d\u044b\u0439 \u043a\u0430\u0431\u0438\u043d\u0435\u0442","url":"\/personal\/"},{"text":"\u041c\u043e\u0438 \u0437\u0430\u043a\u0430\u0437\u044b","url":"\/personal\/order\/"},{"text":"\u0418\u0437\u0431\u0440\u0430\u043d\u043d\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/wishlist\/"},{"text":"\u041f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u043a\u0430\u044f \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430","url":""},{"text":"\u0421\u0442\u0430\u0442\u044c \u043f\u0440\u043e\u0434\u0430\u0432\u0446\u043e\u043c","url":""}]},{"title":"\u041f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u044f","items":[{"text":"\u041d\u043e\u0432\u0438\u043d\u043a\u0438","url":"\/new\/"},{"text":"\u0425\u0438\u0442\u044b \u043f\u0440\u043e\u0434\u0430\u0436","url":"\/popular\/"},{"text":"\u0420\u0430\u0441\u043f\u0440\u043e\u0434\u0430\u0436\u0438 \u0438 \u0441\u043a\u0438\u0434\u043a\u0438","url":"sale\/"},{"text":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/recommend\/"},{"text":"\u0423\u0446\u0435\u043d\u0435\u043d\u043d\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/discount\/"}]}]}')
-    </script>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <div id="new-design-header"></div>
+  <div id="footer"></div>
+
+  <script>
+    window.headerData = {
+      "cartItems": [
+        {
+          "id": "202500",
+          "iblock_id": "31",
+          "name": "Кольцо К087 (19)",
+          "quantity": 1,
+          "code": "koltso_k087_19",
+          "iblock_type_id": "1c_catalog",
+          "price": 370,
+          "picture": "/upload/resize_cache/iblock/620/200_200_1/9i2udzgdr4qsbkonwovws8cqg5macg0u.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2582708",
+              "value": "19",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2582704",
+              "value": "2900000083332",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2582706"
+              ],
+              "value": [
+                "19"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "191093",
+          "iblock_id": "31",
+          "name": "Кольцо УК852 (19,5)",
+          "quantity": 1,
+          "code": "koltso_uk852_19_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 110,
+          "picture": "/upload/resize_cache/iblock/745/200_200_1/7j0o2wnx28zytzst9e80hnlod5c9dv77.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2717611",
+              "value": "19,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2717607",
+              "value": "2900000200159",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2717609"
+              ],
+              "value": [
+                "19,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "191380",
+          "iblock_id": "31",
+          "name": "Кольцо УК006 (18,5)",
+          "quantity": 1,
+          "code": "koltso_uk006_18_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 210,
+          "picture": "/upload/resize_cache/iblock/99a/200_200_1/i4jgamjgkea0aewruy4psurx83o5gx74.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2433195",
+              "value": "18,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2433191",
+              "value": "2900000390461",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2433193"
+              ],
+              "value": [
+                "18,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "198613",
+          "iblock_id": "31",
+          "name": "Серьги С0674",
+          "quantity": 1,
+          "code": "sergi_s0674",
+          "iblock_type_id": "1c_catalog",
+          "price": 280,
+          "picture": "/upload/resize_cache/iblock/0e4/200_200_1/w8lw91nps8sdkam1okjpwz371jdk02ua.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2908148",
+              "value": "2900000397231",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": false,
+              "value": false,
+              "description": false
+            }
+          }
+        },
+        {
+          "id": "193695",
+          "iblock_id": "31",
+          "name": "Мужское кольцо УМК011 (18)",
+          "quantity": 1,
+          "code": "muzhskoe_koltso_umk011_18",
+          "iblock_type_id": "1c_catalog",
+          "price": 180,
+          "picture": "/upload/resize_cache/iblock/c3b/200_200_1/2ogvmrzioj009v0axgstxasbmtfype4c.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2823931",
+              "value": "18",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2823927",
+              "value": "2900000212466",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2823929"
+              ],
+              "value": [
+                "18"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "209377",
+          "iblock_id": "31",
+          "name": "Серьги УС0588",
+          "quantity": 1,
+          "code": "sergi_us0588",
+          "iblock_type_id": "1c_catalog",
+          "price": 460,
+          "picture": "/upload/resize_cache/iblock/f83/200_200_1/ycvuwv0y5ylnd8xe2rjzwq3rv9udgtxy.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2551844",
+              "value": "2900000375635",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": false,
+              "value": false,
+              "description": false
+            }
+          }
+        },
+        {
+          "id": "213686",
+          "iblock_id": "31",
+          "name": "Серьги С0457",
+          "quantity": 1,
+          "code": "sergi_s0457",
+          "iblock_type_id": "1c_catalog",
+          "price": 435,
+          "picture": "/upload/resize_cache/iblock/e64/200_200_1/ag8d96fc646scrdsgbni9rz6nxde8mur.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2805534",
+              "value": "2900000319325",
+              "description": ""
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": false,
+              "value": false,
+              "description": false
+            }
+          }
+        },
+        {
+          "id": "191086",
+          "iblock_id": "31",
+          "name": "Кольцо К812 (18,5)",
+          "quantity": 1,
+          "code": "koltso_k812_18_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 260,
+          "picture": "/upload/resize_cache/iblock/39b/200_200_1/7od814yrf2srmbs0giciydpfiob6vslf.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2573779",
+              "value": "18,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2573775",
+              "value": "2900000148680",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2573777"
+              ],
+              "value": [
+                "18,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "198633",
+          "iblock_id": "31",
+          "name": "Серьги С0682",
+          "quantity": 1,
+          "code": "sergi_s0682",
+          "iblock_type_id": "1c_catalog",
+          "price": 285,
+          "picture": "/upload/resize_cache/iblock/282/200_200_1/nes439kq2shk482uizwg9c3uq7cxu27i.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2909603",
+              "value": "2900000397453",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": false,
+              "value": false,
+              "description": false
+            }
+          }
+        },
+        {
+          "id": "211488",
+          "iblock_id": "31",
+          "name": "Кольцо К774 (21,5)",
+          "quantity": 1,
+          "code": "koltso_k774_21_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 235,
+          "picture": "/upload/resize_cache/iblock/5ff/200_200_1/y2gmgh3uzbbt8fgga6xxsvyc1uomnf5r.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2603750",
+              "value": "21,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2603746",
+              "value": "2900000141919",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2603748"
+              ],
+              "value": [
+                "21,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "213456",
+          "iblock_id": "31",
+          "name": "Комплект КТ694 (16,5, 50)",
+          "quantity": 2,
+          "code": "komplekt_kt694_16_5_50",
+          "iblock_type_id": "1c_catalog",
+          "price": 1110,
+          "picture": "/upload/iblock/9c1/2lv87es5zkoenif9e5b9z6a7ka8h7pvp.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": "2803027",
+              "value": "16,5",
+              "description": null
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": "2803028",
+              "value": "50",
+              "description": null
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2803022",
+              "value": "2900000393332",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2803024",
+                "2803025"
+              ],
+              "value": [
+                "16,5",
+                "50"
+              ],
+              "description": [
+                "Размер браслета, см. (Браслеты)",
+                "Размер цепочки, см. (Цепочки)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "190766",
+          "iblock_id": "31",
+          "name": "Кольцо УК010 (16,5)",
+          "quantity": 1,
+          "code": "koltso_uk010_16_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 210,
+          "picture": "/upload/resize_cache/iblock/7fd/200_200_1/d1as23cbf6qchccaev4d1ir1hm6sre12.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2581894",
+              "value": "16,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2581890",
+              "value": "2900000386952",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2581892"
+              ],
+              "value": [
+                "16,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "205232",
+          "iblock_id": "31",
+          "name": "Комплект КТ673 (16,5)",
+          "quantity": 1,
+          "code": "komplekt_kt673_16_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 1045,
+          "picture": "/upload/resize_cache/iblock/634/200_200_1/526c78lfzb7djw8x8ikc544kukvafqt3.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2908596",
+              "value": "16,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2908592",
+              "value": "2900000353343",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2908594"
+              ],
+              "value": [
+                "16,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "208454",
+          "iblock_id": "31",
+          "name": "Кольцо УК009 (17)",
+          "quantity": 1,
+          "code": "koltso_uk009_17",
+          "iblock_type_id": "1c_catalog",
+          "price": 210,
+          "picture": "/upload/resize_cache/iblock/54f/200_200_1/gq5xzu4opkppgyai0yh3f0anj6c70yvd.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2431130",
+              "value": "17",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2431126",
+              "value": "2900000386860",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2431128"
+              ],
+              "value": [
+                "17"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "191019",
+          "iblock_id": "31",
+          "name": "Комплект КТ777 (18,5)",
+          "quantity": 1,
+          "code": "komplekt_kt777_18_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 605,
+          "picture": "/upload/resize_cache/iblock/601/200_200_1/0q6v2dcv873isz0x047tnw717le0hzvg.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2616973",
+              "value": "18,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2616969",
+              "value": "2900000354746",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2616971"
+              ],
+              "value": [
+                "18,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "191480",
+          "iblock_id": "31",
+          "name": "Комплект КТ712 (20,5)",
+          "quantity": 1,
+          "code": "komplekt_kt712_20_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 645,
+          "picture": "/upload/resize_cache/iblock/5fd/200_200_1/zlhzyofnz4u5omadf0fzvz3ylvrv511d.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2806418",
+              "value": "20,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2806414",
+              "value": "2900000353688",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2806416"
+              ],
+              "value": [
+                "20,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "192996",
+          "iblock_id": "31",
+          "name": "Комплект КТ780 (19,5)",
+          "quantity": 1,
+          "code": "komplekt_kt780_19_5",
+          "iblock_type_id": "1c_catalog",
+          "price": 820,
+          "picture": "/upload/resize_cache/iblock/166/200_200_1/781dsc31c86gk7psokyxjogvndzq2a8l.jpg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2340887",
+              "value": "19,5",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2340883",
+              "value": "2900000354869",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2340885"
+              ],
+              "value": [
+                "19,5"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "210981",
+          "iblock_id": "31",
+          "name": "Мужское кольцо УМК042 (20)",
+          "quantity": 2,
+          "code": "muzhskoe_koltso_umk042_20",
+          "iblock_type_id": "1c_catalog",
+          "price": 210,
+          "picture": "/upload/resize_cache/iblock/1a6/200_200_1/r8prhnry2et3ckbegdiizetuiaubz8bq.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": "2909166",
+              "value": "20",
+              "description": null
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2909162",
+              "value": "2900000217287",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": [
+                "2909164"
+              ],
+              "value": [
+                "20"
+              ],
+              "description": [
+                "Размер кольца, мм. (Кольца)"
+              ]
+            }
+          }
+        },
+        {
+          "id": "191177",
+          "iblock_id": "31",
+          "name": "Серьги С0023",
+          "quantity": 2,
+          "code": "sergi_s0023",
+          "iblock_type_id": "1c_catalog",
+          "price": 585,
+          "picture": "/upload/resize_cache/iblock/c69/200_200_1/3u9fytjkbcjqii79r9quh52r5mu2w4z1.jpeg",
+          "properties": {
+            "RAZMER_BRASLETA_SM": {
+              "id": "1086",
+              "name": "Размер браслета, см.",
+              "code": "RAZMER_BRASLETA_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_KOLTSA_MM": {
+              "id": "1087",
+              "name": "Размер кольца, мм.",
+              "code": "RAZMER_KOLTSA_MM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "RAZMER_TSEPOCHKI_SM": {
+              "id": "1088",
+              "name": "Размер цепочки, см.",
+              "code": "RAZMER_TSEPOCHKI_SM",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_MANUFACTURER": {
+              "id": "1085",
+              "name": "Производитель",
+              "code": "CML2_MANUFACTURER",
+              "value_id": null,
+              "value": "",
+              "description": ""
+            },
+            "CML2_BAR_CODE": {
+              "id": "1077",
+              "name": "ШтрихКод",
+              "code": "CML2_BAR_CODE",
+              "value_id": "2613029",
+              "value": "2900000315082",
+              "description": null
+            },
+            "CML2_ATTRIBUTES": {
+              "id": "1079",
+              "name": "Характеристики",
+              "code": "CML2_ATTRIBUTES",
+              "value_id": false,
+              "value": false,
+              "description": false
+            }
+          }
+        }
+      ],
+      "phone": "+7 (800) 777-75-31",
+      "topMenuItems": [
+        {
+          "text": "О компании",
+          "url": "about/"
+        },
+        {
+          "text": "Оптовые условия",
+          "url": "about/optovie-uslovia/"
+        },
+        {
+          "text": "Доставка",
+          "url": "about/delivery/"
+        },
+        {
+          "text": "Отзывы",
+          "url": "reviews/"
+        },
+        {
+          "text": "Новости",
+          "url": "news/"
+        },
+        {
+          "text": "Контакты",
+          "url": "about/contacts/"
+        }
+      ],
+      "catalogUrl": "/catalog",
+      "accountUrl": "/personal",
+      "loginUrl": "/login",
+      "isLoggedIn": true,
+      "firstName": "Админ",
+      "cityName": "Рубцовск"
+    }
+
+    window.footerData = JSON.parse('{"storeName":"\u0428\u0451\u043b\u043a\u043e\u0432\u044b\u0439 \u043f\u0443\u0442\u044c","storeDescription":"\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043c\u0430\u0433\u0430\u0437\u0438\u043d \u0431\u0438\u0436\u0443\u0442\u0435\u0440\u0438\u0438","address":["658200, \u0410\u043b\u0442\u0430\u0439\u0441\u043a\u0438\u0439 \u043a\u0440\u0430\u0439, \u0433. \u0420\u0443\u0431\u0446\u043e\u0432\u0441\u043a,","\u041f\u0440\u043e\u0441\u043f\u0435\u043a\u0442 \u041b\u0435\u043d\u0438\u043d\u0430 30"],"email":"silkroad-market@yandex.ru","phone":"+7 (800) 777-75-31","menuSections":[{"title":"\u041a\u0430\u0442\u0430\u043b\u043e\u0433","items":[{"text":"\u0421\u0435\u0440\u044c\u0433\u0438","url":"\/catalog\/sergi\/"},{"text":"\u041a\u043e\u043b\u044c\u0446\u0430","url":"\/catalog\/koltsa\/"},{"text":"\u0411\u0440\u0430\u0441\u043b\u0435\u0442\u044b","url":"\/catalog\/braslety\/"},{"text":"\u041a\u043e\u0440\u043e\u0431\u043e\u0447\u043a\u0438","url":"\/catalog\/korobochki\/"},{"text":"\u0426\u0435\u043f\u043e\u0447\u043a\u0438","url":"\/catalog\/tsepochki\/"},{"text":"\u041a\u0443\u043b\u043e\u043d\u044b","url":"\/catalog\/kulony\/"},{"text":"\u0422\u0440\u0435\u043d\u0434\u043e\u0432\u044b\u0435 \u043d\u043e\u0432\u0438\u043d\u043a\u0438","url":"\/catalog\/trendovye_novinki\/"},{"text":"\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442\u044b","url":"\/catalog\/komplekty\/"}]},{"title":"\u0421\u0435\u0440\u0432\u0438\u0441\u044b","items":[{"text":"\u041b\u0438\u0447\u043d\u044b\u0439 \u043a\u0430\u0431\u0438\u043d\u0435\u0442","url":"\/personal\/"},{"text":"\u041c\u043e\u0438 \u0437\u0430\u043a\u0430\u0437\u044b","url":"\/personal\/order\/"},{"text":"\u0418\u0437\u0431\u0440\u0430\u043d\u043d\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/wishlist\/"},{"text":"\u041f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u043a\u0430\u044f \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430","url":""},{"text":"\u0421\u0442\u0430\u0442\u044c \u043f\u0440\u043e\u0434\u0430\u0432\u0446\u043e\u043c","url":""}]},{"title":"\u041f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u044f","items":[{"text":"\u041d\u043e\u0432\u0438\u043d\u043a\u0438","url":"\/new\/"},{"text":"\u0425\u0438\u0442\u044b \u043f\u0440\u043e\u0434\u0430\u0436","url":"\/popular\/"},{"text":"\u0420\u0430\u0441\u043f\u0440\u043e\u0434\u0430\u0436\u0438 \u0438 \u0441\u043a\u0438\u0434\u043a\u0438","url":"sale\/"},{"text":"\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/recommend\/"},{"text":"\u0423\u0446\u0435\u043d\u0435\u043d\u043d\u044b\u0435 \u0442\u043e\u0432\u0430\u0440\u044b","url":"\/discount\/"}]}]}')
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

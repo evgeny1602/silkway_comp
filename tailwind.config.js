@@ -1,12 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     transitionDuration: {
-      DEFAULT: '200ms'
+      DEFAULT: '200ms',
     },
     fontFamily: {
       sans: ['Manrope', 'sans-serif'],
@@ -22,7 +19,8 @@ export default {
         'silkway-light-chocolate': '#583C21',
         'silkway-green': '#004741',
         'silkway-milk': '#F8F6F2',
-        'white': '#fff',
+        'silkway-dark-milk': '#F1EDE5',
+        white: '#fff',
       },
       screens: {
         'header-1': '1623px',
@@ -38,12 +36,11 @@ export default {
         'footer-1': '437px',
         'footer-1.7': '605px',
         'footer-1.8': '670px',
-        'footer-2': '1288px',        
-        'footer-3': '874px',       
+        'footer-2': '1288px',
+        'footer-3': '874px',
         'footer-4': '400px',
-      }
+      },
     },
   },
   plugins: [],
 }
-

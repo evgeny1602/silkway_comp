@@ -15,12 +15,13 @@ export default defineConfig({
       babel: {
         plugins: [['babel-plugin-react-compiler', { target: '18' }]],
       },
-    })
+    }),
   ],
   server: {
     proxy: {
-      '/bitrix/components/dresscode/sale.geo.positiion/ajax.php': silkwayProxyConfig,
-      '/bitrix/components/dresscode/search.line/ajax.php': silkwayProxyConfig
-    }
-  }
+      '/bitrix/components/dresscode/sale.geo.positiion/ajax.php':
+        silkwayProxyConfig,
+      '/bitrix/components/dresscode/search.line/ajax.php': silkwayProxyConfig,
+    },
+  },
 })
