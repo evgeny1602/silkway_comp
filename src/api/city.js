@@ -1,4 +1,4 @@
-import { searchCityUrl, detectCityUrl, setCityUrl } from "../config"
+import { searchCityUrl, setCityUrl } from "../config"
 
 export const set = async cityId => {
     if (!cityId) return []
@@ -8,31 +8,6 @@ export const set = async cityId => {
     const resp = await fetch(url)
 
     if (!resp.ok) throw new Error(resp.statusText)
-}
-
-export const detect = async () => {
-    const resp = await fetch(detectCityUrl)   
-
-    if (!resp.ok) throw new Error(resp.statusText)
-
-    const data = await resp.json()   
-
-    if (data.error != '') throw new Error('An error while loading geo data')
-
-    return {
-        city: {
-            id: data.city.id,
-            name: data.city.name_ru
-        },
-        region: {
-            id: data.region.id,
-            name: data.region.name_ru
-        },
-        country: {
-            id: data.country.id,
-            name: data.country.name_ru
-        }
-    }
 }
 
 export const autocomplete = async query => {
