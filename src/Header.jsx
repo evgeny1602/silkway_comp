@@ -16,7 +16,7 @@ import { searchProductRedirectUrl } from './config'
 import { ModalOverlay } from './ModalOverlay'
 import { useFetch } from './hooks/useFetch'
 
-export function HeaderLogo({ storeName }) {
+export function HeaderLogo() {
 
   return (
     <a href="/">
@@ -24,7 +24,7 @@ export function HeaderLogo({ storeName }) {
         className="min-w-[85px] h-[40px] header-4:w-[220px] header-4:h-[104px]"
         src={headerLogoImg}
         loading="lazy"
-        alt={storeName}
+        alt="Шёлковый путь"
       />
     </a>    
   )
@@ -492,7 +492,6 @@ export function HeaderRightButtonsSection({ children }) {
 export function Header() {
     const {
       firstName,
-      storeName,
       cartItems,
       phone,
       topMenuItems,
@@ -509,7 +508,7 @@ export function Header() {
     return (
         <HeaderBackground>
           <HeaderContainer>
-            <HeaderLogo storeName={storeName} />
+            <HeaderLogo />
 
             <HeaderCenterSection>
               <TopMenu items={topMenuItems} />
