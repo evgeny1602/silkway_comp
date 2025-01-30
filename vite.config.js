@@ -9,7 +9,14 @@ const silkwayProxyConfig = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    // react()
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', { target: '18' }]],
+      },
+    })
+  ],
   server: {
     proxy: {
       '/bitrix/components/dresscode/sale.geo.positiion/ajax.php': silkwayProxyConfig,

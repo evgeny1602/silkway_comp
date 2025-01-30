@@ -14,7 +14,6 @@ import { set as citySet } from "./api/city"
 import { autocomplete as productAutocomplete } from './api/product'
 import { searchProductRedirectUrl } from './config'
 import { ModalOverlay } from './ModalOverlay'
-import { UseGeoData } from './hooks/useGeoData'
 import { useFetch } from './hooks/useFetch'
 
 export function HeaderLogo({ storeName }) {
@@ -286,8 +285,6 @@ export function CitySelect({ initCityName }) {
   const [cityId, setCityId] = useState(null)
   const [cityName, setCityName] = useState((initCityName != '') ? initCityName : null)
 
-  const { geoData, isLoading, error } = UseGeoData()  
-
   const { results } = useFetch(citySet, cityId)
 
   const showModal = () => {
@@ -309,7 +306,7 @@ export function CitySelect({ initCityName }) {
   return (
     <CitySelectWrapper>
       <CitySelectCurrent
-        city={cityName || geoData?.city.name || 'Определение...'}
+        city={cityName || 'Определение...'}
       />
 
       <CitySelectButton onClick={showModal} />
@@ -515,33 +512,33 @@ export function Header() {
     const loginButtonText = isLoggedIn ? firstName : 'Войти'
 
     return (
-      <HeaderBackground>
-        <HeaderContainer>
-          <HeaderLogo storeName={storeName} />
+        <HeaderBackground>
+          <HeaderContainer>
+            <HeaderLogo storeName={storeName} />
 
-          <HeaderCenterSection>
-            <TopMenu items={topMenuItems} />
+            <HeaderCenterSection>
+              <TopMenu items={topMenuItems} />
 
-            <HeaderCenterSubSection>
-              <CatalogButton url={catalogUrl} />
-              <SearchForm />
-            </HeaderCenterSubSection>
-          </HeaderCenterSection>
+              <HeaderCenterSubSection>
+                <CatalogButton url={catalogUrl} />
+                <SearchForm />
+              </HeaderCenterSubSection>
+            </HeaderCenterSection>
 
-          <HeaderRightSection>
-            <CitySelect initCityName={cityName} />
+            <HeaderRightSection>
+              <CitySelect initCityName={cityName} />
 
-            <HeaderPhone phone={phone} />
-          </HeaderRightSection>
+              <HeaderPhone phone={phone} />
+            </HeaderRightSection>
 
-          <HeaderRightButtonsSection>
-            <LoginAccountButton url={loginButtonUrl} text={loginButtonText} />
+            <HeaderRightButtonsSection>
+              <LoginAccountButton url={loginButtonUrl} text={loginButtonText} />
 
-            <CartButton cartItems={cartItems} />
+              <CartButton cartItems={cartItems} />
 
-            <MenuButton />
-          </HeaderRightButtonsSection>          
-        </HeaderContainer>
-      </HeaderBackground>
+              <MenuButton />
+            </HeaderRightButtonsSection>          
+          </HeaderContainer>
+        </HeaderBackground>
     )
 }
