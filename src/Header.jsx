@@ -298,9 +298,9 @@ export function CitySelect({ initCityName }) {
   }
 
   const handleCitySubmit = (submittedCityId, submittedCityName) => {
-    setIsModalVisible(false)
     setCityId(submittedCityId)
     setCityName(submittedCityName)
+    hideModal()    
   }
 
   return (
@@ -309,12 +309,9 @@ export function CitySelect({ initCityName }) {
 
       <CitySelectButton onClick={showModal} />
 
-      {isModalVisible && (
-        <CitySelectModal
-          onCloseClick={hideModal}
-          onSubmit={handleCitySubmit}
-        />
-      )}
+      {isModalVisible && 
+        <CitySelectModal onCloseClick={hideModal} onSubmit={handleCitySubmit} />
+      }
     </CitySelectWrapper>
   )
 }
