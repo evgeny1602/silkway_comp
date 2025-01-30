@@ -548,7 +548,7 @@ function CartItemImg({ src, name }) {
   return (
     <img
       alt={name}
-      className="w-[80px] h-[80px] aspect-auto object-cover rounded"
+      className="w-[80px] h-[80px] aspect-auto object-cover rounded bg-silkway-orange/50"
       src={`${imagesUrlPrefix}${src}`}
     />
   )
