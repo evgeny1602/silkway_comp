@@ -283,7 +283,7 @@ export function CitySelectModal({ onCloseClick, onSubmit }) {
 export function CitySelect({ initCityName }) {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [cityId, setCityId] = useState(null)
-  const [cityName, setCityName] = useState((initCityName != '') ? initCityName : null)
+  const [cityName, setCityName] = useState(initCityName)
 
   const { results } = useFetch(citySet, cityId)
 
@@ -305,9 +305,7 @@ export function CitySelect({ initCityName }) {
 
   return (
     <CitySelectWrapper>
-      <CitySelectCurrent
-        city={cityName || 'Определение...'}
-      />
+      <CitySelectCurrent city={cityName} />
 
       <CitySelectButton onClick={showModal} />
 
