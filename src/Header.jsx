@@ -621,7 +621,7 @@ function CartItemProperties({ properties }) {
 
 function CartItemRightContainer({ children }) {
   return (
-    <div className="max-[540px]:justify-end max-[540px]:w-[270pc] max-[540px]:ml-0 max-[540px]:pr-0 ml-auto flex flex-nowrap justify-between gap-[25px] items-center pr-2">
+    <div className="max-[540px]:justify-end max-[540px]:w-[180px] max-[540px]:pr-0 ml-auto flex flex-nowrap justify-between gap-[25px] items-center pr-2">
       {children}
     </div>
   )
