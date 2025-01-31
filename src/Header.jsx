@@ -11,7 +11,7 @@ import trashIconImg from './assets/trash_icon.svg'
 import {
   itemsCountPostfix,
   formatMoney,
-  getLobalData,
+  getGlobalData,
   searchProduct,
   disableDocumentScroll,
   enableDocumentScroll,
@@ -54,10 +54,12 @@ function TopMenuItem({ item }) {
   )
 }
 
-function TopMenu({ items }) {
+function TopMenu() {
+  const { topMenuItems } = getGlobalData('headerData')
+
   return (
     <ul className="hidden header-4:flex gap-x-[30px] font-sans text-white text-sm items-start">
-      {items.map((item) => (
+      {topMenuItems.map((item) => (
         <TopMenuItem
           key={item.url}
           item={item}
@@ -67,10 +69,12 @@ function TopMenu({ items }) {
   )
 }
 
-function CatalogButton({ url }) {
+function CatalogButton() {
+  const { catalogUrl } = getGlobalData('headerData')
+
   return (
     <a
-      href={url}
+      href={catalogUrl}
       className="h-[36px] header-4:w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200"
     >
       <img
@@ -274,7 +278,9 @@ function CitySelectModal({ onCloseClick, onSubmit }) {
   )
 }
 
-function CitySelect({ initCityName }) {
+function CitySelect() {
+  const { cityName: initCityName } = getGlobalData('headerData')
+
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [cityId, setCityId] = useState(null)
   const [cityName, setCityName] = useState(initCityName)
@@ -313,7 +319,9 @@ function CitySelect({ initCityName }) {
   )
 }
 
-function HeaderPhone({ phone }) {
+function HeaderPhone() {
+  const { phone } = getGlobalData('headerData')
+
   return (
     <a
       href={`tel:${phone}`}
@@ -324,7 +332,13 @@ function HeaderPhone({ phone }) {
   )
 }
 
-function LoginAccountButton({ text, url }) {
+function LoginAccountButton() {
+  const { isLoggedIn, accountUrl, loginUrl, firstName } =
+    getGlobalData('headerData')
+
+  const url = isLoggedIn ? accountUrl : loginUrl
+  const text = isLoggedIn ? firstName : 'Войти'
+
   return (
     <a
       href={url}
@@ -385,7 +399,8 @@ function ItemsCountLabel({ itemsCount, postfixVariants }) {
   )
 }
 
-function CartButton({ cartItems, onClick }) {
+function CartButton({ onClick }) {
+  const { cartItems } = getGlobalData('headerData')
   const postfixVariants = ['товар', 'товара', 'товаров']
 
   return (
@@ -457,10 +472,16 @@ function HeaderRightButtonsSection({ children }) {
   )
 }
 
-function ToCartButton({ onClick }) {
+function ToCartButton() {
+  const { cartUrl } = getGlobalData('headerData')
+
+  const handleClick = () => {
+    location.href = cartUrl
+  }
+
   return (
     <Button
-      onClick={onClick}
+      onClick={handleClick}
       variant="primary"
       paddingX={`px-[15px]`}
       className={`ml-auto mr-[15px]`}
@@ -471,11 +492,17 @@ function ToCartButton({ onClick }) {
   )
 }
 
-function CheckoutButton({ onClick }) {
+function CheckoutButton() {
+  const { checkoutUrl } = getGlobalData('headerData')
+
+  const handleClick = () => {
+    location.href = checkoutUrl
+  }
+
   return (
     <Button
       variant="primary-dark"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <img src={walletIconImg} />
       <span className="max-[540px]:hidden inline ml-[8px]">ОФОРМИТЬ</span>
@@ -483,7 +510,9 @@ function CheckoutButton({ onClick }) {
   )
 }
 
-function CartDropdownTotal({ cartItems }) {
+function CartDropdownTotal() {
+  const { cartItems } = getGlobalData('headerData')
+
   return (
     <div className="font-sans text-silkway-dark-chocolate">
       <div className="text-sm">Итого:</div>
@@ -536,26 +565,37 @@ function CartDropdownContainer({ children, dropdownRef }) {
   )
 }
 
-function CartItemContainer({ children }) {
+function CartItemContainer({ children, onClick }) {
   return (
-    <div className="border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-nowrap gap-[10px] text-silkway-dark-chocolate cursor-pointer hover:bg-silkway-dark-milk">
+    <div
+      onClick={onClick}
+      className="border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-nowrap gap-[10px] text-silkway-dark-chocolate hover:bg-silkway-dark-milk"
+    >
       {children}
     </div>
   )
 }
 
-function CartItemImg({ src, name }) {
+function CartItemImg({ src, name, onClick }) {
   return (
     <img
+      onClick={onClick}
       alt={name}
-      className="w-[80px] h-[80px] aspect-auto object-cover rounded bg-silkway-orange/50"
+      className="cursor-pointer w-[80px] h-[80px] aspect-auto object-cover rounded bg-silkway-orange/50"
       src={`${imagesUrlPrefix}${src}`}
     />
   )
 }
 
-function CartItemHeaderContainer({ children }) {
-  return <div className="text-sm font-normal">{children}</div>
+function CartItemHeaderContainer({ children, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className="text-sm font-normal cursor-pointer"
+    >
+      {children}
+    </div>
+  )
 }
 
 function CartItemInfoContainer({ children }) {
@@ -588,8 +628,27 @@ function CartItemRightContainer({ children }) {
   )
 }
 
+function CartItemDeleteButton({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="hover:bg-silkway-light-orange/40 p-[8px] rounded transition-all"
+    >
+      <img src={trashIconImg} />
+    </button>
+  )
+}
+
 function CartItem({ item }) {
   const excludeCodes = ['CML2_ATTRIBUTES', 'CML2_BAR_CODE']
+
+  const handleClick = (e) => {
+    location.href = item.url
+  }
+
+  const handleDeleteClick = () => {
+    console.log(`Delete item ${item.id} ${item.name} clicked`)
+  }
 
   const properties = Object.values(item.properties)
     .filter((item) => item.value_id)
@@ -598,12 +657,15 @@ function CartItem({ item }) {
   return (
     <CartItemContainer>
       <CartItemImg
+        onClick={handleClick}
         src={item.picture}
         name={item.name}
       />
 
       <CartItemInfoContainer>
-        <CartItemHeaderContainer>{item.name}</CartItemHeaderContainer>
+        <CartItemHeaderContainer onClick={handleClick}>
+          {item.name}
+        </CartItemHeaderContainer>
         <CartItemProperties properties={properties} />
       </CartItemInfoContainer>
 
@@ -616,15 +678,15 @@ function CartItem({ item }) {
           {formatMoney(item.price * item.quantity)} ₽
         </div>
 
-        <button className="hover:bg-silkway-light-orange/40 p-[8px] rounded transition-all">
-          <img src={trashIconImg} />
-        </button>
+        <CartItemDeleteButton onClick={handleDeleteClick} />
       </CartItemRightContainer>
     </CartItemContainer>
   )
 }
 
-function CartDropdownItemsContainer({ cartItems }) {
+function CartDropdownItemsContainer() {
+  const { cartItems } = getGlobalData('headerData')
+
   return (
     <div className="pt-[8px] h-[250px] overflow-y-auto">
       {cartItems.map((item) => (
@@ -637,17 +699,9 @@ function CartDropdownItemsContainer({ cartItems }) {
   )
 }
 
-function CartItemsDropdown({ cartItems, dropdownRef }) {
+function CartItemsDropdown({ dropdownRef }) {
   const handleClearCartClick = () => {
     console.log('Clear cart')
-  }
-
-  const handleCheckoutClick = () => {
-    console.log('Checkout')
-  }
-
-  const handleToCartClick = () => {
-    console.log('To cart')
   }
 
   return (
@@ -656,18 +710,18 @@ function CartItemsDropdown({ cartItems, dropdownRef }) {
         <CartDropdownHeaderContainer>
           <CartDropdownClearCartButton onClick={handleClearCartClick} />
         </CartDropdownHeaderContainer>
-        <CartDropdownItemsContainer cartItems={cartItems} />
+        <CartDropdownItemsContainer />
       </CartDropdownTopContainer>
       <CartDropdownFooterContainer>
-        <CartDropdownTotal cartItems={cartItems} />
-        <ToCartButton onClick={handleToCartClick} />
-        <CheckoutButton onClick={handleCheckoutClick} />
+        <CartDropdownTotal />
+        <ToCartButton />
+        <CheckoutButton />
       </CartDropdownFooterContainer>
     </CartDropdownContainer>
   )
 }
 
-function CartWithDropdown({ cartItems }) {
+function CartWithDropdown() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
 
   const dropdownRef = useRef(null)
@@ -676,65 +730,35 @@ function CartWithDropdown({ cartItems }) {
 
   return (
     <div className="relative order-first header-4:order-2">
-      <CartButton
-        cartItems={cartItems}
-        onClick={() => setIsDropdownVisible((prev) => !prev)}
-      />
+      <CartButton onClick={() => setIsDropdownVisible((prev) => !prev)} />
 
-      {isDropdownVisible && (
-        <CartItemsDropdown
-          dropdownRef={dropdownRef}
-          cartItems={cartItems}
-        />
-      )}
+      {isDropdownVisible && <CartItemsDropdown dropdownRef={dropdownRef} />}
     </div>
   )
 }
 
 export function Header() {
-  const {
-    firstName,
-    cartItems,
-    phone,
-    topMenuItems,
-    catalogUrl,
-    accountUrl,
-    loginUrl,
-    isLoggedIn,
-    cityName,
-  } = getLobalData('headerData')
-
-  const loginButtonUrl = isLoggedIn ? accountUrl : loginUrl
-  const loginButtonText = isLoggedIn ? firstName : 'Войти'
-
   return (
     <HeaderBackground>
       <HeaderContainer>
         <HeaderLogo />
 
         <HeaderCenterSection>
-          <TopMenu items={topMenuItems} />
-
+          <TopMenu />
           <HeaderCenterSubSection>
-            <CatalogButton url={catalogUrl} />
+            <CatalogButton />
             <SearchForm />
           </HeaderCenterSubSection>
         </HeaderCenterSection>
 
         <HeaderRightSection>
-          <CitySelect initCityName={cityName} />
-
-          <HeaderPhone phone={phone} />
+          <CitySelect />
+          <HeaderPhone />
         </HeaderRightSection>
 
         <HeaderRightButtonsSection>
-          <LoginAccountButton
-            url={loginButtonUrl}
-            text={loginButtonText}
-          />
-
-          <CartWithDropdown cartItems={cartItems} />
-
+          <LoginAccountButton />
+          <CartWithDropdown />
           <MenuButton />
         </HeaderRightButtonsSection>
       </HeaderContainer>

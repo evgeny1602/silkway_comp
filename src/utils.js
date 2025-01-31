@@ -38,7 +38,7 @@ export function itemsCountPostfix(itemsCount, postfixVariants) {
   }
 }
 
-export function getLobalData(k) {
+export function getGlobalData(k) {
   if (k in window) {
     return window[k]
   }
