@@ -1,20 +1,23 @@
-import { searchProductUrl } from "../config"
+import { searchProductUrl } from '../config'
 
-export const autocomplete = async query => {
-    if (!query) return []
+export const autocomplete = async (query) => {
+  if (!query) {
+    return []
+  }
 
-    if (query.length < 3) return []
+  if (query.length < 3) {
+    return []
+  }
 
-    const body = new FormData()
-    body.append('SEARCH_QUERY', query)
+  const body = new FormData()
+  body.append('SEARCH_QUERY', query)
 
-    const resp = await fetch(
-        searchProductUrl,
-        { method: 'POST', body }
-    )
-    if (!resp.ok) throw new Error(resp.statusText)
+  const resp = await fetch(searchProductUrl, { method: 'POST', body })
+  if (!resp.ok) {
+    throw new Error(resp.statusText)
+  }
 
-    const json = await resp.json()
-    
-    return json.items
+  const json = await resp.json()
+
+  return json.items
 }

@@ -11,3 +11,7 @@ export const searchProductRedirectUrl =
   '/search/?q={{search_query}}&send=\u041d\u0430\u0439\u0442\u0438&r=Y'
 
 export const imagesUrlPrefix = 'https://xn--b1aobdqivh2b8ap4c.xn--p1acf/'
+
+export const delFromCartUrl =
+  '/ajax.php?act=deleteCartItem&cart_item_id={{cart_item_id}}'
+export const clearCartUrl = '/ajax.php?act=clearCart'

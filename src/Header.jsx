@@ -27,6 +27,7 @@ import { searchProductRedirectUrl, imagesUrlPrefix } from './config'
 import { ModalOverlay } from './ModalOverlay'
 import { useFetch } from './hooks/useFetch'
 import { useOutsideClick } from './hooks/useOutsideClick'
+import { clearCart, delFromCart } from './api/cart'
 
 function HeaderLogo() {
   return (
@@ -399,8 +400,7 @@ function ItemsCountLabel({ itemsCount, postfixVariants }) {
   )
 }
 
-function CartButton({ onClick }) {
-  const { cartItems } = getGlobalData('headerData')
+function CartButton({ onClick, cartItems }) {
   const postfixVariants = ['товар', 'товара', 'товаров']
 
   return (
@@ -510,9 +510,7 @@ function CheckoutButton() {
   )
 }
 
-function CartDropdownTotal() {
-  const { cartItems } = getGlobalData('headerData')
-
+function CartDropdownTotal({ cartItems }) {
   return (
     <div className="font-sans text-silkway-dark-chocolate">
       <div className="text-sm">Итого:</div>
@@ -543,9 +541,10 @@ function CartDropdownTopContainer({ children }) {
   return <div className="pt-[15px]">{children}</div>
 }
 
-function CartDropdownClearCartButton({ onClick }) {
+function CartDropdownClearCartButton({ onClick, disabled }) {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className="font-sans font-medium text-sm text-silkway-gray underline cursor-pointer hover:text-silkway-light-chocolate"
     >
@@ -639,15 +638,11 @@ function CartItemDeleteButton({ onClick }) {
   )
 }
 
-function CartItem({ item }) {
+function CartItem({ item, onDeleteClick }) {
   const excludeCodes = ['CML2_ATTRIBUTES', 'CML2_BAR_CODE']
 
   const handleClick = (e) => {
     location.href = item.url
-  }
-
-  const handleDeleteClick = () => {
-    console.log(`Delete item ${item.id} ${item.name} clicked`)
   }
 
   const properties = Object.values(item.properties)
@@ -678,19 +673,18 @@ function CartItem({ item }) {
           {formatMoney(item.price * item.quantity)} ₽
         </div>
 
-        <CartItemDeleteButton onClick={handleDeleteClick} />
+        <CartItemDeleteButton onClick={onDeleteClick} />
       </CartItemRightContainer>
     </CartItemContainer>
   )
 }
 
-function CartDropdownItemsContainer() {
-  const { cartItems } = getGlobalData('headerData')
-
+function CartDropdownItemsContainer({ cartItems, onDeleteClick }) {
   return (
     <div className="pt-[8px] h-[250px] overflow-y-auto">
       {cartItems.map((item) => (
         <CartItem
+          onDeleteClick={() => onDeleteClick(item.cart_id)}
           key={item.id}
           item={item}
         />
@@ -699,21 +693,29 @@ function CartDropdownItemsContainer() {
   )
 }
 
-function CartItemsDropdown({ dropdownRef }) {
-  const handleClearCartClick = () => {
-    console.log('Clear cart')
-  }
-
+function CartItemsDropdown({
+  dropdownRef,
+  cartItems,
+  onClear,
+  onDelete,
+  isClearing,
+}) {
   return (
     <CartDropdownContainer dropdownRef={dropdownRef}>
       <CartDropdownTopContainer>
         <CartDropdownHeaderContainer>
-          <CartDropdownClearCartButton onClick={handleClearCartClick} />
+          <CartDropdownClearCartButton
+            onClick={onClear}
+            disabled={isClearing}
+          />
         </CartDropdownHeaderContainer>
-        <CartDropdownItemsContainer />
+        <CartDropdownItemsContainer
+          cartItems={cartItems}
+          onDeleteClick={onDelete}
+        />
       </CartDropdownTopContainer>
       <CartDropdownFooterContainer>
-        <CartDropdownTotal />
+        <CartDropdownTotal cartItems={cartItems} />
         <ToCartButton />
         <CheckoutButton />
       </CartDropdownFooterContainer>
@@ -722,17 +724,54 @@ function CartItemsDropdown({ dropdownRef }) {
 }
 
 function CartWithDropdown() {
+  const { cartItems: initCartItems } = getGlobalData('headerData')
+
+  const [cartItems, setCartItems] = useState(initCartItems)
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
+  const [isClearing, setIsClearing] = useState(false)
 
   const dropdownRef = useRef(null)
 
   useOutsideClick(dropdownRef, () => setIsDropdownVisible(false))
 
+  const handleClearCartClick = async () => {
+    if (isClearing) {
+      return
+    }
+    setIsClearing(true)
+    const success = await clearCart()
+    if (success) {
+      setCartItems([])
+    }
+    setIsClearing(false)
+  }
+
+  const handleDelete = async (cartItemId) => {
+    const success = await delFromCart(cartItemId)
+    if (success) {
+      const newCartItems = cartItems.filter(
+        (item) => item.cart_id != cartItemId
+      )
+      setCartItems(newCartItems)
+    }
+  }
+
   return (
     <div className="relative order-first header-4:order-2">
-      <CartButton onClick={() => setIsDropdownVisible((prev) => !prev)} />
+      <CartButton
+        cartItems={cartItems}
+        onClick={() => setIsDropdownVisible((prev) => !prev)}
+      />
 
-      {isDropdownVisible && <CartItemsDropdown dropdownRef={dropdownRef} />}
+      {isDropdownVisible && (
+        <CartItemsDropdown
+          cartItems={cartItems}
+          isClearing={isClearing}
+          dropdownRef={dropdownRef}
+          onDelete={handleDelete}
+          onClear={handleClearCartClick}
+        />
+      )}
     </div>
   )
 }
