@@ -557,7 +557,7 @@ function CartDropdownContainer({ children, dropdownRef }) {
   return (
     <div
       ref={dropdownRef}
-      className="max-[650px]:fixed max-[650px]:top-0 max-[650px]:mt-[65px] mx-auto max-[650px]:max-h-[300px] max-[650px]:translate-y-0 max-[650px]:left-0 max-h-[400px] right-0 bottom-0 -mb-1 translate-y-[100%] max-w-[500px] w-[90vw] min-h-[200px] absolute bg-white rounded shadow-md flex flex-nowrap flex-col justify-between z-50"
+      className="max-[650px]:fixed max-[650px]:top-0 max-[650px]:mt-[65px] mx-auto max-[650px]:translate-y-0 max-[650px]:left-0 max-h-[400px] right-0 bottom-0 -mb-1 translate-y-[100%] max-w-[500px] w-[90vw] min-h-[200px] absolute bg-white rounded shadow-md flex flex-nowrap flex-col justify-between z-50"
     >
       {children}
     </div>
@@ -568,7 +568,7 @@ function CartItemContainer({ children, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-nowrap gap-[10px] text-silkway-dark-chocolate hover:bg-silkway-dark-milk"
+      className="border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-wrap gap-[10px] text-silkway-dark-chocolate hover:bg-silkway-dark-milk"
     >
       {children}
     </div>
@@ -621,7 +621,7 @@ function CartItemProperties({ properties }) {
 
 function CartItemRightContainer({ children }) {
   return (
-    <div className="ml-auto flex flex-nowrap justify-between gap-[25px] items-center pr-2">
+    <div className="max-[540px]:justify-end max-[540px]:w-[270pc] max-[540px]:ml-0 max-[540px]:pr-0 ml-auto flex flex-nowrap justify-between gap-[25px] items-center pr-2">
       {children}
     </div>
   )
@@ -662,14 +662,19 @@ function CartItem({ item, onDeleteClick }) {
           {item.name}
         </CartItemHeaderContainer>
         <CartItemProperties properties={properties} />
+        <div className="text-base max-[540px]:text-xs font-normal text-silkway-orange">
+          <span className="hidden max-[540px]:inline">
+            Количество: {item.quantity}
+          </span>
+        </div>
       </CartItemInfoContainer>
 
       <CartItemRightContainer>
-        <div className="text-base font-normal text-silkway-orange">
-          x{item.quantity}
+        <div className="text-base max-[540px]:text-sm font-normal text-silkway-orange">
+          <span className="inline max-[540px]:hidden">x{item.quantity}</span>
         </div>
 
-        <div className="text-base font-normal text-silkway-dark-chocolate">
+        <div className="ml-0 max-[540px]:ml-auto text-base font-normal text-silkway-dark-chocolate">
           {formatMoney(item.price * item.quantity)} ₽
         </div>
 
