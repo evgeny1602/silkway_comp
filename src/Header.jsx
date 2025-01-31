@@ -568,7 +568,7 @@ function CartItemContainer({ children, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-wrap gap-[10px] text-silkway-dark-chocolate hover:bg-silkway-dark-milk"
+      className="justify-start border-b border-silkway-light-gray/30 px-[15px] py-[10px] flex flex-wrap gap-[10px] text-silkway-dark-chocolate hover:bg-silkway-dark-milk"
     >
       {children}
     </div>
