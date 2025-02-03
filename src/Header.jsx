@@ -355,9 +355,10 @@ function LoginAccountButton() {
   )
 }
 
-function CartButtonWrapper({ children, onClick }) {
+function CartButtonWrapper({ children, onClick, selfRef }) {
   return (
     <button
+      ref={selfRef}
       onClick={onClick}
       className="bg-silkway-orange hover:bg-silkway-light-orange transition-all duration-200 text-silkway-dark-chocolate rounded px-[8px] header-4:px-[15px] py-[5px] header-4:py-[10px] items-center text-xs header-4:text-sm shadow-inner shadow-white/45 border border-silkway-dark-orange whitespace-nowrap flex flex-nowrap h-[40px] header-4:h-[84px] leading-[1.2]"
     >
@@ -400,11 +401,14 @@ function ItemsCountLabel({ itemsCount, postfixVariants }) {
   )
 }
 
-function CartButton({ onClick, cartItems }) {
+function CartButton({ onClick, cartItems, selfRef }) {
   const postfixVariants = ['товар', 'товара', 'товаров']
 
   return (
-    <CartButtonWrapper onClick={onClick}>
+    <CartButtonWrapper
+      onClick={onClick}
+      selfRef={selfRef}
+    >
       <CartIcon />
       <div className="text-left flex flex-col">
         <CartTitle />
@@ -699,12 +703,17 @@ function CartDropdownItemsContainer({ cartItems, onDeleteClick }) {
 }
 
 function CartItemsDropdown({
-  dropdownRef,
+  triggerRef,
   cartItems,
   onClear,
   onDelete,
   isClearing,
+  onOutsideClick,
 }) {
+  const dropdownRef = useRef(null)
+
+  useOutsideClick([dropdownRef, triggerRef], onOutsideClick)
+
   return (
     <CartDropdownContainer dropdownRef={dropdownRef}>
       <CartDropdownTopContainer>
@@ -735,9 +744,7 @@ function CartWithDropdown() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
   const [isClearing, setIsClearing] = useState(false)
 
-  const dropdownRef = useRef(null)
-
-  useOutsideClick(dropdownRef, () => setIsDropdownVisible(false))
+  const cartButtonRef = useRef(null)
 
   const handleClearCartClick = async () => {
     if (isClearing) {
@@ -764,15 +771,17 @@ function CartWithDropdown() {
   return (
     <div className="relative order-first header-4:order-2">
       <CartButton
+        selfRef={cartButtonRef}
         cartItems={cartItems}
         onClick={() => setIsDropdownVisible((prev) => !prev)}
       />
 
       {isDropdownVisible && (
         <CartItemsDropdown
+          triggerRef={cartButtonRef}
           cartItems={cartItems}
           isClearing={isClearing}
-          dropdownRef={dropdownRef}
+          onOutsideClick={() => setIsDropdownVisible(false)}
           onDelete={handleDelete}
           onClear={handleClearCartClick}
         />
