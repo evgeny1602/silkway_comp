@@ -142,7 +142,7 @@ function SearchFormButton({ onClick, isBigButton = true }) {
   let classes =
     'bg-white/20 text-base text-white hover:bg-white/30 transiotion-all duration-200 rounded font-sans'
   if (isBigButton) {
-    classes += ' header-5:px-[33px] px-[8px] h-full px-[6px]'
+    classes += ' header-5:px-[33px] px-[8px] h-full py-[6px]'
   }
   if (!isBigButton) {
     classes += ' pl-[1px] pr-[4px] h-[38px]'
