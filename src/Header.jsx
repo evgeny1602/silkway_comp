@@ -106,7 +106,7 @@ function CatalogButton() {
 
 function SearchFormWrapper({ children, isVisibleOnMobile, variant }) {
   let classes =
-    'has-[:focus]:bg-white/5 h-full max-h-[44px] items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-full relative'
+    'has-[:focus]:bg-white/5 h-full max-h-[44px] items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-full relative flex-nowrap'
   if (isVisibleOnMobile) {
     classes += ' flex'
   }
