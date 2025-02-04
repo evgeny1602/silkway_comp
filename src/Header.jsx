@@ -8,6 +8,8 @@ import crossIconImg from './assets/cross_icon.svg'
 import dollyIconImg from './assets/dolly_icon.svg'
 import walletIconImg from './assets/wallet_icon.svg'
 import trashIconImg from './assets/trash_icon.svg'
+import { ModalOverlay } from './ModalOverlay'
+import { Modal } from './Modal'
 import {
   itemsCountPostfix,
   formatMoney,
@@ -24,7 +26,6 @@ import { autocomplete as cityAutocomplete } from './api/city'
 import { set as citySet } from './api/city'
 import { autocomplete as productAutocomplete } from './api/product'
 import { searchProductRedirectUrl, imagesUrlPrefix } from './config'
-import { ModalOverlay } from './ModalOverlay'
 import { useFetch } from './hooks/useFetch'
 import { useOutsideClick } from './hooks/useOutsideClick'
 import { clearCart, delFromCart } from './api/cart'
@@ -33,7 +34,7 @@ function HeaderLogo() {
   return (
     <a href="/">
       <img
-        className="min-w-[85px] h-[40px] header-4:w-[220px] header-4:h-[104px]"
+        className="w-[85px] h-[40px] header-4:w-[220px] header-4:h-[104px]"
         src={headerLogoImg}
         loading="lazy"
         alt="Шёлковый путь"
@@ -47,11 +48,26 @@ function TopMenuItem({ item }) {
     <li>
       <a
         href={item.url}
-        className="hover:text-silkway-orange transition-all duration-200"
+        className="hover:text-silkway-orange transition-all duration-200 whitespace-nowrap"
       >
         {item.text}
       </a>
     </li>
+  )
+}
+
+function MobileMenuList() {
+  const { topMenuItems } = getGlobalData('headerData')
+
+  return (
+    <ul className="text-center text-xl leading-9 font-semibold">
+      {topMenuItems.map((item) => (
+        <TopMenuItem
+          key={item.url}
+          item={item}
+        />
+      ))}
+    </ul>
   )
 }
 
@@ -76,7 +92,7 @@ function CatalogButton() {
   return (
     <a
       href={catalogUrl}
-      className="h-[36px] header-4:w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200"
+      className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap"
     >
       <img
         src={catalogIconImg}
@@ -88,12 +104,17 @@ function CatalogButton() {
   )
 }
 
-function SearchFormWrapper({ children }) {
-  return (
-    <div className="has-[:focus]:bg-white/5 h-[36px] header-4:h-[48px] hidden header-8:flex items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-[300px] header-3:w-[484px] header-7:w-[380px] relative">
-      {children}
-    </div>
-  )
+function SearchFormWrapper({ children, isVisibleOnMobile }) {
+  let classes =
+    'has-[:focus]:bg-white/5 h-full max-h-[44px] items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-full relative'
+  if (isVisibleOnMobile) {
+    classes += ' flex'
+  }
+  if (!isVisibleOnMobile) {
+    classes += ' hidden header-8:flex'
+  }
+
+  return <div className={classes}>{children}</div>
 }
 
 function SearchFormIcon() {
@@ -105,32 +126,53 @@ function SearchFormIcon() {
   )
 }
 
-function SearchFormButton({ onClick }) {
+function SearchFormButton({ onClick, isBigButton = true }) {
+  let classes =
+    'bg-white/20 text-base text-white hover:bg-white/30 transiotion-all duration-200 rounded font-sans'
+  if (isBigButton) {
+    classes += ' header-5:px-[33px] px-[8px] h-full'
+  }
+  if (!isBigButton) {
+    classes += ' pl-[1px] pr-[4px] h-[38px]'
+  }
+
   return (
     <button
       onClick={onClick}
-      className="bg-white/20 h-[30px] header-4:h-[38px] text-base text-white hover:bg-white/30 transiotion-all duration-200 px-[8px] header-5:px-[33px] rounded font-sans"
+      className={classes}
     >
-      <SearchFormIconRight />
-      <span className="hidden header-5:inline">Найти</span>
+      <SearchFormIconRight isBigButton={isBigButton} />
+      {isBigButton && <span className="hidden header-5:inline">Найти</span>}
     </button>
   )
 }
 
-function SearchFormIconRight() {
+function SearchFormIconRight({ isBigButton = true }) {
+  let classes = 'box-content w-[22px] h-[22px]'
+  if (isBigButton) {
+    classes += ' block header-5:hidden px-[4px]'
+  }
+  if (!isBigButton) {
+    classes += ' block px-[6px]'
+  }
+
   return (
     <img
       src={searchIconImg}
-      className="box-content block header-5:hidden w-[22px] h-[22px] pl-[4px] pr-[4px] header-4:pl-[8px] header-4:pr-[6px]"
+      className={classes}
     />
   )
 }
 
-function SearchForm() {
+function SearchForm({
+  isVisibleOnMobile = false,
+  isLeftIconVisible = true,
+  isBigSearchButton = true,
+}) {
   return (
-    <SearchFormWrapper>
-      <SearchFormIcon />
-      <ProductSearchAutocomplete />
+    <SearchFormWrapper isVisibleOnMobile={isVisibleOnMobile}>
+      {isLeftIconVisible && <SearchFormIcon />}
+      <ProductSearchAutocomplete isBigSearchButton={isBigSearchButton} />
     </SearchFormWrapper>
   )
 }
@@ -172,33 +214,19 @@ function CloseModalButton({ onClick }) {
 
 function ModalContainer({ children }) {
   return (
-    <div className="p-6 bg-white rounded shadow-md h-[200px] w-[90vw] max-w-[400px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
+    <div className="p-6 bg-white rounded shadow-md h-[200px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
       {children}
     </div>
   )
 }
 
-function ModalContentContainer({ children }) {
-  return (
-    <div className="flex flex-col justify-between h-full -mt-5 relative">
-      {children}
-    </div>
-  )
-}
-
-function ModalHeader({ children }) {
-  return (
-    <h3 className="font-sans font-semibold text-xl text-center">{children}</h3>
-  )
-}
-
-function ModalButtonsContainer({ children }) {
+function ButtonsContainer({ children }) {
   return (
     <div className="flex flex-nowrap justify-center gap-[25px]">{children}</div>
   )
 }
 
-function ProductSearchAutocomplete() {
+function ProductSearchAutocomplete({ isBigSearchButton = true }) {
   const [query, setQuery] = useState('')
 
   const handleItemClick = (e) => {
@@ -213,7 +241,7 @@ function ProductSearchAutocomplete() {
     <>
       <SearchAutocomplete
         fetcher={productAutocomplete}
-        inputClassname="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-silkway-green text-white transition-all duration-200 w-full"
+        inputClassname="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-transparent text-white transition-all duration-200 w-full"
         dropdownClassname="h-[200px] w-full left-0 top-[55px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
         dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
         onItemClick={handleItemClick}
@@ -221,7 +249,10 @@ function ProductSearchAutocomplete() {
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      <SearchFormButton onClick={handleEnter} />
+      <SearchFormButton
+        onClick={handleEnter}
+        isBigButton={isBigSearchButton}
+      />
     </>
   )
 }
@@ -239,7 +270,21 @@ function CitySearchAutocomplete({ onChange, onItemClick }) {
   )
 }
 
-function CitySelectModal({ onCloseClick, onSubmit }) {
+function CitySelectModalContent({ children }) {
+  return (
+    <div className="flex flex-col justify-between h-full -mt-5 relative">
+      {children}
+    </div>
+  )
+}
+
+function CitySelectModalHeader({ children }) {
+  return (
+    <h3 className="font-sans font-semibold text-xl text-center">{children}</h3>
+  )
+}
+
+function CitySelectModal({ onCloseClick, onSubmit, isVisible, overlayZIndex=70 }) {
   const [cityId, setCityId] = useState(null)
   const [cityName, setCityName] = useState(null)
 
@@ -249,37 +294,36 @@ function CitySelectModal({ onCloseClick, onSubmit }) {
   }
 
   return (
-    <>
-      <ModalContainer>
-        <CloseModalButton onClick={onCloseClick} />
+    <Modal
+      overlayZIndex={overlayZIndex}
+      isVisible={isVisible}
+      onClose={onCloseClick}
+    >
+      <CitySelectModalContent>
+        <CitySelectModalHeader>Ваш город</CitySelectModalHeader>
 
-        <ModalContentContainer>
-          <ModalHeader>Ваш город</ModalHeader>
+        <CitySearchAutocomplete onItemClick={handleItemClick} />
 
-          <CitySearchAutocomplete onItemClick={handleItemClick} />
-
-          <ModalButtonsContainer>
-            <Button
-              variant="ghost"
-              onClick={onCloseClick}
-            >
-              Отменить
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => onSubmit(cityId, cityName)}
-            >
-              Сохранить
-            </Button>
-          </ModalButtonsContainer>
-        </ModalContentContainer>
-      </ModalContainer>
-      <ModalOverlay />
-    </>
+        <ButtonsContainer>
+          <Button
+            variant="ghost"
+            onClick={onCloseClick}
+          >
+            Отменить
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => onSubmit(cityId, cityName)}
+          >
+            Сохранить
+          </Button>
+        </ButtonsContainer>
+      </CitySelectModalContent>
+    </Modal>
   )
 }
 
-function CitySelect() {
+function CitySelect({modalZIndex=70}) {
   const { cityName: initCityName } = getGlobalData('headerData')
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -310,23 +354,28 @@ function CitySelect() {
 
       <CitySelectButton onClick={showModal} />
 
-      {isModalVisible && (
-        <CitySelectModal
-          onCloseClick={hideModal}
-          onSubmit={handleCitySubmit}
-        />
-      )}
+      <CitySelectModal
+        overlayZIndex={80}
+        isVisible={isModalVisible}
+        onCloseClick={hideModal}
+        onSubmit={handleCitySubmit}
+      />
     </CitySelectWrapper>
   )
 }
 
-function HeaderPhone() {
+function HeaderPhone({ className = null }) {
   const { phone } = getGlobalData('headerData')
+
+  let classes = 'font-sans text-2xl'
+  if (className) {
+    classes += ' ' + className
+  }
 
   return (
     <a
       href={`tel:${phone}`}
-      className="font-sans text-2xl text-white"
+      className={classes}
     >
       {phone}
     </a>
@@ -424,11 +473,104 @@ function CartButton({ onClick, cartItems, selfRef }) {
   )
 }
 
-function MenuButton() {
+function MobileMenuButton({ onClick }) {
   return (
-    <button className="w-[40px] h-[40px] rounded border border-white flex header-4:hidden justify-center items-center hover:bg-white/10 transition-all duration-200">
+    <button
+      onClick={onClick}
+      className="w-[40px] h-[40px] rounded border border-white flex header-4:hidden justify-center items-center hover:bg-white/10 transition-all duration-200"
+    >
       <img src={menuIconImg} />
     </button>
+  )
+}
+
+function DrawerContainer({ onClose, isVisible, children }) {
+  let classes =
+    'p-6 w-[300px] mx-[10px] my-[2vh] h-[96vh] bg-white backdrop-blur-md fixed z-[60] top-0 right-0 shadow-md rounded transition-all duration-300 flex flex-nowrap flex-col'
+
+  classes += isVisible
+    ? ' translate-x-0 opacity-100'
+    : ' translate-x-[105%] opacity-0'
+
+  return (
+    <>
+      <div className={classes}>
+        <CloseModalButton onClick={onClose} />
+        {children}
+      </div>
+    </>
+  )
+}
+
+function GreenContainer({ children, className }) {
+  let classes = 'bg-silkway-green relative mb-5 p-3 rounded h-[70px]'
+  if (className) {
+    classes += ' ' + className
+  }
+
+  return <div className={classes}>{children}</div>
+}
+
+function OrangeContainer({ children, className }) {
+  let classes =
+    'bg-silkway-dark-orange relative mb-5 p-3 rounded mt-auto h-[70px]'
+  if (className) {
+    classes += ' ' + className
+  }
+
+  return <div className={classes}>{children}</div>
+}
+
+function MobileMenuDrawer({ onClose, isVisible }) {
+  return (
+    <>
+      {isVisible && <ModalOverlay zIndex={50} />}
+      <DrawerContainer
+        onClose={onClose}
+        isVisible={isVisible}
+      >
+        <MobileMenuList />
+
+        <OrangeContainer className="mt-auto h-[95px]">
+          <div className="font-sans text-white text-sm">Поиск</div>
+          <SearchForm
+            isVisibleOnMobile={true}
+            isLeftIconVisible={false}
+            isBigSearchButton={false}
+          />
+        </OrangeContainer>
+
+        <GreenContainer>
+          <CitySelect modalZIndex={80} />
+        </GreenContainer>
+
+        <HeaderPhone className="text-silkway-green text-center justify-center flex flex-nowrap " />
+      </DrawerContainer>
+    </>
+  )
+}
+
+function MobileMenu() {
+  const [isMenuVisible, setIsMenuVisible] = useState(false)
+
+  const showDrawer = () => {
+    setIsMenuVisible(true)
+    disableDocumentScroll()
+  }
+
+  const hideDrawer = () => {
+    setIsMenuVisible(false)
+    enableDocumentScroll()
+  }
+
+  return (
+    <>
+      <MobileMenuButton onClick={showDrawer} />
+      <MobileMenuDrawer
+        onClose={hideDrawer}
+        isVisible={isMenuVisible}
+      />
+    </>
   )
 }
 
@@ -800,19 +942,21 @@ export function Header() {
           <TopMenu />
           <HeaderCenterSubSection>
             <CatalogButton />
-            <SearchForm />
+            <div className="h-[36px] header-4:h-[48px] w-[480px] max-[700px]:hidden max-[770px]:w-[300px] max-[1295px]:w-[360px]">
+              <SearchForm />
+            </div>
           </HeaderCenterSubSection>
         </HeaderCenterSection>
 
         <HeaderRightSection>
           <CitySelect />
-          <HeaderPhone />
+          <HeaderPhone className="text-white" />
         </HeaderRightSection>
 
         <HeaderRightButtonsSection>
           <LoginAccountButton />
           <CartWithDropdown />
-          <MenuButton />
+          <MobileMenu />
         </HeaderRightButtonsSection>
       </HeaderContainer>
     </HeaderBackground>

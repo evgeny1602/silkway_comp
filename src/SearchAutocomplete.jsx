@@ -22,7 +22,7 @@ export function SearchAutocomplete({
 
     const { results } = useFetch(fetcher, debouncedQuery)
 
-    useOutsideClick(resultsRef, () => setAreResultsVisible(false))
+    useOutsideClick([resultsRef], () => setAreResultsVisible(false))
 
     const handleItemClick = e => {
         setQuery(e.target.dataset.title)
