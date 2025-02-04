@@ -104,7 +104,7 @@ function CatalogButton() {
   )
 }
 
-function SearchFormWrapper({ children, isVisibleOnMobile }) {
+function SearchFormWrapper({ children, isVisibleOnMobile, variant }) {
   let classes =
     'has-[:focus]:bg-white/5 h-full max-h-[44px] items-center p-[2px] pr-[3px] header-4:p-[4px] gap-[5px] border rounded border-white/45 transition-all duration-200 w-full relative'
   if (isVisibleOnMobile) {
@@ -114,7 +114,19 @@ function SearchFormWrapper({ children, isVisibleOnMobile }) {
     classes += ' hidden header-8:flex'
   }
 
-  return <div className={classes}>{children}</div>
+  let wrapperClasses = 'rounded'
+  if (variant == 'orange') {
+    wrapperClasses += ' bg-silkway-orange'
+  }
+  if (variant == 'dark-orange') {
+    wrapperClasses += ' bg-silkway-dark-orange'
+  }
+
+  return (
+    <div className={wrapperClasses}>
+      <div className={classes}>{children}</div>
+    </div>
+  )
 }
 
 function SearchFormIcon() {
@@ -168,9 +180,13 @@ function SearchForm({
   isVisibleOnMobile = false,
   isLeftIconVisible = true,
   isBigSearchButton = true,
+  variant = 'transparent',
 }) {
   return (
-    <SearchFormWrapper isVisibleOnMobile={isVisibleOnMobile}>
+    <SearchFormWrapper
+      variant={variant}
+      isVisibleOnMobile={isVisibleOnMobile}
+    >
       {isLeftIconVisible && <SearchFormIcon />}
       <ProductSearchAutocomplete isBigSearchButton={isBigSearchButton} />
     </SearchFormWrapper>
@@ -226,7 +242,19 @@ function ButtonsContainer({ children }) {
   )
 }
 
-function ProductSearchAutocomplete({ isBigSearchButton = true }) {
+function ProductSearchAutocomplete({
+  isBigSearchButton = true,
+  inputClassName = null,
+}) {
+  let inputClasses =
+    'px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base transition-all duration-200 w-full'
+  if (inputClassName) {
+    inputClasses += ' ' + inputClassName
+  }
+  if (!inputClassName) {
+    inputClasses += ' text-white bg-transparent'
+  }
+
   const [query, setQuery] = useState('')
 
   const handleItemClick = (e) => {
@@ -241,7 +269,7 @@ function ProductSearchAutocomplete({ isBigSearchButton = true }) {
     <>
       <SearchAutocomplete
         fetcher={productAutocomplete}
-        inputClassname="focus:bg-transparent px-[4px] header-5:p-0 outline-none font-sans h-[30px] header-4:h-[38px] text-base bg-transparent text-white transition-all duration-200 w-full"
+        inputClassname={inputClasses}
         dropdownClassname="h-[200px] w-full left-0 top-[55px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
         dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
         onItemClick={handleItemClick}
@@ -284,7 +312,12 @@ function CitySelectModalHeader({ children }) {
   )
 }
 
-function CitySelectModal({ onCloseClick, onSubmit, isVisible, overlayZIndex=70 }) {
+function CitySelectModal({
+  onCloseClick,
+  onSubmit,
+  isVisible,
+  overlayZIndex = 70,
+}) {
   const [cityId, setCityId] = useState(null)
   const [cityName, setCityName] = useState(null)
 
@@ -323,7 +356,7 @@ function CitySelectModal({ onCloseClick, onSubmit, isVisible, overlayZIndex=70 }
   )
 }
 
-function CitySelect({modalZIndex=70}) {
+function CitySelect({ modalZIndex = 70 }) {
   const { cityName: initCityName } = getGlobalData('headerData')
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -531,14 +564,16 @@ function MobileMenuDrawer({ onClose, isVisible }) {
       >
         <MobileMenuList />
 
-        <OrangeContainer className="mt-auto h-[95px]">
-          <div className="font-sans text-white text-sm">Поиск</div>
-          <SearchForm
-            isVisibleOnMobile={true}
-            isLeftIconVisible={false}
-            isBigSearchButton={false}
-          />
-        </OrangeContainer>
+        <div className="font-sans text-silkway-dark-chocolate text-sm mt-14">
+          Поиск
+        </div>
+        <SearchForm
+          isVisibleOnMobile={true}
+          isLeftIconVisible={false}
+          isBigSearchButton={false}
+          variant="dark-orange"
+        />
+        <div className="mb-auto"></div>
 
         <GreenContainer>
           <CitySelect modalZIndex={80} />
