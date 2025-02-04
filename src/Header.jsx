@@ -194,7 +194,7 @@ function SearchForm({
 }
 
 function CitySelectWrapper({ children }) {
-  return <div className="h-[20px] flex gap-[10px]">{children}</div>
+  return <div className="h-[20px] flex flex-nowrap gap-[10px]">{children}</div>
 }
 
 function CitySelectCurrent({ city }) {
