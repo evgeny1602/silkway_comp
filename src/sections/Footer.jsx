@@ -1,7 +1,7 @@
 import footerLogoImg from '@/assets/logo.png'
 import { getGlobalData } from '@/utils'
 
-function FooterHeader({ children }) {
+function FooterHeading({ children }) {
   return (
     <h3 className="text-xl footer-1.7:text-2xl font-bold pb-3 text-center footer-1:text-left">
       {children}
@@ -46,7 +46,7 @@ function FooterMenuSectionItem({ item }) {
 function FooterMenuSection({ section }) {
   return (
     <div>
-      <FooterHeader>{section.title}</FooterHeader>
+      <FooterHeading>{section.title}</FooterHeading>
 
       <ul>
         {section.items.map((item) => (
@@ -60,12 +60,12 @@ function FooterMenuSection({ section }) {
   )
 }
 
-function Contacts() {
+function FooterContacts() {
   const { address, phone, email } = getGlobalData('footerData')
 
   return (
     <div>
-      <FooterHeader>Контакты</FooterHeader>
+      <FooterHeading>Контакты</FooterHeading>
 
       <p className="text-xs footer-1.7:text-sm leading-8 text-center footer-1:text-left">
         {address[0]}
@@ -100,7 +100,7 @@ export function Footer() {
           />
         ))}
 
-        <Contacts />
+        <FooterContacts />
       </div>
     </div>
   )
