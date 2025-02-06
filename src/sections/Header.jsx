@@ -1,15 +1,15 @@
-import headerLogoImg from './assets/header_logo.png'
-import catalogIconImg from './assets/catalog_icon.svg'
-import searchIconImg from './assets/search_icon.svg'
-import loginIconImg from './assets/login_icon.svg'
-import cartIconImg from './assets/cart_icon.svg'
-import menuIconImg from './assets/menu_icon.svg'
-import crossIconImg from './assets/cross_icon.svg'
-import dollyIconImg from './assets/dolly_icon.svg'
-import walletIconImg from './assets/wallet_icon.svg'
-import trashIconImg from './assets/trash_icon.svg'
-import { ModalOverlay } from './ModalOverlay'
-import { Modal } from './Modal'
+import headerLogoImg from '@/assets/header_logo.png'
+import catalogIconImg from '@/assets/catalog_icon.svg'
+import searchIconImg from '@/assets/search_icon.svg'
+import loginIconImg from '@/assets/login_icon.svg'
+import cartIconImg from '@/assets/cart_icon.svg'
+import menuIconImg from '@/assets/menu_icon.svg'
+import crossIconImg from '@/assets/cross_icon.svg'
+import dollyIconImg from '@/assets/dolly_icon.svg'
+import walletIconImg from '@/assets/wallet_icon.svg'
+import trashIconImg from '@/assets/trash_icon.svg'
+import { ModalOverlay } from '@/ui/ModalOverlay'
+import { Modal } from '@/ui/Modal'
 import {
   itemsCountPostfix,
   formatMoney,
@@ -18,17 +18,17 @@ import {
   disableDocumentScroll,
   enableDocumentScroll,
   cartSum,
-} from './utils'
+} from '@/utils'
 import { useRef, useState } from 'react'
-import { Button } from './Button'
-import { SearchAutocomplete } from './SearchAutocomplete'
-import { autocomplete as cityAutocomplete } from './api/city'
-import { set as citySet } from './api/city'
-import { autocomplete as productAutocomplete } from './api/product'
-import { searchProductRedirectUrl, imagesUrlPrefix } from './config'
-import { useFetch } from './hooks/useFetch'
-import { useOutsideClick } from './hooks/useOutsideClick'
-import { clearCart, delFromCart } from './api/cart'
+import { Button } from '@/ui/Button'
+import { SearchAutocomplete } from '@/ui/SearchAutocomplete'
+import { autocomplete as cityAutocomplete } from '@/api/city'
+import { set as citySet } from '@/api/city'
+import { autocomplete as productAutocomplete } from '@/api/product'
+import { searchProductRedirectUrl, imagesUrlPrefix } from '@/config'
+import { useFetch } from '@/hooks/useFetch'
+import { useOutsideClick } from '@/hooks/useOutsideClick'
+import { clearCart, delFromCart } from '@/api/cart'
 
 function HeaderLogo() {
   return (
@@ -557,7 +557,7 @@ function OrangeContainer({ children, className }) {
 function MobileMenuDrawer({ onClose, isVisible }) {
   return (
     <>
-      {isVisible && <ModalOverlay zIndex={50} />}
+      {isVisible && <ModalOverlay zIndex={60} />}
       <DrawerContainer
         onClose={onClose}
         isVisible={isVisible}

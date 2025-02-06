@@ -1,3 +1,4 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -22,6 +23,11 @@ export default defineConfig({
       '/bitrix/components/dresscode/sale.geo.positiion/ajax.php':
         silkwayProxyConfig,
       '/bitrix/components/dresscode/search.line/ajax.php': silkwayProxyConfig,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
   },
 })

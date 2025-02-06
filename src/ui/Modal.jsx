@@ -1,6 +1,6 @@
-import { ReactPortal } from './ReactPortal'
-import crossIconImg from './assets/cross_icon.svg'
-import { ModalOverlay } from './ModalOverlay'
+import { ReactPortal } from '@/ui/ReactPortal'
+import crossIconImg from '@/assets/cross_icon.svg'
+import { ModalOverlay } from '@/ui/ModalOverlay'
 
 function CloseModalButton({ onClick }) {
   return (
@@ -14,7 +14,7 @@ function CloseModalButton({ onClick }) {
   )
 }
 
-export function Modal({ children, isVisible, onClose, overlayZIndex=70 }) {
+export function Modal({ children, isVisible, onClose, overlayZIndex = 70 }) {
   if (!isVisible) {
     return null
   }

@@ -7,14 +7,22 @@ const init = async () => {
 
   el = document.getElementById('new-design-header')
   if (el) {
-    const { Header } = await import('./Header')
-    createRoot(el).render(<StrictMode><Header /></StrictMode>)
+    const { Header } = await import('./sections/Header')
+    createRoot(el).render(
+      <StrictMode>
+        <Header />
+      </StrictMode>
+    )
   }
 
   el = document.getElementById('footer')
   if (el) {
-    const { Footer } = await import('./Footer')
-    createRoot(el).render(<StrictMode><Footer /></StrictMode>)
+    const { Footer } = await import('./sections/Footer')
+    createRoot(el).render(
+      <StrictMode>
+        <Footer />
+      </StrictMode>
+    )
   }
 }
 
