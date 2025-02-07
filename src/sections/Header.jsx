@@ -29,6 +29,7 @@ import { searchProductRedirectUrl, imagesUrlPrefix } from '@/config'
 import { useFetch } from '@/hooks/useFetch'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { clearCart, delFromCart } from '@/api/cart'
+import { SectionContainer } from '../ui/SectionContainer'
 
 function HeaderLogo() {
   return (
@@ -609,18 +610,6 @@ function MobileMenu() {
   )
 }
 
-function HeaderBackground({ children }) {
-  return <div className="w-full bg-silkway-green">{children}</div>
-}
-
-function HeaderContainer({ children }) {
-  return (
-    <div className="max-w-[1670px] h-[80px] header-4:h-[206px] m-auto flex flex-nowrap items-center justify-start gap-[5px] header-9:gap-[30px] p-[10px] header-4:p-[50px] px-[10px] header-9:px-[20px] header-5:px-[50px]">
-      {children}
-    </div>
-  )
-}
-
 function HeaderCenterSection({ children }) {
   return (
     <div className="flex flex-nowrap flex-col justify-center header-4:justify-between gap-[14px] h-full header-4:h-[82px] ml-auto header-4:ml-0">
@@ -967,9 +956,25 @@ function CartWithDropdown() {
   )
 }
 
+function HeaderContainer({ children }) {
+  return (
+    <div className="h-[80px] header-4:h-[206px] flex flex-nowrap items-center justify-start gap-[5px] header-9:gap-[30px]">
+      {children}
+    </div>
+  )
+}
+
+function SearchFormContainer({ children }) {
+  return (
+    <div className="h-[36px] header-4:h-[48px] w-[480px] max-[700px]:hidden max-[770px]:w-[300px] max-[1295px]:w-[360px]">
+      {children}
+    </div>
+  )
+}
+
 export function Header() {
   return (
-    <HeaderBackground>
+    <SectionContainer variant="green">
       <HeaderContainer>
         <HeaderLogo />
 
@@ -977,9 +982,9 @@ export function Header() {
           <TopMenu />
           <HeaderCenterSubSection>
             <CatalogButton />
-            <div className="h-[36px] header-4:h-[48px] w-[480px] max-[700px]:hidden max-[770px]:w-[300px] max-[1295px]:w-[360px]">
+            <SearchFormContainer>
               <SearchForm />
-            </div>
+            </SearchFormContainer>
           </HeaderCenterSubSection>
         </HeaderCenterSection>
 
@@ -994,6 +999,6 @@ export function Header() {
           <MobileMenu />
         </HeaderRightButtonsSection>
       </HeaderContainer>
-    </HeaderBackground>
+    </SectionContainer>
   )
 }

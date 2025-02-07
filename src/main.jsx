@@ -15,6 +15,16 @@ const init = async () => {
     )
   }
 
+  el = document.getElementById('hero-section')
+  if (el) {
+    const { HeroSection } = await import('./sections/HeroSection')
+    createRoot(el).render(
+      <StrictMode>
+        <HeroSection />
+      </StrictMode>
+    )
+  }
+
   el = document.getElementById('footer')
   if (el) {
     const { Footer } = await import('./sections/Footer')

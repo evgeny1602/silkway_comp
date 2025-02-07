@@ -1,5 +1,6 @@
 import footerLogoImg from '@/assets/logo.png'
 import { getGlobalData } from '@/utils'
+import { SectionContainer } from '@/ui/SectionContainer'
 
 function FooterHeading({ children }) {
   return (
@@ -89,8 +90,8 @@ export function Footer() {
   const { menuSections } = getGlobalData('footerData')
 
   return (
-    <div className="w-full bg-silkway-milk">
-      <div className="grid grid-cols-1 footer-1:grid-cols-2 footer-1.8:flex flex-wrap justify-between gap-[50px] p-[50px] px-[10px] footer-4:px-[20px] footer-3:px-[50px] max-w-[1670px] m-auto text-silkway-dark-chocolate font-sans">
+    <SectionContainer>
+      <div className="grid grid-cols-1 footer-1:grid-cols-2 footer-1.8:flex flex-wrap justify-between gap-[50px]   text-silkway-dark-chocolate font-sans py-[50px]">
         <FooterLogo />
 
         {menuSections.map((s) => (
@@ -102,6 +103,6 @@ export function Footer() {
 
         <FooterContacts />
       </div>
-    </div>
+    </SectionContainer>
   )
 }

@@ -67,3 +67,11 @@ export const cartSum = (cartItems) => {
     .map((item) => item.quantity * item.price)
     .reduce((s, x) => s + x, 0)
 }
+
+export const getSlugFromUrl = (url) => {
+  let slug = url
+  if (slug.at(-1) == '/') {
+    slug = slug.slice(0, -1)
+  }
+  return slug.split('/').at(-1)
+}
