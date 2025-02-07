@@ -30,7 +30,7 @@ function BannerSliderContainer() {
   const { banners } = getGlobalData('heroSectionData')
 
   return (
-    <div className="rounded overflow-hidden max-w-[1037px]">
+    <div className="rounded overflow-hidden">
       <BannerSlider
         banners={banners}
         renderDot={WhiteOrangeDot}
@@ -76,38 +76,42 @@ export function SocialButtonsContainer() {
   const { socials } = getGlobalData('heroSectionData')
 
   return (
-    <div className="grid grid-rows-1 grid-cols-4 gap-[15px] max-[760px]:gap-[10px] max-[760px]:justify-center">
-      <SocialButton
-        url={socials.vk}
-        icon={vkIcon}
-      >
-        ВКонтакте
-      </SocialButton>
-      <SocialButton
-        url={socials.ok}
-        icon={okIcon}
-      >
-        Одноклассники
-      </SocialButton>
-      <SocialButton
-        url={socials.yt}
-        icon={ytIcon}
-      >
-        Youtube
-      </SocialButton>
-      <SocialButton
-        url={socials.tiktok}
-        icon={tiktokIcon}
-      >
-        TikTok
-      </SocialButton>
+    <div className="flex flex-nowrap gap-[15px] max-[760px]:gap-[10px] max-[750px]:flex-col max-[1060px]:flex-row max-[1600px]:flex-col max-[1600px]:items-center">
+      <div className="flex flex-nowrap gap-[15px] max-[760px]:gap-[10px]">
+        <SocialButton
+          url={socials.vk}
+          icon={vkIcon}
+        >
+          ВКонтакте
+        </SocialButton>
+        <SocialButton
+          url={socials.ok}
+          icon={okIcon}
+        >
+          Одноклассники
+        </SocialButton>
+      </div>
+      <div className="flex flex-nowrap gap-[15px] max-[760px]:gap-[10px]">
+        <SocialButton
+          url={socials.yt}
+          icon={ytIcon}
+        >
+          Youtube
+        </SocialButton>
+        <SocialButton
+          url={socials.tiktok}
+          icon={tiktokIcon}
+        >
+          TikTok
+        </SocialButton>
+      </div>
     </div>
   )
 }
 
 export function MoreCategoriesContainer() {
   return (
-    <div className="w-full flex flex-nowrap justify-center mt-auto">
+    <div className="w-full flex flex-nowrap justify-center items-start max-[1060px]:order-6">
       <button className="text-silkway-dark-chocolate font-sans text-base font-medium flex flex-nowrap gap-[10px] items-center bg-silkway-dark-milk rounded px-[45px] py-[15px] hover:bg-silkway-light-orange transition-colors h-[48px] max-[1200px]:h-[36px]">
         Еще категории <img src={chevronDownIcon} />
       </button>
@@ -121,7 +125,7 @@ export function BecomeSellerButton() {
   return (
     <a
       href={becomeSellerUrl}
-      className="flex flex-nowrap whitespace-nowrap text-base max-[1200px]:text-xs font-sans items-center gap-[10px] p-[15px] max-[1200px]:p-[10px] bg-silkway-green rounded text-white cursor-pointer hover:bg-silkway-light-green transition-colors h-[48px] max-[1200px]:h-[36px] min-w-[300px]"
+      className="flex flex-nowrap whitespace-nowrap text-base max-[1200px]:text-xs font-sans items-center gap-[10px] p-[15px] max-[1200px]:p-[10px] bg-silkway-green rounded text-white cursor-pointer hover:bg-silkway-light-green transition-colors h-[48px] max-[1200px]:h-[36px] min-w-[370px] max-[750px]:mr-0 max-[1200px]:min-w-[280px] mr-auto max-[1060px]:mr-auto max-[1600px]:mr-0"
     >
       <img
         src={showcaseIcon}
@@ -136,13 +140,13 @@ export function TopCategoriesContainer() {
   const { topCategories } = getGlobalData('heroSectionData')
 
   return (
-    <div className="flex flex-nowrap flex-col gap-[30px] w-full">
-      <div className="flex flex-nowrap gap-[30px]">
+    <div className="flex flex-nowrap max-[680px]:flex-col max-[1060px]:flex-row flex-col justify-center gap-[30px] h-full w-full max-[1060px]:order-5">
+      <div className="flex flex-nowrap gap-[30px] w-full justify-center">
         {topCategories.slice(0, 2).map(({ url, title }) => (
           <CategoryButton url={url}>{title}</CategoryButton>
         ))}
       </div>
-      <div className="flex flex-nowrap gap-[30px]">
+      <div className="flex flex-nowrap gap-[30px] w-full justify-center">
         {topCategories.slice(2, 4).map(({ url, title }) => (
           <CategoryButton url={url}>{title}</CategoryButton>
         ))}
@@ -153,15 +157,17 @@ export function TopCategoriesContainer() {
 
 export function HeroSection() {
   return (
-    <SectionContainer className="py-[50px]">
-      <div className="grid grid-cols-2 grid-rows-[1fr minmax(300px, 502px)] gap-[30px]">
+    <SectionContainer className="py-[50px] max-[874px]:py-[20px]">
+      <div className="grid grid-cols-[68fr,32fr] grid-rows-[auto,auto] gap-[30px] max-[874px]:gap-[15px] max-[1060px]:grid-cols-1 max-[1060px]:grid-rows-[auto,auto,auto,auto]">
         <BannerSliderContainer />
+
         <TopCategoriesContainer />
 
-        <div className="flex">
+        <div className="flex flex-nowrap max-[1060px]:flex max-[750px]:flex-col max-[1060px]:flex-row max-[1600px]:flex-col max-[1600px]:items-center gap-[15px]">
           <BecomeSellerButton />
           <SocialButtonsContainer />
         </div>
+
         <MoreCategoriesContainer />
       </div>
     </SectionContainer>
