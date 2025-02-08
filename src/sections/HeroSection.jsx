@@ -61,7 +61,7 @@ function CategoryButton({ url, children }) {
 
   return (
     <a
-      className="bg-white aspect-square min-w-[135px] min-h-[135px] max-w-[236px] max-h-[236px] rounded hover:scale-105 hover:shadow-md transition-all duration-1000 p-[20px] font-sans text-xl bg-right-bottom bg-cover w-full"
+      className="bg-white aspect-square min-w-[135px] min-h-[135px] max-w-[236px] max-h-[236px] rounded hover:scale-105 hover:shadow-md transition-all duration-1000 p-[20px] max-[370px]:p-[15px] max-[1060px]:p-[20px] max-[1200px]:p-[15px] font-sans text-xl max-[370px]:text-lg max-[1060px]:text-xl max-[1200px]:text-lg bg-right-bottom bg-cover w-full"
       style={{
         backgroundImage: `url(${imgDir}${slug}.png)`,
       }}
@@ -140,15 +140,25 @@ export function TopCategoriesContainer() {
   const { topCategories } = getGlobalData('heroSectionData')
 
   return (
-    <div className="flex flex-nowrap max-[680px]:flex-col max-[1060px]:flex-row flex-col justify-center gap-[30px] h-full w-full max-[1060px]:order-5">
-      <div className="flex flex-nowrap gap-[30px] w-full justify-center">
+    <div className="flex flex-nowrap max-[680px]:flex-col max-[1060px]:flex-row flex-col justify-center gap-[30px] max-[875px]:gap-[15px] h-full w-full max-[1060px]:order-5 max-[875px]:pt-[10px]">
+      <div className="flex flex-nowrap gap-[30px] max-[875px]:gap-[15px] w-full justify-center">
         {topCategories.slice(0, 2).map(({ url, title }) => (
-          <CategoryButton url={url}>{title}</CategoryButton>
+          <CategoryButton
+            key={url}
+            url={url}
+          >
+            {title}
+          </CategoryButton>
         ))}
       </div>
-      <div className="flex flex-nowrap gap-[30px] w-full justify-center">
+      <div className="flex flex-nowrap gap-[30px] max-[875px]:gap-[15px] w-full justify-center">
         {topCategories.slice(2, 4).map(({ url, title }) => (
-          <CategoryButton url={url}>{title}</CategoryButton>
+          <CategoryButton
+            key={url}
+            url={url}
+          >
+            {title}
+          </CategoryButton>
         ))}
       </div>
     </div>
