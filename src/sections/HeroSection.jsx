@@ -1,4 +1,5 @@
 import { SectionContainer } from '@/ui/SectionContainer'
+import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { getGlobalData, getSlugFromUrl } from '../utils'
 import { BannerSlider } from '../ui/BannerSlider'
 import showcaseIcon from '@/assets/showcase_icon.svg'
@@ -7,7 +8,9 @@ import okIcon from '@/assets/ok_icon.svg'
 import ytIcon from '@/assets/yt_icon.svg'
 import tiktokIcon from '@/assets/tiktok_icon.svg'
 import chevronDownIcon from '@/assets/chevron_down_icon.svg'
+import bigCloseIcon from '@/assets/big_close_icon.svg'
 import { imagesUrlPrefix } from '@/config'
+import { useState } from 'react'
 
 function WhiteOrangeDot({ onClick, isActive = false }) {
   let classes = 'min-w-[21px] min-h-[8px] rounded'
@@ -109,10 +112,13 @@ export function SocialButtonsContainer() {
   )
 }
 
-export function MoreCategoriesContainer() {
+export function MoreCategoriesContainer({ onClick }) {
   return (
     <div className="w-full flex flex-nowrap justify-center items-start max-[1060px]:order-6">
-      <button className="text-silkway-dark-chocolate font-sans text-base font-medium flex flex-nowrap gap-[10px] items-center bg-silkway-dark-milk rounded px-[45px] py-[15px] hover:bg-silkway-light-orange transition-colors h-[48px] max-[1200px]:h-[36px]">
+      <button
+        onClick={onClick}
+        className="text-silkway-dark-chocolate font-sans text-base font-medium flex flex-nowrap gap-[10px] items-center bg-silkway-dark-milk rounded px-[45px] py-[15px] hover:bg-silkway-light-orange transition-colors h-[48px] max-[1200px]:h-[36px]"
+      >
         Еще категории <img src={chevronDownIcon} />
       </button>
     </div>
@@ -165,21 +171,124 @@ export function TopCategoriesContainer() {
   )
 }
 
+function HeroSectionButtonsContainer({ children }) {
+  return (
+    <div className="flex flex-nowrap max-[1060px]:flex max-[750px]:flex-col max-[1060px]:flex-row max-[1600px]:flex-col max-[1600px]:items-center gap-[15px]">
+      {children}
+    </div>
+  )
+}
+
+function HeroSectionGridContainer({ children }) {
+  return (
+    <div className="grid grid-cols-[68fr,32fr] grid-rows-[auto,auto] gap-[30px] max-[874px]:gap-[15px] max-[1060px]:grid-cols-1 max-[1060px]:grid-rows-[auto,auto,auto,auto]">
+      {children}
+    </div>
+  )
+}
+
+function HeroSectionCategoriesPopoverContainer({ children }) {
+  return (
+    <div className="w-full h-full absolute top-0 left-0 px-[10px] header-4:px-[50px] header-9:px-[20px] header-5:px-[50px]">
+      <div className="gap-[35px] flex flex-nowrap flex-col bg-silkway-green/90 rounded shadow-md w-full h-full p-[30px] max-[650px]:p-[20px] max-[470px]:p-[10px]">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function PopoverTopSectionContainer({ children }) {
+  return <div className="flex flex-nowrap items-center">{children}</div>
+}
+
+function PopoverCloseButton({ onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className="bg-silkway-green ml-auto cursor-pointer rounded transition-colors hover:bg-silkway-light-green"
+    >
+      <img
+        src={bigCloseIcon}
+        className="w-[70px] h-[70px] max-[650px]:w-[40px] max-[650px]:h-[40px]"
+      />
+    </div>
+  )
+}
+
+function PopoverContentContainer({ children }) {
+  return (
+    <div className="gap-[30px] grid grid-cols-4 grid-rows-2 max-[1000px]:grid-cols-3 max-[1000px]:grid-rows-3 max-[750px]:grid-cols-2 max-[750px]:grid-rows-4 w-full h-full">
+      {children}
+    </div>
+  )
+}
+
+function PopoverCategoryTile({ item }) {
+  const { url, name } = item
+  const slug = getSlugFromUrl(url)
+  const imgDir = `${imagesUrlPrefix}category_images/`
+
+  return (
+    <a
+      href={url}
+      className="font-sans font-bold text-xl max-[800px]:text-lg p-[20px] max-[1200px]:p-[10px] max-[500px]:p-[5px] rounded bg-white w-full h-full w-min-[210px] h-min-[135px] w-max-[360px] h-max-[240px] hover:shadow-md hover:scale-105 transition-all duration-1000 bg-right-bottom bg-cover"
+      style={{
+        backgroundImage: `url(${imgDir}${slug}.png)`,
+      }}
+    >
+      {name}
+    </a>
+  )
+}
+
+function HeroSectionCategoriesPopover({ onClose }) {
+  const { categories } = getGlobalData('heroSectionData')
+
+  return (
+    <HeroSectionCategoriesPopoverContainer>
+      <PopoverTopSectionContainer>
+        <div className="font-sans text-5xl max-[650px]:text-4xl max-[470px]:text-2xl text-white">
+          КАТАЛОГ ТОВАРОВ
+        </div>
+        <PopoverCloseButton onClick={onClose} />
+      </PopoverTopSectionContainer>
+      <PopoverContentContainer>
+        {categories.map((item) => (
+          <PopoverCategoryTile
+            item={item}
+            key={item.url}
+          />
+        ))}
+      </PopoverContentContainer>
+    </HeroSectionCategoriesPopoverContainer>
+  )
+}
+
 export function HeroSection() {
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false)
+
   return (
     <SectionContainer className="py-[50px] max-[874px]:py-[20px]">
-      <div className="grid grid-cols-[68fr,32fr] grid-rows-[auto,auto] gap-[30px] max-[874px]:gap-[15px] max-[1060px]:grid-cols-1 max-[1060px]:grid-rows-[auto,auto,auto,auto]">
-        <BannerSliderContainer />
+      <SectionInnerContainer className="relative">
+        <HeroSectionGridContainer>
+          <BannerSliderContainer />
 
-        <TopCategoriesContainer />
+          <TopCategoriesContainer />
 
-        <div className="flex flex-nowrap max-[1060px]:flex max-[750px]:flex-col max-[1060px]:flex-row max-[1600px]:flex-col max-[1600px]:items-center gap-[15px]">
-          <BecomeSellerButton />
-          <SocialButtonsContainer />
-        </div>
+          <HeroSectionButtonsContainer>
+            <BecomeSellerButton />
+            <SocialButtonsContainer />
+          </HeroSectionButtonsContainer>
 
-        <MoreCategoriesContainer />
-      </div>
+          <MoreCategoriesContainer onClick={() => setIsPopoverVisible(true)} />
+        </HeroSectionGridContainer>
+
+        {isPopoverVisible && (
+          <HeroSectionCategoriesPopover
+            onClose={() => setIsPopoverVisible(false)}
+          />
+        )}
+      </SectionInnerContainer>
     </SectionContainer>
   )
 }

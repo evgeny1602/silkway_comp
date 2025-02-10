@@ -1,6 +1,7 @@
 import footerLogoImg from '@/assets/logo.png'
 import { getGlobalData } from '@/utils'
 import { SectionContainer } from '@/ui/SectionContainer'
+import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 
 function FooterHeading({ children }) {
   return (
@@ -91,18 +92,20 @@ export function Footer() {
 
   return (
     <SectionContainer>
-      <div className="grid grid-cols-1 footer-1:grid-cols-2 footer-1.8:flex flex-wrap justify-between gap-[50px]   text-silkway-dark-chocolate font-sans py-[50px]">
-        <FooterLogo />
+      <SectionInnerContainer>
+        <div className="grid grid-cols-1 footer-1:grid-cols-2 footer-1.8:flex flex-wrap justify-between gap-[50px]   text-silkway-dark-chocolate font-sans py-[50px]">
+          <FooterLogo />
 
-        {menuSections.map((s) => (
-          <FooterMenuSection
-            key={s.title}
-            section={s}
-          />
-        ))}
+          {menuSections.map((s) => (
+            <FooterMenuSection
+              key={s.title}
+              section={s}
+            />
+          ))}
 
-        <FooterContacts />
-      </div>
+          <FooterContacts />
+        </div>
+      </SectionInnerContainer>
     </SectionContainer>
   )
 }

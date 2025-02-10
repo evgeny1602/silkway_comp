@@ -30,6 +30,7 @@ import { useFetch } from '@/hooks/useFetch'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { clearCart, delFromCart } from '@/api/cart'
 import { SectionContainer } from '../ui/SectionContainer'
+import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 
 function HeaderLogo() {
   return (
@@ -975,30 +976,32 @@ function SearchFormContainer({ children }) {
 export function Header() {
   return (
     <SectionContainer variant="green">
-      <HeaderContainer>
-        <HeaderLogo />
+      <SectionInnerContainer>
+        <HeaderContainer>
+          <HeaderLogo />
 
-        <HeaderCenterSection>
-          <TopMenu />
-          <HeaderCenterSubSection>
-            <CatalogButton />
-            <SearchFormContainer>
-              <SearchForm />
-            </SearchFormContainer>
-          </HeaderCenterSubSection>
-        </HeaderCenterSection>
+          <HeaderCenterSection>
+            <TopMenu />
+            <HeaderCenterSubSection>
+              <CatalogButton />
+              <SearchFormContainer>
+                <SearchForm />
+              </SearchFormContainer>
+            </HeaderCenterSubSection>
+          </HeaderCenterSection>
 
-        <HeaderRightSection>
-          <CitySelect />
-          <HeaderPhone className="text-white" />
-        </HeaderRightSection>
+          <HeaderRightSection>
+            <CitySelect />
+            <HeaderPhone className="text-white" />
+          </HeaderRightSection>
 
-        <HeaderRightButtonsSection>
-          <LoginAccountButton />
-          <CartWithDropdown />
-          <MobileMenu />
-        </HeaderRightButtonsSection>
-      </HeaderContainer>
+          <HeaderRightButtonsSection>
+            <LoginAccountButton />
+            <CartWithDropdown />
+            <MobileMenu />
+          </HeaderRightButtonsSection>
+        </HeaderContainer>
+      </SectionInnerContainer>
     </SectionContainer>
   )
 }
