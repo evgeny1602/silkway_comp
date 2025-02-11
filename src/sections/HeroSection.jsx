@@ -181,7 +181,7 @@ function HeroSectionButtonsContainer({ children }) {
 
 function HeroSectionGridContainer({ children }) {
   return (
-    <div className="grid grid-cols-[68fr,32fr] grid-rows-[auto,auto] gap-[30px] max-[874px]:gap-[15px] max-[1060px]:grid-cols-1 max-[1060px]:grid-rows-[auto,auto,auto,auto]">
+    <div className="grid grid-cols-[68fr,32fr] grid-rows-[auto,auto] gap-[30px] max-[1200px]:gap-[15px] max-[1060px]:grid-cols-1 max-[1060px]:grid-rows-[auto,auto,auto,auto]">
       {children}
     </div>
   )
@@ -190,7 +190,7 @@ function HeroSectionGridContainer({ children }) {
 function HeroSectionCategoriesPopoverContainer({ children }) {
   return (
     <div className="w-full h-full absolute top-0 left-0 px-[10px] header-4:px-[50px] header-9:px-[20px] header-5:px-[50px]">
-      <div className="gap-[35px] flex flex-nowrap flex-col bg-silkway-green/90 rounded shadow-md w-full h-full p-[30px] max-[650px]:p-[20px] max-[470px]:p-[10px]">
+      <div className="gap-[35px] flex flex-nowrap flex-col bg-silkway-green/90 rounded shadow-md w-full h-full p-[30px] max-[1200px]:p-[20px] max-[650px]:p-[10px]">
         {children}
       </div>
     </div>
@@ -209,7 +209,7 @@ function PopoverCloseButton({ onClick }) {
     >
       <img
         src={bigCloseIcon}
-        className="w-[70px] h-[70px] max-[650px]:w-[40px] max-[650px]:h-[40px]"
+        className="w-[70px] h-[70px] max-[1200px]:h-[50px] max-[1200px]:w-[50px] max-[650px]:w-[40px] max-[650px]:h-[40px]"
       />
     </div>
   )
@@ -224,20 +224,35 @@ function PopoverContentContainer({ children }) {
 }
 
 function PopoverCategoryTile({ item }) {
-  const { url, name } = item
+  const { url, name, child_categories } = item
   const slug = getSlugFromUrl(url)
   const imgDir = `${imagesUrlPrefix}category_images/`
 
   return (
-    <a
-      href={url}
-      className="font-sans font-bold text-xl max-[800px]:text-lg p-[20px] max-[1200px]:p-[10px] max-[500px]:p-[5px] rounded bg-white w-full h-full w-min-[210px] h-min-[135px] w-max-[360px] h-max-[240px] hover:shadow-md hover:scale-105 transition-all duration-1000 bg-right-bottom bg-cover"
+    <div
+      className="font-sans p-[20px] max-[1200px]:p-[10px] max-[500px]:p-[5px] rounded bg-white w-full h-full w-min-[210px] h-min-[135px] w-max-[360px] h-max-[240px] hover:shadow-md hover:scale-105 transition-all duration-1000 bg-right-bottom bg-cover"
       style={{
-        backgroundImage: `url(${imgDir}${slug}.png)`,
+        backgroundImage: `linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.2)), url(${imgDir}${slug}.png)`,
       }}
     >
-      {name}
-    </a>
+      <a
+        href={url}
+        className="hover:underline font-bold text-xl max-[800px]:text-lg max-[380px]:text-base leading-5"
+      >
+        {name}
+      </a>
+      <div className="max-[760px]:hidden mt-2 max-[1200px]:mt-1 flex flex-nowrap flex-col text-base max-[1300px]:text-sm max-[1200px]:text-xs leading-6">
+        {child_categories.map(({ name, url }) => (
+          <a
+            className="hover:underline"
+            key={url}
+            href={url}
+          >
+            {name}
+          </a>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -247,7 +262,7 @@ function HeroSectionCategoriesPopover({ onClose }) {
   return (
     <HeroSectionCategoriesPopoverContainer>
       <PopoverTopSectionContainer>
-        <div className="font-sans text-5xl max-[650px]:text-4xl max-[470px]:text-2xl text-white">
+        <div className="font-sans text-5xl max-[1200px]:text-4xl max-[470px]:text-2xl text-white">
           КАТАЛОГ ТОВАРОВ
         </div>
         <PopoverCloseButton onClick={onClose} />
@@ -268,7 +283,7 @@ export function HeroSection() {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false)
 
   return (
-    <SectionContainer className="py-[50px] max-[874px]:py-[20px]">
+    <SectionContainer className="pt-[50px] pb-[70px] max-[874px]:pt-[20px] max-[874px]:pb-[50px]">
       <SectionInnerContainer className="relative">
         <HeroSectionGridContainer>
           <BannerSliderContainer />
