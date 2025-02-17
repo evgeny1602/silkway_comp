@@ -12,7 +12,20 @@ import { getGlobalData } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
 import { formatMoney } from '../utils'
 
-function BestsellerCard({ item }) {
+function CardProgressBar({ percent }) {
+  return (
+    <div className="h-[7px] w-full bg-silkway-dark-milk rounded">
+      <div
+        className="h-[7px] bg-silkway-orange rounded"
+        style={{
+          width: `${percent}%`,
+        }}
+      ></div>
+    </div>
+  )
+}
+
+function RestsaleCard({ item }) {
   let priceClasses = 'font-sans font-bold text-base'
   if (item.OLD_PRICE) {
     priceClasses += ' text-silkway-red'
@@ -24,7 +37,7 @@ function BestsellerCard({ item }) {
         location.href = imagesUrlPrefix + item.URL
       }}
     >
-      <CardBadge variant="discount" />
+      <CardBadge variant="sale" />
       <img
         src={`${imagesUrlPrefix}${item.DETAIL_PICTURE}`}
         alt={item.NAME}
@@ -37,21 +50,23 @@ function BestsellerCard({ item }) {
             {formatMoney(item.OLD_PRICE)} ₽
           </div>
         )}
-
-        {item.DISCOUNT_PERCENT && (
-          <div className="font-medium text-xs text-silkway-red">
-            -{item.DISCOUNT_PERCENT}%
-          </div>
-        )}
       </div>
 
       <div className="font-bold text-base">{item.NAME}</div>
+
+      {item.PROGRESS_PERCENT && (
+        <CardProgressBar percent={item.PROGRESS_PERCENT} />
+      )}
+
+      {item.QUANTITY && (
+        <div className="text-base">Осталось {item.QUANTITY} шт.</div>
+      )}
     </CardContainer>
   )
 }
 
-export function BestsellersSection({ itemsCount = 6 }) {
-  const { items, pageUrl } = getGlobalData('bestsellersSectionData')
+export function RestsaleSection({ itemsCount = 6 }) {
+  const { items, pageUrl } = getGlobalData('restSaleSectionData')
 
   const goPageUrl = () => {
     location.href = pageUrl
@@ -61,10 +76,10 @@ export function BestsellersSection({ itemsCount = 6 }) {
     <SectionContainer className="pb-[70px] max-[874px]:pb-[50px]">
       <SectionInnerContainer>
         <CardsGroupContainer>
-          <CardsGroupHeader>Хиты продаж</CardsGroupHeader>
+          <CardsGroupHeader>Распродажа остатков</CardsGroupHeader>
           <CardListContainer>
             {items.slice(0, itemsCount).map((item) => (
-              <BestsellerCard
+              <RestsaleCard
                 item={item}
                 key={item.URL}
               />

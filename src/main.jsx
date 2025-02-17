@@ -41,6 +41,19 @@ const initBestsellersSection = async () => {
   )
 }
 
+const initRestsaleSection = async () => {
+  const el = document.getElementById('rest-sale-section')
+  if (!el) {
+    return
+  }
+  const { RestsaleSection } = await import('./sections/RestsaleSection')
+  createRoot(el).render(
+    <StrictMode>
+      <RestsaleSection />
+    </StrictMode>
+  )
+}
+
 const initFooter = async () => {
   const el = document.getElementById('footer')
   if (!el) {
@@ -57,4 +70,5 @@ const initFooter = async () => {
 intHeader()
 initHeroSection()
 initBestsellersSection()
+initRestsaleSection()
 initFooter()
