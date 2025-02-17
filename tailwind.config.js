@@ -13,6 +13,7 @@ export default {
         'silkway-light-orange': '#e1c8a3',
         'silkway-orange': '#D4B07B',
         'silkway-dark-orange': '#AE8F64',
+        'silkway-orange-sale': '#FF8000',
         'silkway-gray': '#777777',
         'silkway-light-gray': '#DFE1E3',
         'silkway-dark-chocolate': '#362102',
@@ -21,6 +22,8 @@ export default {
         'silkway-light-green': '#006159',
         'silkway-milk': '#F8F6F2',
         'silkway-dark-milk': '#F1EDE5',
+        'silkway-red': '#C83636',
+        'silkway-blue-auction': '#367ADF',
         white: '#fff',
       },
       screens: {

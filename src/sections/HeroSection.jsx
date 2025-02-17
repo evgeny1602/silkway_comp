@@ -1,13 +1,13 @@
 import { SectionContainer } from '@/ui/SectionContainer'
-import { SectionInnerContainer } from '../ui/SectionInnerContainer'
-import { getGlobalData, getSlugFromUrl } from '../utils'
-import { BannerSlider } from '../ui/BannerSlider'
+import { SectionInnerContainer } from '@/ui/SectionInnerContainer'
+import { MoreButton } from '@/ui/MoreButton'
+import { getGlobalData, getSlugFromUrl } from '@/utils'
+import { BannerSlider } from '@/ui/BannerSlider'
 import showcaseIcon from '@/assets/showcase_icon.svg'
 import vkIcon from '@/assets/vk_icon.svg'
 import okIcon from '@/assets/ok_icon.svg'
 import ytIcon from '@/assets/yt_icon.svg'
 import tiktokIcon from '@/assets/tiktok_icon.svg'
-import chevronDownIcon from '@/assets/chevron_down_icon.svg'
 import bigCloseIcon from '@/assets/big_close_icon.svg'
 import { imagesUrlPrefix } from '@/config'
 import { useState } from 'react'
@@ -115,12 +115,10 @@ export function SocialButtonsContainer() {
 export function MoreCategoriesContainer({ onClick }) {
   return (
     <div className="w-full flex flex-nowrap justify-center items-start max-[1060px]:order-6">
-      <button
+      <MoreButton
         onClick={onClick}
-        className="text-silkway-dark-chocolate font-sans text-base font-medium flex flex-nowrap gap-[10px] items-center bg-silkway-dark-milk rounded px-[45px] py-[15px] hover:bg-silkway-light-orange transition-colors h-[48px] max-[1200px]:h-[36px]"
-      >
-        Еще категории <img src={chevronDownIcon} />
-      </button>
+        text="Еще категории"
+      />
     </div>
   )
 }

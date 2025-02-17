@@ -2,6 +2,10 @@ export function formatMoney(amount) {
   let buffer = ''
   let result = ''
   let amountStr = `${amount}`
+  let fractions = ''
+  if (amountStr.includes('.')) {
+    ;[amountStr, fractions] = amountStr.split('.')
+  }
   for (let i = 1; i <= amountStr.length; i++) {
     buffer = amountStr.at(-i) + buffer
     if (buffer.length == 3) {
@@ -11,6 +15,9 @@ export function formatMoney(amount) {
   }
   result = buffer + ' ' + result
   result = result.trim()
+  if (fractions != '') {
+    result += '.' + fractions
+  }
   return result
 }
 
