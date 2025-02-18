@@ -1,3 +1,10 @@
+export function fixURL(url) {
+  let result = url.replace('://', '###')
+  result = result.replaceAll('//', '/')
+  result = result.replaceAll('###', '://')
+  return result
+}
+
 export function formatMoney(amount) {
   let buffer = ''
   let result = ''

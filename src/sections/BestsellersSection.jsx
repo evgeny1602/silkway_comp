@@ -9,7 +9,7 @@ import { ShowMoreButtonContainer } from '../ui/ShowMoreButtonContainer'
 import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
 import { getGlobalData } from '@/utils'
-import { imagesUrlPrefix } from '@/config'
+import { imagesUrlPrefix, fixURL } from '@/config'
 import { formatMoney } from '../utils'
 
 function BestsellerCard({ item }) {
@@ -21,7 +21,7 @@ function BestsellerCard({ item }) {
   return (
     <CardContainer
       onClick={() => {
-        location.href = imagesUrlPrefix + item.URL
+        location.href = fixURL(imagesUrlPrefix + item.URL)
       }}
     >
       <CardBadge variant="discount" />

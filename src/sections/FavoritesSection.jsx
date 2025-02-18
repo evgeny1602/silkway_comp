@@ -7,7 +7,7 @@ import { CardProgressBar } from '../ui/CardProgressBar'
 import { ShowMoreWithCountButton } from '../ui/ShowMoreWithCountButton'
 import { MoreButton } from '@/ui/MoreButton'
 import { getGlobalData, formatMoney } from '@/utils'
-import { imagesUrlPrefix } from '@/config'
+import { imagesUrlPrefix, fixURL } from '@/config'
 
 function FavoritesCard({ item, className }) {
   let priceClasses = 'font-sans font-bold text-base'
@@ -20,7 +20,7 @@ function FavoritesCard({ item, className }) {
     <CardContainer
       className={className}
       onClick={() => {
-        location.href = imagesUrlPrefix + item.URL
+        location.href = fixURL(imagesUrlPrefix + item.URL)
       }}
     >
       <CardBadge variant="sale" />
