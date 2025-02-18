@@ -10,7 +10,7 @@ import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
 import { getGlobalData } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
-import { formatMoney } from '../utils'
+import { formatMoney, fixURL } from '../utils'
 
 function BestsellerCard({ item }) {
   let priceClasses = 'font-sans font-bold text-base'
@@ -21,7 +21,7 @@ function BestsellerCard({ item }) {
   return (
     <CardContainer
       onClick={() => {
-        location.href = imagesUrlPrefix + item.URL
+        location.href = fixURL(imagesUrlPrefix + item.URL)
       }}
     >
       <CardBadge variant="discount" />

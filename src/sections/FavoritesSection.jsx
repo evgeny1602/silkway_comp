@@ -6,7 +6,7 @@ import { CardBadge } from '../ui/CardBadge'
 import { CardProgressBar } from '../ui/CardProgressBar'
 import { ShowMoreWithCountButton } from '../ui/ShowMoreWithCountButton'
 import { MoreButton } from '@/ui/MoreButton'
-import { getGlobalData, formatMoney } from '@/utils'
+import { getGlobalData, formatMoney, fixURL } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
 
 function FavoritesCard({ item, className }) {
@@ -20,7 +20,7 @@ function FavoritesCard({ item, className }) {
     <CardContainer
       className={className}
       onClick={() => {
-        location.href = imagesUrlPrefix + item.URL
+        location.href = fixURL(imagesUrlPrefix + item.URL)
       }}
     >
       <CardBadge variant="sale" />
