@@ -8,8 +8,8 @@ import { CardListContainer } from '../ui/CardListContainer'
 import { ShowMoreButtonContainer } from '../ui/ShowMoreButtonContainer'
 import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
-import { getGlobalData } from '@/utils'
-import { imagesUrlPrefix, fixURL } from '@/config'
+import { getGlobalData, fixURL } from '@/utils'
+import { imagesUrlPrefix } from '@/config'
 import { formatMoney } from '../utils'
 
 function BestsellerCard({ item }) {

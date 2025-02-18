@@ -9,8 +9,8 @@ import { ShowMoreButtonContainer } from '../ui/ShowMoreButtonContainer'
 import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
 import { CardProgressBar } from '../ui/CardProgressBar'
-import { getGlobalData } from '@/utils'
-import { imagesUrlPrefix, fixURL } from '@/config'
+import { getGlobalData, fixURL } from '@/utils'
+import { imagesUrlPrefix } from '@/config'
 import { formatMoney } from '../utils'
 
 function RestsaleCard({ item }) {

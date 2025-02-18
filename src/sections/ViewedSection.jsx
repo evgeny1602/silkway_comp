@@ -6,8 +6,8 @@ import { CardBadge } from '../ui/CardBadge'
 import { CardProgressBar } from '../ui/CardProgressBar'
 import { ShowMoreWithCountButton } from '../ui/ShowMoreWithCountButton'
 import { MoreButton } from '@/ui/MoreButton'
-import { getGlobalData, formatMoney } from '@/utils'
-import { imagesUrlPrefix, fixURL } from '@/config'
+import { getGlobalData, formatMoney, fixURL } from '@/utils'
+import { imagesUrlPrefix } from '@/config'
 
 function ViewedCard({ item, className }) {
   let priceClasses = 'font-sans font-bold text-base'
