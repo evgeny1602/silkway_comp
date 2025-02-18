@@ -11,7 +11,7 @@ import { CardBadge } from '../ui/CardBadge'
 import { CardProgressBar } from '../ui/CardProgressBar'
 import { getGlobalData } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
-import { formatMoney, fixURL } from '../utils'
+import { formatMoney } from '../utils'
 
 function RestsaleCard({ item }) {
   let priceClasses = 'font-sans font-bold text-base'
@@ -22,7 +22,7 @@ function RestsaleCard({ item }) {
   return (
     <CardContainer
       onClick={() => {
-        location.href = fixURL(imagesUrlPrefix + item.URL)
+        location.href = imagesUrlPrefix + item.URL
       }}
     >
       <CardBadge variant="sale" />

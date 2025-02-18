@@ -1,7 +1,3 @@
-export function fixURL(url) {
-  return url.replaceAll('//', '/')
-}
-
 export function formatMoney(amount) {
   let buffer = ''
   let result = ''
