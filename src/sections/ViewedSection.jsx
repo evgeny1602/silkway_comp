@@ -1,26 +1,24 @@
-import { SectionContainer } from '@/ui/SectionContainer'
-import { SectionInnerContainer } from '@/ui/SectionInnerContainer'
-import { MoreButton } from '@/ui/MoreButton'
-import { MoreButtonSmall } from '@/ui/MoreButtonSmall'
 import { CardsGroupContainer } from '../ui/CardsGroupContainer'
 import { CardsGroupHeader } from '../ui/CardsGroupHeader'
-import { CardListContainer } from '../ui/CardListContainer'
-import { ShowMoreButtonContainer } from '../ui/ShowMoreButtonContainer'
+import { CardListContainer3 } from '../ui/CardListContainer3'
 import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
 import { CardProgressBar } from '../ui/CardProgressBar'
-import { getGlobalData } from '@/utils'
+import { ShowMoreWithCountButton } from '../ui/ShowMoreWithCountButton'
+import { MoreButton } from '@/ui/MoreButton'
+import { getGlobalData, formatMoney } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
-import { formatMoney } from '../utils'
 
-function RestsaleCard({ item }) {
+function ViewedCard({ item, className }) {
   let priceClasses = 'font-sans font-bold text-base'
+
   if (item.OLD_PRICE) {
     priceClasses += ' text-silkway-red'
   }
 
   return (
     <CardContainer
+      className={className}
       onClick={() => {
         location.href = imagesUrlPrefix + item.URL
       }}
@@ -53,39 +51,43 @@ function RestsaleCard({ item }) {
   )
 }
 
-export function RestsaleSection({ itemsCount = 6 }) {
-  const { items, pageUrl } = getGlobalData('restSaleSectionData')
+export function ViewedSection({ itemsCount = 3 }) {
+  const { total, items, pageUrl } = getGlobalData('viewedSectionData')
 
   const goPageUrl = () => {
     location.href = pageUrl
   }
 
   return (
-    <SectionContainer className="pb-[70px] max-[874px]:pb-[50px]">
-      <SectionInnerContainer>
-        <CardsGroupContainer>
-          <CardsGroupHeader>Распродажа остатков</CardsGroupHeader>
-          <CardListContainer>
-            {items.slice(0, itemsCount).map((item) => (
-              <RestsaleCard
-                item={item}
-                key={item.URL}
-              />
-            ))}
-            <ShowMoreButtonContainer>
-              <MoreButton
-                className="min-[1210px]:hidden"
-                onClick={goPageUrl}
-                text="Показать еще"
-              />
-              <MoreButtonSmall
-                className="max-[1210px]:hidden"
-                onClick={goPageUrl}
-              />
-            </ShowMoreButtonContainer>
-          </CardListContainer>
-        </CardsGroupContainer>
-      </SectionInnerContainer>
-    </SectionContainer>
+    <CardsGroupContainer>
+      <div className="flex flex-nowrap justify-between">
+        <CardsGroupHeader>Просмотрено ранее</CardsGroupHeader>
+        <ShowMoreWithCountButton
+          onClick={goPageUrl}
+          total={total}
+        />
+      </div>
+
+      <CardListContainer3>
+        {items.slice(0, itemsCount).map((item) => (
+          <ViewedCard
+            item={item}
+            key={item.URL}
+          />
+        ))}
+        <ViewedCard
+          className="min-[700px]:hidden"
+          item={items[3]}
+        />
+      </CardListContainer3>
+
+      <div className="flex flex-nowrap justify-center">
+        <MoreButton
+          className="min-[1210px]:hidden"
+          onClick={goPageUrl}
+          text="Показать еще"
+        />
+      </div>
+    </CardsGroupContainer>
   )
 }

@@ -54,6 +54,21 @@ const initRestsaleSection = async () => {
   )
 }
 
+const initFavoritesViewedSection = async () => {
+  const el = document.getElementById('favorite-viewed-section')
+  if (!el) {
+    return
+  }
+  const { FavoritesViewedSection } = await import(
+    './sections/FavoritesViewedSection'
+  )
+  createRoot(el).render(
+    <StrictMode>
+      <FavoritesViewedSection />
+    </StrictMode>
+  )
+}
+
 const initFooter = async () => {
   const el = document.getElementById('footer')
   if (!el) {
@@ -71,4 +86,5 @@ intHeader()
 initHeroSection()
 initBestsellersSection()
 initRestsaleSection()
+initFavoritesViewedSection()
 initFooter()
