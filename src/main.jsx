@@ -15,6 +15,19 @@ const intHeader = async () => {
   )
 }
 
+const intBreadcrumbs = async () => {
+  const el = document.getElementById('breadcrumbs-section')
+  if (!el) {
+    return
+  }
+  const { Breadcrumbs } = await import('./sections/Breadcrumbs')
+  createRoot(el).render(
+    <StrictMode>
+      <Breadcrumbs />
+    </StrictMode>
+  )
+}
+
 const initHeroSection = async () => {
   const el = document.getElementById('hero-section')
   if (!el) {
@@ -83,6 +96,7 @@ const initFooter = async () => {
 }
 
 intHeader()
+intBreadcrumbs()
 initHeroSection()
 initBestsellersSection()
 initRestsaleSection()
