@@ -28,6 +28,19 @@ const intBreadcrumbs = async () => {
   )
 }
 
+const intSidebar = async () => {
+  const el = document.getElementById('sidebar')
+  if (!el) {
+    return
+  }
+  const { Sidebar } = await import('./sections/Sidebar')
+  createRoot(el).render(
+    <StrictMode>
+      <Sidebar />
+    </StrictMode>
+  )
+}
+
 const initHeroSection = async () => {
   const el = document.getElementById('hero-section')
   if (!el) {
@@ -97,6 +110,7 @@ const initFooter = async () => {
 
 intHeader()
 intBreadcrumbs()
+intSidebar()
 initHeroSection()
 initBestsellersSection()
 initRestsaleSection()

@@ -22,7 +22,7 @@ export default defineConfig({
     proxy: {
       '/bitrix/components/dresscode/sale.geo.positiion/ajax.php':
         silkwayProxyConfig,
-      '/bitrix/components/dresscode/search.line/ajax.php': silkwayProxyConfig,
+      '/ajax2.php': silkwayProxyConfig,
     },
   },
   resolve: {

@@ -1,4 +1,4 @@
-import { searchProductUrl } from '../config'
+import { searchProductUrl, bitrixIBlockID } from '../config'
 
 export const autocomplete = async (query) => {
   if (!query) {
@@ -10,9 +10,14 @@ export const autocomplete = async (query) => {
   }
 
   const body = new FormData()
-  body.append('SEARCH_QUERY', query)
+  body.append('iblock_id', bitrixIBlockID)
+  body.append('action', 'search')
+  body.append('q', query)
+  body.append('page_size', 20)
+  body.append('page_num', 1)
 
   const resp = await fetch(searchProductUrl, { method: 'POST', body })
+
   if (!resp.ok) {
     throw new Error(resp.statusText)
   }
