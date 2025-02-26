@@ -3,9 +3,23 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { CardListContainer } from '../ui/CardListContainer'
 import { GeneralCard } from '../ui/GeneralCard'
 
-import { getGlobalData, fixURL } from '../utils'
+import { getGlobalData, fixURL, itemsCountPostfix } from '../utils'
 
 import { imagesUrlPrefix } from '../config'
+
+function ResultsInfo({ resultsCount }) {
+  const postfix = itemsCountPostfix(resultsCount, [
+    'результат',
+    'результата',
+    'результатов',
+  ])
+
+  return (
+    <div className="border-b border-silkway-dark-milk font-sans text-sm text-silkway-dark-chocolate pb-[15px] mb-[15px]">
+      {resultsCount} {postfix}
+    </div>
+  )
+}
 
 export function SearchResults() {
   const { items } = getGlobalData('searchResults')
@@ -13,6 +27,7 @@ export function SearchResults() {
   return (
     <SectionContainer className="pb-[70px]">
       <SectionInnerContainer>
+        <ResultsInfo resultsCount={items.length} />
         <CardListContainer>
           {items.map((item) => (
             <GeneralCard
