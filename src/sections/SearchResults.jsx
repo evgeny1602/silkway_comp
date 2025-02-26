@@ -22,7 +22,7 @@ function ResultsInfo({ resultsCount }) {
 
 function SearchResultsContainer({ children }) {
   return (
-    <div className="flex flex-wrap justify-start gap-[30px] max-[700px]:gap-[10px]">
+    <div className="flex flex-wrap gap-[30px] max-[700px]:gap-[10px]">
       {children}
     </div>
   )
