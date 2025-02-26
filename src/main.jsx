@@ -108,6 +108,19 @@ const initFooter = async () => {
   )
 }
 
+const initSearchResults = async () => {
+  const el = document.getElementById('search-results')
+  if (!el) {
+    return
+  }
+  const { SearchResults } = await import('./sections/SearchResults')
+  createRoot(el).render(
+    <StrictMode>
+      <SearchResults />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intSidebar()
@@ -116,3 +129,4 @@ initBestsellersSection()
 initRestsaleSection()
 initFavoritesViewedSection()
 initFooter()
+initSearchResults()

@@ -8,9 +8,14 @@ import { CardListContainer } from '../ui/CardListContainer'
 import { ShowMoreButtonContainer } from '../ui/ShowMoreButtonContainer'
 import { CardContainer } from '../ui/CardContainer'
 import { CardBadge } from '../ui/CardBadge'
+import { CardDiscount } from '../ui/CardDiscount'
+import { CardImage } from '../ui/CardImage'
+import { CardPrice } from '../ui/CardPrice'
+import { CardOldPrice } from '../ui/CardOldPrice'
+import { CardPricesContainer } from '../ui/CardPricesContainer'
+import { CardTitle } from '../ui/CardTitle'
 import { getGlobalData, fixURL } from '@/utils'
 import { imagesUrlPrefix } from '@/config'
-import { formatMoney } from '../utils'
 
 function BestsellerCard({ item }) {
   let priceClasses = 'font-sans font-bold text-base'
@@ -18,34 +23,33 @@ function BestsellerCard({ item }) {
     priceClasses += ' text-silkway-red'
   }
 
+  const handleClick = () => {
+    location.href = fixURL(imagesUrlPrefix + item.URL)
+  }
+
   return (
-    <CardContainer
-      onClick={() => {
-        location.href = fixURL(imagesUrlPrefix + item.URL)
-      }}
-    >
+    <CardContainer onClick={handleClick}>
       <CardBadge variant="discount" />
-      <img
-        src={`${imagesUrlPrefix}${item.DETAIL_PICTURE}`}
-        alt={item.NAME}
-        className="rounded w-full h-full min-w-[135px] max-w-[320px] min-h-[135px] max-h-[320px] object-cover aspect-square"
+
+      <CardImage
+        imgUrl={item.DETAIL_PICTURE}
+        title={item.NAME}
       />
-      <div className="flex flex-nowrap justify-start gap-[5px]">
-        <div className={priceClasses}>{formatMoney(item.PRICE)} ₽</div>
-        {item.OLD_PRICE && (
-          <div className="font-medium text-xs text-silkway-gray line-through">
-            {formatMoney(item.OLD_PRICE)} ₽
-          </div>
-        )}
+
+      <CardPricesContainer>
+        <CardPrice
+          price={item.PRICE}
+          hasOldPrice={item.OLD_PRICE}
+        />
+
+        {item.OLD_PRICE && <CardOldPrice oldPrice={item.OLD_PRICE} />}
 
         {item.DISCOUNT_PERCENT && (
-          <div className="font-medium text-xs text-silkway-red">
-            -{item.DISCOUNT_PERCENT}%
-          </div>
+          <CardDiscount percent={item.DISCOUNT_PERCENT} />
         )}
-      </div>
+      </CardPricesContainer>
 
-      <div className="font-bold text-base">{item.NAME}</div>
+      <CardTitle title={item.NAME} />
     </CardContainer>
   )
 }
