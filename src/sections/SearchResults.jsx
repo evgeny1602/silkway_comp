@@ -1,6 +1,5 @@
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
-import { CardListContainer } from '../ui/CardListContainer'
 import { GeneralCard } from '../ui/GeneralCard'
 
 import { getGlobalData, fixURL, itemsCountPostfix } from '../utils'
@@ -21,6 +20,14 @@ function ResultsInfo({ resultsCount }) {
   )
 }
 
+function SearchResultsContainer({ children }) {
+  return (
+    <div className="flex flex-wrap gap-[30px] max-[700px]:gap-[10px]">
+      {children}
+    </div>
+  )
+}
+
 export function SearchResults() {
   const { items } = getGlobalData('searchResults')
 
@@ -28,7 +35,7 @@ export function SearchResults() {
     <SectionContainer className="pb-[70px]">
       <SectionInnerContainer>
         <ResultsInfo resultsCount={items.length} />
-        <CardListContainer>
+        <SearchResultsContainer>
           {items.map((item) => (
             <GeneralCard
               key={item.URL}
@@ -43,7 +50,7 @@ export function SearchResults() {
               badge={item.BADGE || null}
             />
           ))}
-        </CardListContainer>
+        </SearchResultsContainer>
       </SectionInnerContainer>
     </SectionContainer>
   )
