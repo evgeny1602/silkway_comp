@@ -41,14 +41,14 @@ export function itemsCountPostfix(itemsCount, postfixVariants) {
   if (lastTwoDigits > 4 && lastTwoDigits < 21) {
     return postfixVariants[2]
   }
-  if (lastOneDigit == 0) {
-    return postfixVariants[2]
-  }
   if (lastOneDigit == 1) {
     return postfixVariants[0]
   }
   if ([2, 3, 4].includes(lastOneDigit)) {
     return postfixVariants[1]
+  }
+  if ([5, 6, 7, 8, 9, 0].includes(lastOneDigit)) {
+    return postfixVariants[2]
   }
 }
 
@@ -88,4 +88,29 @@ export const getSlugFromUrl = (url) => {
     slug = slug.slice(0, -1)
   }
   return slug.split('/').at(-1)
+}
+
+export const uniqueArr = (arr) =>
+  arr.filter((v, idx, a) => a.indexOf(v) === idx)
+
+export const calcPaginationPages = (pagesTotal, curPage) => {
+  let pages = [
+    1,
+    Math.max(1, curPage - 1),
+    curPage,
+    Math.min(pagesTotal, curPage + 1),
+    pagesTotal,
+  ]
+
+  pages = uniqueArr(pages)
+
+  let pages2 = []
+  for (let i = 0; i < pages.length - 1; i++) {
+    pages2.push(pages[i])
+    if (pages[i + 1] - pages[i] > 1) {
+      pages2.push(-1)
+    }
+  }
+  pages2.push(pages.at(-1))
+  return pages2
 }

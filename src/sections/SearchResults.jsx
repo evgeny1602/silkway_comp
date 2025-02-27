@@ -1,6 +1,7 @@
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { GeneralCard } from '../ui/GeneralCard'
+import { Pagination } from '../ui/Pagination'
 
 import { getGlobalData, fixURL, itemsCountPostfix } from '../utils'
 
@@ -31,10 +32,15 @@ function SearchResultsContainer({ children }) {
 export function SearchResults() {
   const { items } = getGlobalData('searchResults')
 
+  const handlePageClick = (pageNum) => {
+    console.log('Search result page clicked', pageNum)
+  }
+
   return (
     <SectionContainer className="pb-[70px]">
       <SectionInnerContainer>
         <ResultsInfo resultsCount={items.length} />
+
         <SearchResultsContainer>
           {items.map((item) => (
             <GeneralCard
@@ -51,6 +57,13 @@ export function SearchResults() {
             />
           ))}
         </SearchResultsContainer>
+
+        <Pagination
+          itemsTotal={100}
+          pageSize={10}
+          initPageNum={1}
+          onPageClick={handlePageClick}
+        />
       </SectionInnerContainer>
     </SectionContainer>
   )
