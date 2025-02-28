@@ -8,6 +8,9 @@ import { Pagination } from '../ui/Pagination'
 import { getGlobalData, fixURL, itemsCountPostfix } from '../utils'
 
 import { imagesUrlPrefix } from '../config'
+
+import { fetchData } from '../api/fetcher'
+
 import { useState } from 'react'
 
 function ResultsInfo({ resultsCount, isLoading }) {
@@ -59,36 +62,19 @@ export function SearchResults() {
   const [itemsTotal, setItemsTotal] = useState(initItemsTotal)
   const [isLoading, setIsLoading] = useState(false)
 
-  const fetchData = async (url, method, reqData) => {
-    const body = new FormData()
-
-    for (let k in reqData) {
-      body.append(k, reqData[k])
-    }
-
-    setIsLoading(true)
-
-    const resp = await fetch(url, { method, body })
-
-    if (!resp.ok) {
-      throw new Error(resp.statusText)
-    }
-
-    const json = await resp.json()
-
-    setIsLoading(false)
-
-    return json
-  }
-
   const handlePageClick = async (pageNum) => {
-    const json = await fetchData(url, 'post', {
-      action,
-      iblock_id: iblockId,
-      q,
-      page_size: pageSize,
-      page_num: pageNum,
-    })
+    const json = await fetchData(
+      url,
+      'post',
+      {
+        action,
+        iblock_id: iblockId,
+        q,
+        page_size: pageSize,
+        page_num: pageNum,
+      },
+      setIsLoading
+    )
     setItems(json.items)
     setItemsTotal(json.items_total)
   }
