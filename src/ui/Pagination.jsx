@@ -70,15 +70,23 @@ function PageButton({ isActive = false, onClick, pageNum }) {
   )
 }
 
-export function Pagination({ itemsTotal, pageSize, initPageNum, onPageClick }) {
+export function Pagination({
+  itemsTotal,
+  pageSize,
+  initPageNum,
+  onPageClick,
+  isClickable,
+}) {
   const [page, setPage] = useState(initPageNum)
 
   const pagesTotal = Math.ceil(itemsTotal / pageSize)
   const pages = calcPaginationPages(pagesTotal, page)
 
   const handlePageClick = (pageNum) => {
-    setPage(pageNum)
-    onPageClick(pageNum)
+    if (isClickable) {
+      setPage(pageNum)
+      onPageClick(pageNum)
+    }
   }
 
   const handlePrevClick = () => {
