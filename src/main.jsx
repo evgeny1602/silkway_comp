@@ -134,6 +134,19 @@ const initCategoryItems = async () => {
   )
 }
 
+const initCatalogItems = async () => {
+  const el = document.getElementById('catalog-items')
+  if (!el) {
+    return
+  }
+  const { CatalogItems } = await import('./sections/CatalogItems')
+  createRoot(el).render(
+    <StrictMode>
+      <CatalogItems />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intSidebar()
@@ -144,3 +157,4 @@ initFavoritesViewedSection()
 initFooter()
 initSearchResults()
 initCategoryItems()
+initCatalogItems()
