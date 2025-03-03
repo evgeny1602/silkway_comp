@@ -31,7 +31,7 @@ function FavoritesCard({ item, className }) {
       />
       <div className="flex flex-nowrap justify-start gap-[5px]">
         <div className={priceClasses}>{formatMoney(item.PRICE)} ₽</div>
-        {item.OLD_PRICE && (
+        {(item.OLD_PRICE || false) && (
           <div className="font-medium text-xs text-silkway-gray line-through">
             {formatMoney(item.OLD_PRICE)} ₽
           </div>
@@ -40,11 +40,11 @@ function FavoritesCard({ item, className }) {
 
       <div className="font-bold text-base">{item.NAME}</div>
 
-      {item.PROGRESS_PERCENT && (
+      {(item.PROGRESS_PERCENT || false) && (
         <CardProgressBar percent={item.PROGRESS_PERCENT} />
       )}
 
-      {item.QUANTITY && (
+      {(item.QUANTITY || false) && (
         <div className="text-base">Осталось {item.QUANTITY} шт.</div>
       )}
     </CardContainer>
