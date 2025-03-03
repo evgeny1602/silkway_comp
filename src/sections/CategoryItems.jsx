@@ -1,10 +1,10 @@
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { GeneralCard } from '../ui/GeneralCard'
-import { Pagination } from '../ui/Pagination'
 import { SearchResultsLoader } from '../ui/SearchResultsLoader'
 import { ResultsInfo } from '../ui/ResultsInfo'
 import { SearchResultsContainer } from '../ui/SearchResultsContainer'
+import { Pagination } from '../ui/Pagination'
 
 import { getGlobalData, fixURL } from '../utils'
 
@@ -14,17 +14,17 @@ import { fetchData } from '../api/fetcher'
 
 import { useState } from 'react'
 
-export function SearchResults() {
+export function CategoryItems() {
   const {
     items: initItems,
     items_total: initItemsTotal,
     page_size: pageSize,
     url,
     iblock_id: iblockId,
+    section_id: sectionId,
     action,
-    q,
     page_num: pageNum,
-  } = getGlobalData('searchResults')
+  } = getGlobalData('categoryItemsData')
 
   const [items, setItems] = useState(initItems)
   const [itemsTotal, setItemsTotal] = useState(initItemsTotal)
@@ -37,7 +37,7 @@ export function SearchResults() {
       {
         action,
         iblock_id: iblockId,
-        q,
+        section_id: sectionId,
         page_size: pageSize,
         page_num: pageNum,
       },
@@ -48,7 +48,7 @@ export function SearchResults() {
   }
 
   return (
-    <SectionContainer className="pb-[70px]">
+    <SectionContainer>
       <SectionInnerContainer>
         <ResultsInfo
           resultsCount={itemsTotal}

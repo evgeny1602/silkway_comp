@@ -121,6 +121,19 @@ const initSearchResults = async () => {
   )
 }
 
+const initCategoryItems = async () => {
+  const el = document.getElementById('category-items')
+  if (!el) {
+    return
+  }
+  const { CategoryItems } = await import('./sections/CategoryItems')
+  createRoot(el).render(
+    <StrictMode>
+      <CategoryItems />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intSidebar()
@@ -130,3 +143,4 @@ initRestsaleSection()
 initFavoritesViewedSection()
 initFooter()
 initSearchResults()
+initCategoryItems()
