@@ -1,14 +1,14 @@
 import { Children, useState, useRef } from 'react'
 
-export function AccordionTitleText({ children }) {
-  return <div>{children}</div>
+export function AccordionTitleText({ children, className }) {
+  return <div className={className}>{children}</div>
 }
 
-export function AccordionTitleArrow({ children }) {
-  return <div>{children}</div>
+export function AccordionTitleArrow({ children, className }) {
+  return <div className={className}>{children}</div>
 }
 
-export function AccordionContent({ children, isOpen }) {
+export function AccordionContent({ children, isOpen, className = null }) {
   const contentRef = useRef()
 
   return (
@@ -19,18 +19,28 @@ export function AccordionContent({ children, isOpen }) {
         isOpen ? { height: contentRef.current.scrollHeight } : { height: '0px' }
       }
     >
-      {children}
+      <div className={className}>{children}</div>
     </div>
   )
 }
 
-export function AccordionTitle({ children, onClick, isOpen }) {
+export function AccordionTitle({
+  children,
+  onClick,
+  isOpen,
+  className = null,
+}) {
   const style = isOpen ? { rotate: '180deg' } : null
+
+  let classes = 'flex flex-nowrap justify-between w-full cursor-pointer'
+  if (className) {
+    classes += ' ' + className
+  }
 
   return (
     <div
       onClick={onClick}
-      className="flex flex-nowrap justify-between w-full"
+      className={classes}
     >
       <div>
         {Children.map(children, (child) => {
@@ -44,9 +54,17 @@ export function AccordionTitle({ children, onClick, isOpen }) {
           }
         })}
       </div>
+
       {Children.map(children, (child) => {
         if (child.type == AccordionTitleArrow) {
-          return <div style={style}>{child.props.children}</div>
+          return (
+            <div
+              className="transition-all"
+              style={style}
+            >
+              {child.props.children}
+            </div>
+          )
         }
       })}
     </div>

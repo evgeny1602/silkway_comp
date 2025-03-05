@@ -114,3 +114,22 @@ export const calcPaginationPages = (pagesTotal, curPage) => {
   pages2.push(pages.at(-1))
   return pages2
 }
+
+export const buildPriceFilter = (priceIntervals) => {
+  let result = {
+    title: 'Цена',
+    code: 'price',
+    options: [],
+  }
+  for (let { start, end, total } of priceIntervals) {
+    result.options.push({
+      code: `${start}_${end}`,
+      text: `${start} - ${end} ₽`,
+      total,
+    })
+  }
+  result.options[0].text = 'До ' + result.options[0].text.split(' - ')[1]
+  result.options.at(-1).text =
+    'Более ' + result.options.at(-1).text.split(' - ')[0] + ' ₽'
+  return result
+}
