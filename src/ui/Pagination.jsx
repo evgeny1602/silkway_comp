@@ -75,12 +75,13 @@ function PageButton({ isActive = false, onClick, pageNum }) {
 
 export function Pagination() {
   const filters = useProductsFiltersStore((state) => state.filters)
+  const q = useProductsFiltersStore((state) => state.q)
   const pageSize = useProductsFiltersStore((state) => state.pageSize)
   const pageNum = useProductsFiltersStore((state) => state.pageNum)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
   const setPageNum = useProductsFiltersStore((state) => state.setPageNum)
 
-  const { data, isLoading } = useProductsTotal(filters, sectionId)
+  const { data, isLoading } = useProductsTotal(filters, sectionId, q)
 
   const itemsTotal = data?.total || 0
 

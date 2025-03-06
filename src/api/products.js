@@ -2,7 +2,8 @@ export const fetchItems = async (
   filters = null,
   pageSize,
   pageNum,
-  sectionId = null
+  sectionId = null,
+  q = null
 ) => {
   const body = new FormData()
   body.append('action', 'filter_items')
@@ -14,11 +15,18 @@ export const fetchItems = async (
   if (filters) {
     body.append('filters', JSON.stringify(filters))
   }
+  if (q) {
+    body.append('q', q)
+  }
   const resp = await fetch('/ajax2.php', { method: 'POST', body })
   return await resp.json()
 }
 
-export const fetchItemsTotal = async (filters = null, sectionId = null) => {
+export const fetchItemsTotal = async (
+  filters = null,
+  sectionId = null,
+  q = null
+) => {
   const body = new FormData()
   body.append('action', 'filter_items_total')
   if (sectionId) {
@@ -26,6 +34,9 @@ export const fetchItemsTotal = async (filters = null, sectionId = null) => {
   }
   if (filters) {
     body.append('filters', JSON.stringify(filters))
+  }
+  if (q) {
+    body.append('q', q)
   }
   const resp = await fetch('/ajax2.php', { method: 'POST', body })
   return await resp.json()

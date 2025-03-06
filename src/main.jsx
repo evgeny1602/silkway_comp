@@ -113,10 +113,12 @@ const initSearchResults = async () => {
   if (!el) {
     return
   }
-  const { SearchResults } = await import('./sections/SearchResults')
+  const { SearchResultsSection } = await import(
+    './sections/SearchResultsSection'
+  )
   createRoot(el).render(
     <StrictMode>
-      <SearchResults />
+      <SearchResultsSection />
     </StrictMode>
   )
 }

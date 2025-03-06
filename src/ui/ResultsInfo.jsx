@@ -15,8 +15,11 @@ function ResultsInfoContainer({ children }) {
 export function ResultsInfo() {
   const filters = useProductsFiltersStore((state) => state.filters)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
+  const q = useProductsFiltersStore((state) => state.q)
 
-  const { data, isLoading, isError } = useProductsTotal(filters, sectionId)
+  console.log({ filters, sectionId, q })
+
+  const { data, isLoading } = useProductsTotal(filters, sectionId, q)
 
   const resultsCount = data?.total || 0
   const postfix = itemsCountPostfix(resultsCount, productsPostifixVariants)

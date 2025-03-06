@@ -14,8 +14,6 @@ export function SearchResults() {
   const pageNum = useProductsFiltersStore((state) => state.pageNum)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
 
-  console.log(sectionId)
-
   const { data, isLoading } = useProducts(filters, pageSize, pageNum, sectionId)
 
   const items = data?.items || []

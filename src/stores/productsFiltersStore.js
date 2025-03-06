@@ -8,12 +8,14 @@ const globalData = window.catalogItemsData
         page_size: 15,
         page_num: 1,
       }
+const globalQ = window.searchResults?.q || false
 
 export const useProductsFiltersStore = create((set, get) => ({
   sectionId: globalData.section_id || null,
   filters: {},
   pageSize: globalData.page_size,
   pageNum: globalData.page_num,
+  q: globalQ,
 
   isFiltered: () => {
     const filters = get().filters
