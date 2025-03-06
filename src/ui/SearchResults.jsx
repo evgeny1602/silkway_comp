@@ -10,11 +10,18 @@ import { BlankCard } from '@/ui/BlankCard'
 
 export function SearchResults() {
   const filters = useProductsFiltersStore((state) => state.filters)
+  const q = useProductsFiltersStore((state) => state.q)
   const pageSize = useProductsFiltersStore((state) => state.pageSize)
   const pageNum = useProductsFiltersStore((state) => state.pageNum)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
 
-  const { data, isLoading } = useProducts(filters, pageSize, pageNum, sectionId)
+  const { data, isLoading } = useProducts(
+    filters,
+    pageSize,
+    pageNum,
+    sectionId,
+    q
+  )
 
   const items = data?.items || []
 
