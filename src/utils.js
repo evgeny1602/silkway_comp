@@ -133,3 +133,8 @@ export const buildPriceFilter = (priceIntervals) => {
     'Более ' + result.options.at(-1).text.split(' - ')[0] + ' ₽'
   return result
 }
+
+export const getFilterDescriptions = () => {
+  const { price_intervals } = getGlobalData('sidebarData')
+  return [buildPriceFilter(price_intervals)]
+}

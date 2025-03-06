@@ -1,6 +1,6 @@
-import { useProductsFilterStore } from '../stores/productsFilterStore'
+import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 
-import checkIcon from '../assets/check_icon.svg'
+import checkIcon from '@/assets/check_icon.svg'
 
 function CheckButtonAndTextContainer({ children, onClick }) {
   return (
@@ -22,8 +22,8 @@ function CheckButtonContainer({ children }) {
 }
 
 export function CheckButton({ text, filterCode, optionCode }) {
-  const filters = useProductsFilterStore((state) => state.filters)
-  const setFilterOption = useProductsFilterStore(
+  const filters = useProductsFiltersStore((state) => state.filters)
+  const setFilterOption = useProductsFiltersStore(
     (state) => state.setFilterOption
   )
 

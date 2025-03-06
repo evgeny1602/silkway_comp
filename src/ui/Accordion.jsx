@@ -1,4 +1,17 @@
+import accordionIcon from '@/assets/accordion_icon.svg'
+
 import { Children, useState, useRef } from 'react'
+
+export function AccordionArrowDown() {
+  return (
+    <div className="h-full flex flex-nowrap items-center justify-center">
+      <img
+        src={accordionIcon}
+        className="rotate-180"
+      />
+    </div>
+  )
+}
 
 export function AccordionTitleText({ children, className }) {
   return <div className={className}>{children}</div>
