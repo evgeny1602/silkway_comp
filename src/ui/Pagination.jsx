@@ -21,7 +21,7 @@ function PageButtonContainer({
   isHoverable = true,
 }) {
   let classes =
-    'rounded p-[10px] max-[450px]:p-[5px] transition-colors flex justify-center items-center w-[50px] h-[50px] max-[640px]:w-[40px] max-[640px]:h-[40px] max-[450px]:w-[30px] max-[450px]:h-[30px]'
+    'rounded p-[10px] max-[450px]:p-[3px] transition-colors flex justify-center items-center w-[50px] h-[50px] max-[640px]:w-[40px] max-[640px]:h-[40px] max-[450px]:w-[25px] max-[450px]:h-[25px]'
 
   if (isHoverable) {
     classes += ' hover:bg-silkway-light-orange'
