@@ -8,7 +8,7 @@ import pageNextIcon from '@/assets/page_next_icon.svg'
 
 function PaginationContainer({ children }) {
   return (
-    <div className="bg-white rounded w-full flex justify-center items-center gap-[5px] max-[640px]:gap-[2px] h-[68px] max-[640px]:h-[56px] p-[10px] font-sans text-silkway-dark-chocolate text-base max-[640px]:text-xs">
+    <div className="bg-white rounded w-full flex justify-center items-center gap-[5px] max-[640px]:gap-[2px] h-[68px] max-[640px]:h-[56px] p-[10px] max-[640px]:p-[5px] font-sans text-silkway-dark-chocolate text-base max-[640px]:text-xs">
       {children}
     </div>
   )
@@ -21,7 +21,7 @@ function PageButtonContainer({
   isHoverable = true,
 }) {
   let classes =
-    'rounded p-[10px] max-[450px]:p-[3px] transition-colors flex justify-center items-center w-[50px] h-[50px] max-[640px]:w-[40px] max-[640px]:h-[40px] max-[450px]:w-[25px] max-[450px]:h-[25px]'
+    'rounded p-[10px] max-[450px]:p-[3px] transition-colors flex justify-center items-center w-[50px] h-[50px] max-[640px]:w-[40px] max-[640px]:h-[40px] max-[450px]:w-[30px] max-[450px]:h-[30px]'
 
   if (isHoverable) {
     classes += ' hover:bg-silkway-light-orange'
