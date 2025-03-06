@@ -1,7 +1,10 @@
-import { useState } from 'react'
-import pageNextIcon from '../assets/page_next_icon.svg'
+import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
+import { calcPaginationPages } from '@/utils'
+import { useProductsTotal } from '@/hooks/products'
 
-import { calcPaginationPages } from '../utils'
+import { Spinner } from '../ui/Spinner'
+
+import pageNextIcon from '@/assets/page_next_icon.svg'
 
 function PaginationContainer({ children }) {
   return (
@@ -70,47 +73,53 @@ function PageButton({ isActive = false, onClick, pageNum }) {
   )
 }
 
-export function Pagination({
-  itemsTotal,
-  pageSize,
-  initPageNum,
-  onPageClick,
-  isClickable,
-}) {
-  const [page, setPage] = useState(initPageNum)
+export function Pagination() {
+  const filters = useProductsFiltersStore((state) => state.filters)
+  const pageSize = useProductsFiltersStore((state) => state.pageSize)
+  const pageNum = useProductsFiltersStore((state) => state.pageNum)
+  const sectionId = useProductsFiltersStore((state) => state.sectionId)
+  const setPageNum = useProductsFiltersStore((state) => state.setPageNum)
+
+  const { data, isLoading } = useProductsTotal(filters, sectionId)
+
+  const itemsTotal = data?.total || 0
 
   const pagesTotal = Math.ceil(itemsTotal / pageSize)
-  const pages = calcPaginationPages(pagesTotal, page)
+  const pages = calcPaginationPages(pagesTotal, pageNum)
 
   const handlePageClick = (pageNum) => {
-    if (isClickable) {
-      setPage(pageNum)
-      onPageClick(pageNum)
+    if (!isLoading) {
+      setPageNum(pageNum)
     }
   }
 
   const handlePrevClick = () => {
-    handlePageClick(Math.max(1, page - 1))
+    handlePageClick(Math.max(1, pageNum - 1))
   }
 
   const hanldeNextClick = () => {
-    handlePageClick(Math.min(pagesTotal, page + 1))
+    handlePageClick(Math.min(pagesTotal, pageNum + 1))
   }
 
   return (
     <PaginationContainer>
-      {page > 1 && <PagePrev onClick={handlePrevClick} />}
+      {isLoading && <Spinner />}
 
-      {pages.map((p, idx) => (
-        <PageButton
-          key={idx}
-          pageNum={p}
-          onClick={() => handlePageClick(p)}
-          isActive={p == page}
-        />
-      ))}
+      {!isLoading && pageNum > 1 && <PagePrev onClick={handlePrevClick} />}
 
-      {page < pagesTotal && <PageNext onClick={hanldeNextClick} />}
+      {!isLoading &&
+        pages.map((p, idx) => (
+          <PageButton
+            key={idx}
+            pageNum={p}
+            onClick={() => handlePageClick(p)}
+            isActive={p == pageNum}
+          />
+        ))}
+
+      {!isLoading && pageNum < pagesTotal && (
+        <PageNext onClick={hanldeNextClick} />
+      )}
     </PaginationContainer>
   )
 }

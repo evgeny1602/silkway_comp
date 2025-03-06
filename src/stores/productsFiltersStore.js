@@ -10,7 +10,7 @@ const globalData = window.catalogItemsData
       }
 
 export const useProductsFiltersStore = create((set, get) => ({
-  sectionId: globalData.sectionId || null,
+  sectionId: globalData.section_id || null,
   filters: {},
   pageSize: globalData.page_size,
   pageNum: globalData.page_num,
@@ -31,11 +31,12 @@ export const useProductsFiltersStore = create((set, get) => ({
 
   setPageNum: (n) => set((state) => ({ ...state, pageNum: n })),
 
-  resetFilters: () => set((state) => ({ ...state, filters: {} })),
+  resetFilters: () => set((state) => ({ ...state, filters: {}, pageNum: 1 })),
 
   setFilterOption: (filterCode, optionCode, value) =>
     set((state) => ({
       ...state,
+      pageNum: 1,
       filters: {
         ...state.filters,
         [filterCode]: {

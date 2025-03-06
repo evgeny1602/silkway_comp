@@ -126,10 +126,10 @@ const initCategoryItems = async () => {
   if (!el) {
     return
   }
-  const { CategoryItems } = await import('./sections/CategoryItems')
+  const { CatalogItems } = await import('./sections/CatalogItems')
   createRoot(el).render(
     <StrictMode>
-      <CategoryItems />
+      <CatalogItems />
     </StrictMode>
   )
 }

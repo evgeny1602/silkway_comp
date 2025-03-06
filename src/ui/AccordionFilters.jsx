@@ -85,30 +85,6 @@ function ResetFitlerResultsButton() {
   )
 }
 
-function AccordionFilterTitle({ children }) {
-  return (
-    <AccordionTitle className="p-[15px] border-b border-silkway-dark-milk">
-      {children}
-    </AccordionTitle>
-  )
-}
-
-function AccordionFilterTitleText({ children }) {
-  return (
-    <AccordionTitleText className="font-sans text-xl font-bold text-silkway-dark-chocolate">
-      {children}
-    </AccordionTitleText>
-  )
-}
-
-function AccordionFilterContent({ children }) {
-  return (
-    <AccordionContent className="p-[15px] font-sans text-sm text-silkway-dark-chocolate">
-      {children}
-    </AccordionContent>
-  )
-}
-
 export function AccordionFilters() {
   const filterDescriptions = getFilterDescriptions()
 
@@ -117,18 +93,20 @@ export function AccordionFilters() {
       <Accordion>
         {filterDescriptions.map(({ title, options, code }) => (
           <AccordionItem key={title}>
-            <AccordionFilterTitle>
-              <AccordionFilterTitleText>{title}</AccordionFilterTitleText>
+            <AccordionTitle className="p-[15px] border-b border-silkway-dark-milk">
+              <AccordionTitleText className="font-sans text-xl font-bold text-silkway-dark-chocolate">
+                {title}
+              </AccordionTitleText>
               <AccordionTitleArrow>
                 <AccordionArrowDown />
               </AccordionTitleArrow>
-            </AccordionFilterTitle>
-            <AccordionFilterContent>
+            </AccordionTitle>
+            <AccordionContent className="p-[15px] font-sans text-sm text-silkway-dark-chocolate">
               <ProductsFilter
                 filterCode={code}
                 options={options}
               />
-            </AccordionFilterContent>
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

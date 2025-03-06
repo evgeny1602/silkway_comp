@@ -7,11 +7,8 @@ import { ResultsInfo } from '../ui/ResultsInfo'
 import { SearchResultsContainer } from '../ui/SearchResultsContainer'
 
 import { getGlobalData, fixURL } from '../utils'
-
 import { imagesUrlPrefix } from '../config'
-
-import { fetchData } from '../api/fetcher'
-
+import { fetchData } from '@/api/fetcher'
 import { useState } from 'react'
 
 export function SearchResults() {
