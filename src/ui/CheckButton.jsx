@@ -2,6 +2,14 @@ import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 
 import checkIcon from '@/assets/check_icon.svg'
 
+function TotalPill({ children }) {
+  return (
+    <span className="font-sans text-xs text-silkway-dark-chocolate bg-silkway-dark-milk h-[20px] rounded-[10px] px-[8px] py-[2px]">
+      {children}
+    </span>
+  )
+}
+
 function CheckButtonAndTextContainer({ children, onClick }) {
   return (
     <div
@@ -21,7 +29,7 @@ function CheckButtonContainer({ children }) {
   )
 }
 
-export function CheckButton({ text, filterCode, optionCode }) {
+export function CheckButton({ text, filterCode, optionCode, total }) {
   const filters = useProductsFiltersStore((state) => state.filters)
   const setFilterOption = useProductsFiltersStore(
     (state) => state.setFilterOption
@@ -40,8 +48,7 @@ export function CheckButton({ text, filterCode, optionCode }) {
       <CheckButtonContainer>
         {filters[filterCode]?.[optionCode] ? <img src={checkIcon} /> : null}
       </CheckButtonContainer>
-
-      {text}
+      {text} <TotalPill>{total}</TotalPill>
     </CheckButtonAndTextContainer>
   )
 }

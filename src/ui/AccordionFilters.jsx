@@ -21,12 +21,13 @@ function ProductsFilterContainer({ children }) {
 function ProductsFilter({ options, filterCode }) {
   return (
     <ProductsFilterContainer>
-      {options.map(({ code, text }) => (
+      {options.map(({ code, text, total }) => (
         <CheckButton
           filterCode={filterCode}
           optionCode={code}
           key={code}
           text={text}
+          total={total}
         />
       ))}
     </ProductsFilterContainer>
