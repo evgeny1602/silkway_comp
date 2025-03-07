@@ -42,7 +42,7 @@ function FilterButtonsContainer({ children }) {
   )
 }
 
-function ShowFilterResultsButton() {
+function ShowFilterResultsButton({ onClick }) {
   const isFiltered = useProductsFiltersStore((state) => state.isFiltered)
   const filters = useProductsFiltersStore((state) => state.filters)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
@@ -55,17 +55,13 @@ function ShowFilterResultsButton() {
     'товаров',
   ])
 
-  const handleClick = () => {
-    console.log('ShowFilterResultsButton click')
-  }
-
   const buttonText = isFiltered()
     ? `Показать ${data?.total || 0} ${totalPostfix}`
     : 'Показать все товары'
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={onClick}
       className="w-full"
     >
       {isLoading ? <Spinner /> : buttonText}
@@ -86,7 +82,7 @@ function ResetFitlerResultsButton() {
   )
 }
 
-export function AccordionFilters() {
+export function AccordionFilters({ onShowResultsClick }) {
   const filterDescriptions = getFilterDescriptions()
 
   return (
@@ -112,7 +108,7 @@ export function AccordionFilters() {
         ))}
       </Accordion>
       <FilterButtonsContainer>
-        <ShowFilterResultsButton />
+        <ShowFilterResultsButton onClick={onShowResultsClick} />
         <ResetFitlerResultsButton />
       </FilterButtonsContainer>
     </div>

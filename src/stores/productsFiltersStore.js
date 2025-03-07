@@ -16,6 +16,14 @@ export const useProductsFiltersStore = create((set, get) => ({
   pageSize: globalData.page_size,
   pageNum: globalData.page_num,
   q: globalQ,
+  floatY: null,
+  floatX: null,
+
+  setFloatY: (y) => set((state) => ({ ...state, floatY: y })),
+
+  setFloatX: (x) => set((state) => ({ ...state, floatX: x })),
+
+  resetFloatY: () => set((state) => ({ ...state, floatY: null })),
 
   isFiltered: () => {
     const filters = get().filters

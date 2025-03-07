@@ -138,3 +138,21 @@ export const getFilterDescriptions = () => {
   const { price_intervals } = getGlobalData('sidebarData')
   return [buildPriceFilter(price_intervals)]
 }
+
+export const calcClickedY = (elementRef) => {
+  const rect = elementRef.current?.getBoundingClientRect()
+  let y = null
+  if (rect) {
+    y = Math.round(rect.top + rect.height / 2 + window.scrollY)
+  }
+  return y
+}
+
+export const calcElementX = (elementRef) => {
+  const rect = elementRef.current?.getBoundingClientRect()
+  let x = null
+  if (rect) {
+    x = Math.round(rect.right)
+  }
+  return x
+}

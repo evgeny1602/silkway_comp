@@ -5,11 +5,12 @@ export function Button({
   className = null,
   paddingX = null,
   paddingY = null,
+  height = 'standart',
 }) {
   const basePaddingX = 'px-[15px]'
   const basePaddingY = 'py-[5px]'
   const baseClasses =
-    'transition-all duration-200 text-silkway-dark-chocolate rounded items-center border whitespace-nowrap flex flex-nowrap font-sans text-base font-medium justify-center h-[48px]'
+    'transition-all duration-200 text-silkway-dark-chocolate rounded items-center border whitespace-nowrap flex flex-nowrap font-sans text-base font-medium justify-center'
 
   const variantClasses = {
     primary:
@@ -21,6 +22,13 @@ export function Button({
   }
 
   let classes = [baseClasses, variantClasses[variant]].join(' ')
+
+  const heights = {
+    standart: 'h-[48px]',
+    small: 'h-[36px]',
+  }
+
+  classes += ' ' + heights[height]
 
   if (className) {
     classes += ' ' + className

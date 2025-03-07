@@ -1,20 +1,38 @@
 import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 
 import checkIcon from '@/assets/check_icon.svg'
+import { useRef, useState } from 'react'
+import { useProductsTotal } from '../hooks/products'
 
-function TotalPill({ children }) {
+import { Button } from '@/ui/Button'
+import { calcClickedY, calcElementX } from '../utils'
+
+function TotalPill({ children, selfRef }) {
   return (
-    <span className="font-sans text-xs text-silkway-dark-chocolate bg-silkway-dark-milk h-[20px] rounded-[10px] px-[8px] py-[2px]">
+    <span
+      ref={selfRef}
+      className="font-sans text-xs text-silkway-dark-chocolate bg-silkway-dark-milk h-[20px] rounded-[10px] px-[8px] py-[2px]"
+    >
       {children}
     </span>
   )
 }
 
 function CheckButtonAndTextContainer({ children, onClick }) {
+  const selfRef = useRef(null)
+
+  const setFloatY = useProductsFiltersStore((state) => state.setFloatY)
+
+  const handleClick = () => {
+    setFloatY(calcClickedY(selfRef))
+    onClick()
+  }
+
   return (
     <div
-      onClick={onClick}
-      className="flex flex-nowrap items-center justify-start gap-[10px] cursor-pointer rounded font-sans text-sm text-silkway-dark-chocolate hover:text-silkway-orange transition-colors"
+      ref={selfRef}
+      onClick={handleClick}
+      className="relative flex flex-nowrap items-center justify-start gap-[10px] cursor-pointer rounded font-sans text-sm text-silkway-dark-chocolate hover:text-silkway-orange transition-colors"
     >
       {children}
     </div>
@@ -30,25 +48,25 @@ function CheckButtonContainer({ children }) {
 }
 
 export function CheckButton({ text, filterCode, optionCode, total }) {
+  const pillRef = useRef(null)
+
   const filters = useProductsFiltersStore((state) => state.filters)
   const setFilterOption = useProductsFiltersStore(
     (state) => state.setFilterOption
   )
+  const setFloatX = useProductsFiltersStore((state) => state.setFloatX)
+
+  const handleClick = () => {
+    setFloatX(calcElementX(pillRef))
+    setFilterOption(filterCode, optionCode, !filters[filterCode]?.[optionCode])
+  }
 
   return (
-    <CheckButtonAndTextContainer
-      onClick={() =>
-        setFilterOption(
-          filterCode,
-          optionCode,
-          !filters[filterCode]?.[optionCode]
-        )
-      }
-    >
+    <CheckButtonAndTextContainer onClick={handleClick}>
       <CheckButtonContainer>
         {filters[filterCode]?.[optionCode] ? <img src={checkIcon} /> : null}
       </CheckButtonContainer>
-      {text} <TotalPill>{total}</TotalPill>
+      {text} <TotalPill selfRef={pillRef}>{total}</TotalPill>
     </CheckButtonAndTextContainer>
   )
 }
