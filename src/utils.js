@@ -156,3 +156,37 @@ export const calcElementX = (elementRef) => {
   }
   return x
 }
+
+export const getMinMaxPricesFromGlobal = () => {
+  const sidebarData = getGlobalData('sidebarData')
+  const startPrices = sidebarData.price_intervals.map((item) => item.start)
+  const endPrices = sidebarData.price_intervals.map((item) => item.end)
+  return {
+    minPrice: Math.min(...startPrices),
+    maxPrice: Math.max(...endPrices),
+  }
+}
+
+export const findMinMaxPrices = (filters) => {
+  let minPrice = -1
+  let maxPrice = -1
+  const filterOptions = filters.price || {}
+  for (const optionCode in filterOptions) {
+    if (!filterOptions[optionCode]) {
+      continue
+    }
+    const [startPrice, endPrice] = optionCode
+      .split('_')
+      .map((item) => parseFloat(item))
+    if (minPrice < 0 || startPrice < minPrice) {
+      minPrice = startPrice
+    }
+    if (endPrice > maxPrice) {
+      maxPrice = endPrice
+    }
+  }
+  return {
+    minPrice,
+    maxPrice,
+  }
+}

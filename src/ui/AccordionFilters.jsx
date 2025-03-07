@@ -11,18 +11,98 @@ import {
   AccordionTitleArrow,
   AccordionTitleText,
   AccordionArrowDown,
-} from '@/ui/Accordion'
-import { Button } from '@/ui/Button'
-import { CheckButton } from '@/ui/CheckButton'
+} from '../ui/Accordion'
+import { Button } from '../ui/Button'
+import { CheckButton } from '../ui/CheckButton'
 import { Spinner } from '../ui/Spinner'
+import {
+  calcClickedY,
+  calcElementX,
+  findMinMaxPrices,
+  getMinMaxPricesFromGlobal,
+} from '../utils'
+import { useRef, useState } from 'react'
 
 function ProductsFilterContainer({ children }) {
   return <div className="flex flex-nowrap flex-col gap-[15px]">{children}</div>
 }
 
+function RangeInput({ priceType, selfRef, otherRef, onChange }) {
+  const filters = useProductsFiltersStore((state) => state.filters)
+  const resetFilters = useProductsFiltersStore((state) => state.resetFilters)
+  const setFilterOption = useProductsFiltersStore(
+    (state) => state.setFilterOption
+  )
+
+  const globalMinMax = getMinMaxPricesFromGlobal()
+
+  const filterPrices = findMinMaxPrices(filters)
+
+  console.log(filters)
+
+  const handleChange = (e) => {
+    resetFilters()
+    let priceStart = otherRef.current?.value || globalMinMax.minPrice
+    let priceEnd = parseFloat(e.target.value)
+    if (priceType == 'minPrice') {
+      priceStart = parseFloat(e.target.value)
+      priceEnd = otherRef.current?.value || globalMinMax.maxPrice
+    }
+    let optionCode = `${priceStart}_${priceEnd}`
+    if (!optionCode.includes('NaN')) {
+      setFilterOption('price', optionCode, true)
+      onChange()
+    }
+  }
+
+  return (
+    <input
+      ref={selfRef}
+      className="rounded h-[36px] w-[120px] outline-none px-[10px] border border-silkway-dark-milk focus:border-silkway-orange focus:bg-silkway-orange/10 transition-colors"
+      value={filterPrices[priceType] > 0 ? filterPrices[priceType] : ''}
+      onChange={handleChange}
+    />
+  )
+}
+
+function RangeFilter() {
+  const minRef = useRef(null)
+  const maxRef = useRef(null)
+  const containerRef = useRef(null)
+
+  const setFloatY = useProductsFiltersStore((state) => state.setFloatY)
+  const setFloatX = useProductsFiltersStore((state) => state.setFloatX)
+
+  const onChange = () => {
+    setFloatY(calcClickedY(containerRef))
+    setFloatX(calcElementX(containerRef))
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="flex flex-nowrap gap-[20px]"
+    >
+      <RangeInput
+        priceType="minPrice"
+        selfRef={minRef}
+        otherRef={maxRef}
+        onChange={onChange}
+      />
+      <RangeInput
+        priceType="maxPrice"
+        selfRef={maxRef}
+        otherRef={minRef}
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
 function ProductsFilter({ options, filterCode }) {
   return (
     <ProductsFilterContainer>
+      {filterCode == 'price' && <RangeFilter />}
       {options.map(({ code, text, total }) => (
         <CheckButton
           filterCode={filterCode}
