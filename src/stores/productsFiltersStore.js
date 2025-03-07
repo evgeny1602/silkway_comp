@@ -28,6 +28,7 @@ export const useProductsFiltersStore = create((set, get) => ({
   syncPrev: () =>
     set((state) => ({
       ...state,
+      pageNum: 1,
       sectionIdPrev: state.sectionId,
       filtersPrev: state.filters,
       qPrev: state.q,
@@ -60,7 +61,6 @@ export const useProductsFiltersStore = create((set, get) => ({
   setFilterOption: (filterCode, optionCode, value) =>
     set((state) => ({
       ...state,
-      pageNum: 1,
       filters: {
         ...state.filters,
         [filterCode]: {
