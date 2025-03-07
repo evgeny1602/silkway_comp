@@ -1,3 +1,5 @@
+import { useProductsFiltersStore } from '../stores/productsFiltersStore'
+
 import { SectionContainer } from '@/ui/SectionContainer'
 import { SectionInnerContainer } from '@/ui/SectionInnerContainer'
 import { ResultsInfo } from '@/ui/ResultsInfo'
@@ -7,8 +9,12 @@ import { AccordionFilters } from '@/ui/AccordionFilters'
 import { FloatFilterResults } from '../ui/FloatFilterResults'
 
 export function CatalogItems() {
+  const syncPrev = useProductsFiltersStore((state) => state.syncPrev)
+  const resetFloatY = useProductsFiltersStore((state) => state.resetFloatY)
+
   const showResults = () => {
-    console.log('Catalog Items SEction - show results')
+    syncPrev()
+    resetFloatY()
   }
 
   return (

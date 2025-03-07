@@ -13,11 +13,25 @@ const globalQ = window.searchResults?.q || false
 export const useProductsFiltersStore = create((set, get) => ({
   sectionId: globalData.section_id || null,
   filters: {},
+  q: globalQ,
+
+  sectionIdPrev: globalData.section_id || null,
+  filtersPrev: {},
+  qPrev: globalQ,
+
   pageSize: globalData.page_size,
   pageNum: globalData.page_num,
-  q: globalQ,
+
   floatY: null,
   floatX: null,
+
+  syncPrev: () =>
+    set((state) => ({
+      ...state,
+      sectionIdPrev: state.sectionId,
+      filtersPrev: state.filters,
+      qPrev: state.q,
+    })),
 
   setFloatY: (y) => set((state) => ({ ...state, floatY: y })),
 

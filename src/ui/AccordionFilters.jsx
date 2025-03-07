@@ -1,6 +1,8 @@
 import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 import { useProductsTotal } from '../hooks/products'
 import { getFilterDescriptions, itemsCountPostfix } from '@/utils'
+import { productsPostifixVariants } from '../config'
+
 import {
   Accordion,
   AccordionItem,
@@ -47,13 +49,12 @@ function ShowFilterResultsButton({ onClick }) {
   const filters = useProductsFiltersStore((state) => state.filters)
   const sectionId = useProductsFiltersStore((state) => state.sectionId)
 
-  const { data, isLoading, isError } = useProductsTotal(filters, sectionId)
+  const { data, isLoading } = useProductsTotal(filters, sectionId)
 
-  const totalPostfix = itemsCountPostfix(data?.total || 0, [
-    'товар',
-    'товара',
-    'товаров',
-  ])
+  const totalPostfix = itemsCountPostfix(
+    data?.total || 0,
+    productsPostifixVariants
+  )
 
   const buttonText = isFiltered()
     ? `Показать ${data?.total || 0} ${totalPostfix}`

@@ -9,18 +9,18 @@ import { SearchResultsLoader } from '@/ui/SearchResultsLoader'
 import { BlankCard } from '@/ui/BlankCard'
 
 export function SearchResults() {
-  const filters = useProductsFiltersStore((state) => state.filters)
-  const q = useProductsFiltersStore((state) => state.q)
+  const filtersPrev = useProductsFiltersStore((state) => state.filtersPrev)
+  const qPrev = useProductsFiltersStore((state) => state.qPrev)
   const pageSize = useProductsFiltersStore((state) => state.pageSize)
   const pageNum = useProductsFiltersStore((state) => state.pageNum)
-  const sectionId = useProductsFiltersStore((state) => state.sectionId)
+  const sectionIdPrev = useProductsFiltersStore((state) => state.sectionIdPrev)
 
   const { data, isLoading } = useProducts(
-    filters,
+    filtersPrev,
     pageSize,
     pageNum,
-    sectionId,
-    q
+    sectionIdPrev,
+    qPrev
   )
 
   const items = data?.items || []

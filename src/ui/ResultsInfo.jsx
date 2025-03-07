@@ -13,13 +13,15 @@ function ResultsInfoContainer({ children }) {
 }
 
 export function ResultsInfo() {
-  const filters = useProductsFiltersStore((state) => state.filters)
-  const sectionId = useProductsFiltersStore((state) => state.sectionId)
-  const q = useProductsFiltersStore((state) => state.q)
+  const filtersPrev = useProductsFiltersStore((state) => state.filtersPrev)
+  const sectionIdPrev = useProductsFiltersStore((state) => state.sectionIdPrev)
+  const qPrev = useProductsFiltersStore((state) => state.qPrev)
 
-  console.log({ filters, sectionId, q })
-
-  const { data, isLoading } = useProductsTotal(filters, sectionId, q)
+  const { data, isLoading } = useProductsTotal(
+    filtersPrev,
+    sectionIdPrev,
+    qPrev
+  )
 
   const resultsCount = data?.total || 0
   const postfix = itemsCountPostfix(resultsCount, productsPostifixVariants)
