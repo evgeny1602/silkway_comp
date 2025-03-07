@@ -23,7 +23,10 @@ export function CatalogItems() {
         <div className="flex flex-nowrap gap-[30px] max-[1190px]:flex-col">
           <div>
             <div className="w-[370px] max-[1190px]:w-full bg-white rounded p-[15px]">
-              <AccordionFilters onShowResultsClick={showResults} />
+              <AccordionFilters
+                onShowResultsClick={showResults}
+                mainTitle="Фильтр товаров"
+              />
               <FloatFilterResults onClick={showResults} />
             </div>
           </div>

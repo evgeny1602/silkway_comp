@@ -118,7 +118,7 @@ function ProductsFilter({ options, filterCode }) {
 
 function FilterButtonsContainer({ children }) {
   return (
-    <div className="pt-[30px] gap-[15px] w-full flex flex-nowrap flex-col justify-center">
+    <div className="pt-[30px] gap-[15px] w-full flex flex-nowrap flex-col justify-center border-t">
       {children}
     </div>
   )
@@ -163,16 +163,25 @@ function ResetFitlerResultsButton() {
   )
 }
 
-export function AccordionFilters({ onShowResultsClick }) {
+function AccordionMainTitleContainer({ children }) {
+  return (
+    <div className="font-sans text-xl font-bold text-silkway-dark-chocolate pb-[16px] px-[16px]">
+      {children}
+    </div>
+  )
+}
+
+export function AccordionFilters({ mainTitle, onShowResultsClick }) {
   const filterDescriptions = getFilterDescriptions()
 
   return (
     <div>
+      <AccordionMainTitleContainer>{mainTitle}</AccordionMainTitleContainer>
       <Accordion>
         {filterDescriptions.map(({ title, options, code }) => (
           <AccordionItem key={title}>
-            <AccordionTitle className="p-[15px] border-b border-silkway-dark-milk">
-              <AccordionTitleText className="font-sans text-xl font-bold text-silkway-dark-chocolate">
+            <AccordionTitle className="p-[15px] border-t border-silkway-dark-milk">
+              <AccordionTitleText className="font-sans text-base font-bold text-silkway-dark-chocolate">
                 {title}
               </AccordionTitleText>
               <AccordionTitleArrow>
