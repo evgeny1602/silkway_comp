@@ -1,6 +1,6 @@
 import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 import { useProductsTotal } from '../hooks/products'
-import { getFilterDescriptions, itemsCountPostfix } from '@/utils'
+import { getFilterDescriptions, itemsCountPostfix } from '../utils'
 import { productsPostifixVariants } from '../config'
 
 import {
@@ -21,7 +21,7 @@ import {
   findMinMaxPrices,
   getMinMaxPricesFromGlobal,
 } from '../utils'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 function ProductsFilterContainer({ children }) {
   return <div className="flex flex-nowrap flex-col gap-[15px]">{children}</div>
@@ -106,7 +106,7 @@ function ProductsFilter({ options, filterCode }) {
       {options.map(({ code, text, total }) => (
         <CheckButton
           filterCode={filterCode}
-          optionCode={code}
+          optionCode={filterCode == 'price' ? code : text}
           key={code}
           text={text}
           total={total}

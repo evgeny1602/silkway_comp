@@ -66,7 +66,8 @@ export function CheckButton({ text, filterCode, optionCode, total }) {
       <CheckButtonContainer>
         {filters[filterCode]?.[optionCode] ? <img src={checkIcon} /> : null}
       </CheckButtonContainer>
-      {text} <TotalPill selfRef={pillRef}>{total}</TotalPill>
+      {text} <span ref={pillRef}></span>
+      {total >= 0 && <TotalPill>{total}</TotalPill>}
     </CheckButtonAndTextContainer>
   )
 }

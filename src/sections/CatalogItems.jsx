@@ -5,7 +5,7 @@ import { SectionInnerContainer } from '@/ui/SectionInnerContainer'
 import { ResultsInfo } from '@/ui/ResultsInfo'
 import { SearchResults } from '@/ui/SearchResults'
 import { Pagination } from '@/ui/Pagination'
-import { AccordionFilters } from '@/ui/AccordionFilters'
+import { AccordionFilters } from '../ui/AccordionFilters'
 import { FloatFilterResults } from '../ui/FloatFilterResults'
 
 export function CatalogItems() {
