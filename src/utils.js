@@ -142,9 +142,9 @@ export const getFilterDescriptions = () => {
       title: propOption.name,
       code: propOption.code,
       options: propOption.options.map((item) => ({
-        code: textTranslit(item),
-        text: item,
-        total: -1,
+        code: textTranslit(item.code),
+        text: item.text,
+        total: item.total,
       })),
     })
   }

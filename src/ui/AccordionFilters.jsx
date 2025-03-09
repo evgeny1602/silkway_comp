@@ -107,7 +107,7 @@ function ProductsFilter({ options, filterCode }) {
         <CheckButton
           filterCode={filterCode}
           optionCode={filterCode == 'price' ? code : text}
-          key={code}
+          key={`${code}_${text}_${total}`}
           text={text}
           total={total}
         />
