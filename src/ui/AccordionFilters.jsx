@@ -2,6 +2,8 @@ import { useProductsFiltersStore } from '@/stores/productsFiltersStore'
 import { useProductsTotal } from '../hooks/products'
 import { getFilterDescriptions, itemsCountPostfix } from '../utils'
 import { productsPostifixVariants } from '../config'
+import closeIcon from '../assets/cross_icon.svg'
+import settingsIcon from '../assets/settings_icon.svg'
 
 import {
   Accordion,
@@ -21,7 +23,7 @@ import {
   findMinMaxPrices,
   getMinMaxPricesFromGlobal,
 } from '../utils'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 function ProductsFilterContainer({ children }) {
   return <div className="flex flex-nowrap flex-col gap-[15px]">{children}</div>
@@ -165,18 +167,66 @@ function ResetFitlerResultsButton() {
 
 function AccordionMainTitleContainer({ children }) {
   return (
-    <div className="font-sans text-xl font-bold text-silkway-dark-chocolate pb-[16px] px-[16px]">
+    <div className="font-sans text-xl font-bold text-silkway-dark-chocolate  px-[16px]">
       {children}
     </div>
   )
 }
 
+function CloseFilterButton({ onClick }) {
+  return (
+    <img
+      onClick={onClick}
+      src={closeIcon}
+      className="min-[1190px]:hidden p-[4px] rounded mr-[10px] transition-colors cursor-pointer hover:bg-silkway-light-gray"
+    />
+  )
+}
+
+function AccordionHeaderContainer({ children }) {
+  return (
+    <div className="flex flex-nowrap items-center justify-between mb-[16px]">
+      {children}
+    </div>
+  )
+}
+
+function AccordionFilterContainer({ children }) {
+  return (
+    <div className="w-[370px] max-[1190px]:w-full bg-white rounded p-[15px]">
+      {children}
+    </div>
+  )
+}
+
+function ShowFilterButton({ onClick }) {
+  return (
+    <div
+      className="p-[5px] flex flex-nowrap gap-[5px] cursor-pointer w-full font-sans text-xs text-silkway-dark-chocolate"
+      onClick={onClick}
+    >
+      <img src={settingsIcon} />
+      Фильтр
+    </div>
+  )
+}
+
 export function AccordionFilters({ mainTitle, onShowResultsClick }) {
+  const [isVisible, setisVisible] = useState(true)
+
   const filterDescriptions = getFilterDescriptions()
 
+  if (!isVisible) {
+    return <ShowFilterButton onClick={() => setisVisible(true)} />
+  }
+
   return (
-    <div>
-      <AccordionMainTitleContainer>{mainTitle}</AccordionMainTitleContainer>
+    <AccordionFilterContainer>
+      <AccordionHeaderContainer>
+        <AccordionMainTitleContainer>{mainTitle}</AccordionMainTitleContainer>
+        <CloseFilterButton onClick={() => setisVisible(false)} />
+      </AccordionHeaderContainer>
+
       <Accordion>
         {filterDescriptions.map(({ title, options, code }) => (
           <AccordionItem key={title}>
@@ -201,6 +251,6 @@ export function AccordionFilters({ mainTitle, onShowResultsClick }) {
         <ShowFilterResultsButton onClick={onShowResultsClick} />
         <ResetFitlerResultsButton />
       </FilterButtonsContainer>
-    </div>
+    </AccordionFilterContainer>
   )
 }

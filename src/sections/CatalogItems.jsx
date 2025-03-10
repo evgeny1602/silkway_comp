@@ -22,7 +22,7 @@ export function CatalogItems() {
       <SectionInnerContainer>
         <div className="flex flex-nowrap gap-[30px] max-[1190px]:flex-col">
           <div>
-            <div className="w-[370px] max-[1190px]:w-full bg-white rounded p-[15px]">
+            <div>
               <AccordionFilters
                 onShowResultsClick={showResults}
                 mainTitle="Фильтр товаров"
