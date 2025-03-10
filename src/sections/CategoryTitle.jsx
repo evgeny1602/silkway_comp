@@ -11,7 +11,7 @@ export function CategoryTitle() {
   return (
     <SectionContainer>
       <SectionInnerContainer>
-        <div className="py-[45px] font-sans font-semibold text-5xl text-silkway-dark-chocolate">
+        <div className="py-[45px] max-[600px]:py-[20px] font-sans font-semibold text-5xl max-[600px]:text-2xl text-silkway-dark-chocolate">
           {titleText}
         </div>
       </SectionInnerContainer>
