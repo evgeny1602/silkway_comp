@@ -5,7 +5,7 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 
 export function CategoryTitle() {
   let items = getGlobalData('breadcrumbsData')
-  items = items.filter((item) => item.url != '')
+  // items = items.filter((item) => item.url != '')
   const titleText = items.at(-1).name
 
   return (
