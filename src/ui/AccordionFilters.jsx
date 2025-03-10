@@ -202,7 +202,7 @@ function AccordionFilterContainer({ children }) {
 function ShowFilterButton({ onClick }) {
   return (
     <div
-      className="p-[5px] flex flex-nowrap gap-[5px] cursor-pointer w-full font-sans text-xs text-silkway-dark-chocolate"
+      className="p-[5px] flex flex-nowrap justify-start gap-[5px] cursor-pointer w-full font-sans text-xs text-silkway-dark-chocolate"
       onClick={onClick}
     >
       <img src={settingsIcon} />
