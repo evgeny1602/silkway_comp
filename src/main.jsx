@@ -149,6 +149,19 @@ const initCatalogItems = async () => {
   )
 }
 
+const initCategoryTitle = async () => {
+  const el = document.getElementById('category-title')
+  if (!el) {
+    return
+  }
+  const { CategoryTitle } = await import('./sections/CategoryTitle')
+  createRoot(el).render(
+    <StrictMode>
+      <CategoryTitle />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intSidebar()
@@ -160,3 +173,4 @@ initFooter()
 initSearchResults()
 initCategoryItems()
 initCatalogItems()
+initCategoryTitle()

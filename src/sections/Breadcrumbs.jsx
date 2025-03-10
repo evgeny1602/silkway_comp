@@ -38,7 +38,7 @@ function BreadcrumbsContainer({ children }) {
   return (
     <SectionContainer className="pb-[30px]">
       <SectionInnerContainer>
-        <ul className="py-[10px] flex flex-nowrap items-center justify-start gap-[10px] text-silkway-green">
+        <ul className="pt-[20px] flex flex-nowrap items-center justify-start gap-[10px] text-silkway-green">
           {children}
         </ul>
       </SectionInnerContainer>
