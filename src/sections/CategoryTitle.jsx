@@ -5,10 +5,10 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 
 export function CategoryTitle() {
   let items = getGlobalData('breadcrumbsData')
-  const isProductPage = getGlobalData('productdata') ? true : false
   const titleText = items.at(-1).name
+  const isProductPage = getGlobalData('productdata') ? true : false
 
-  if (!isProductPage) {
+  if (isProductPage) {
     return null
   }
 
