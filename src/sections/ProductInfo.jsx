@@ -14,7 +14,7 @@ export function ProductInfo() {
   return (
     <SectionContainer variant="white">
       <SectionInnerContainer>
-        <div className="flex flex-nowrap gap-[30px]">
+        <div className="flex flex-nowrap gap-[30px] justify-start">
           <PictureSlider
             onChange={(idx) => setPictureIdx(idx)}
             pictureUrls={productInfo.picture_urls}
