@@ -66,11 +66,13 @@ export function BannerSlider({ banners, delayMs = 5000, renderDot }) {
   }
 
   const handleTouchMove = (e) => {
+    // console.log(touchPosition)
+
     if (touchPosition === null) {
       return
     }
 
-    const direction = touchPosition - e.touches[0].clientX
+    const direction = touchPosition - e.touches[0].clientY
 
     if (direction > 10) {
       slideNext(true)

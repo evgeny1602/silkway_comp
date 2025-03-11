@@ -41,9 +41,12 @@ function BreadcrumbsItem({ url, name }) {
   )
 }
 
-function BreadcrumbsContainer({ children }) {
+function BreadcrumbsContainer({ children, variant = 'milk' }) {
   return (
-    <SectionContainer className="pb-[30px] max-[600px]:pb-[15px]">
+    <SectionContainer
+      className="pb-[30px] max-[600px]:pb-[15px]"
+      variant={variant}
+    >
       <SectionInnerContainer>
         <ul className="pt-[20px] max-[600px]:pt-[10px] flex flex-nowrap max-[600px]:flex-wrap items-center justify-start gap-[10px] max-[600px]:gap-[5px] text-silkway-green">
           {children}
@@ -53,11 +56,11 @@ function BreadcrumbsContainer({ children }) {
   )
 }
 
-export function Breadcrumbs() {
+export function Breadcrumbs({ variant = 'milk' }) {
   const items = getGlobalData('breadcrumbsData')
 
   return (
-    <BreadcrumbsContainer>
+    <BreadcrumbsContainer variant={variant}>
       {items.map(({ url, name }) => (
         <BreadcrumbsItem
           url={url}

@@ -11,6 +11,9 @@ export function SectionContainer({
   if (variant == 'green') {
     classes += ' bg-silkway-green'
   }
+  if (variant == 'white') {
+    classes += ' bg-white'
+  }
 
   if (className) {
     classes += ' ' + className

@@ -28,6 +28,19 @@ const intBreadcrumbs = async () => {
   )
 }
 
+const intProductBreadcrumbs = async () => {
+  const el = document.getElementById('product-breadcrumbs-section')
+  if (!el) {
+    return
+  }
+  const { ProductBreadcrumbs } = await import('./sections/ProductBreadcrumbs')
+  createRoot(el).render(
+    <StrictMode>
+      <ProductBreadcrumbs />
+    </StrictMode>
+  )
+}
+
 const intSidebar = async () => {
   const el = document.getElementById('sidebar')
   if (!el) {
@@ -162,8 +175,22 @@ const initCategoryTitle = async () => {
   )
 }
 
+const initProductInfo = async () => {
+  const el = document.getElementById('product-info')
+  if (!el) {
+    return
+  }
+  const { ProductInfo } = await import('./sections/ProductInfo')
+  createRoot(el).render(
+    <StrictMode>
+      <ProductInfo />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
+intProductBreadcrumbs()
 intSidebar()
 initHeroSection()
 initBestsellersSection()
@@ -174,3 +201,4 @@ initSearchResults()
 initCategoryItems()
 initCatalogItems()
 initCategoryTitle()
+initProductInfo()
