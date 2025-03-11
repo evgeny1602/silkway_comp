@@ -6,7 +6,7 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 export function CategoryTitle() {
   let items = getGlobalData('breadcrumbsData')
   const titleText = items.at(-1).name
-  const isProductPage = getGlobalData('productdata') ? true : false
+  const isProductPage = getGlobalData('productData') ? true : false
 
   if (isProductPage) {
     return null
