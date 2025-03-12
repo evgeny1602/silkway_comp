@@ -70,6 +70,10 @@ function ProductTitle() {
 function ProductDescription() {
   const { description } = getGlobalData('productData')
 
+  if (!description) {
+    return null
+  }
+
   return (
     <div className="font-sans text-silkway-dark-chocolate mt-[30px] border-t border-silkway-dark-milk">
       <div className="font-bold text-xl my-[15px]">Описание</div>
