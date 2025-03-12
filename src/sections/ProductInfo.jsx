@@ -107,7 +107,7 @@ function ProductCharacteristics() {
 
 function ProductDetails() {
   return (
-    <div className="flex flex-nowrap flex-col max-w-[400px]">
+    <div className="flex flex-nowrap flex-col max-w-[400px] justify-start">
       <ProductTitle />
       <ProductQty />
       <ProductPrice />
