@@ -116,8 +116,9 @@ function PictureSliderContainerOuter({
   if (orientation == 'vertical') {
     return (
       <div
+        style={{ scrollbarWidth: 'none' }}
         ref={selfRef}
-        className="overflow-y-scroll no-scrollbar w-[56px] h-[300px] min-[400px]:w-[81px] min-[1100px]:w-[106px] min-[500px]:h-[400px] min-[1100px]:h-[640px]"
+        className="overflow-y-scroll w-[56px] h-[300px] min-[400px]:w-[81px] min-[1100px]:w-[106px] min-[500px]:h-[400px] min-[1100px]:h-[640px]"
       >
         {children}
       </div>
@@ -127,8 +128,9 @@ function PictureSliderContainerOuter({
   if (orientation == 'horizontal') {
     return (
       <div
+        style={{ scrollbarWidth: 'none' }}
         ref={selfRef}
-        className="overflow-x-scroll no-scrollbar h-[56px] w-[300px] min-[400px]:h-[81px] min-[1100px]:h-[106px] min-[500px]:w-[400px] min-[1100px]:w-[640px]"
+        className="overflow-x-scroll h-[56px] w-[300px] min-[400px]:h-[81px] min-[1100px]:h-[106px] min-[500px]:w-[400px] min-[1100px]:w-[640px]"
       >
         {children}
       </div>
