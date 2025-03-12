@@ -123,7 +123,7 @@ function ProductDetails() {
 
 function ProductInfoContainer({ children }) {
   return (
-    <div className="mb-[60px] flex flex-wrap flex-row justify-start gap-[30px]">
+    <div className="pb-[60px] flex flex-wrap flex-row justify-start gap-[30px]">
       {children}
     </div>
   )
