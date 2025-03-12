@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useProductInfoStore } from '../stores/productInfoStore'
+import { useSlider } from '../hooks/useSlider'
 import { imagesUrlPrefix } from '../config'
 
 import arrowRightIcon from '../assets/arrow_right_icon.svg'
-import { useSlider } from '../hooks/useSlider'
 
 function ArrowUpIcon() {
   return (
@@ -51,57 +51,90 @@ function SliderButton({ children, onClick }) {
   )
 }
 
-function SliderUpButton({ onClick }) {
+function SliderUpButton() {
+  const prevSlide = useProductInfoStore((state) => state.prevSlide)
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+
+  if (activeIdx == 0) {
+    return null
+  }
+
   return (
     <div className="absolute top-0 left-[50%] -translate-x-[50%]">
-      <SliderButton onClick={onClick}>
+      <SliderButton onClick={prevSlide}>
         <ArrowUpIcon />
       </SliderButton>
     </div>
   )
 }
 
-function SliderDownButton({ onClick }) {
+function SliderDownButton() {
+  const nextSlide = useProductInfoStore((state) => state.nextSlide)
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+  const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
+
+  if (activeIdx == pictureUrls.length - 1) {
+    return null
+  }
+
   return (
     <div className="absolute bottom-0 left-[50%] -translate-x-[50%]">
-      <SliderButton onClick={onClick}>
+      <SliderButton onClick={nextSlide}>
         <ArrowDownIcon />
       </SliderButton>
     </div>
   )
 }
 
-function SliderLeftButton({ onClick }) {
+function SliderLeftButton() {
+  const prevSlide = useProductInfoStore((state) => state.prevSlide)
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+
+  if (activeIdx == 0) {
+    return null
+  }
+
   return (
     <div className="absolute top-[50%] left-0 -translate-y-[50%]">
-      <SliderButton onClick={onClick}>
+      <SliderButton onClick={prevSlide}>
         <ArrowLeftIcon />
       </SliderButton>
     </div>
   )
 }
 
-function SliderRightButton({ onClick }) {
+function SliderRightButton() {
+  const nextSlide = useProductInfoStore((state) => state.nextSlide)
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+  const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
+
+  if (activeIdx == pictureUrls.length - 1) {
+    return null
+  }
+
   return (
     <div className="absolute top-[50%] right-0 -translate-y-[50%]">
-      <SliderButton onClick={onClick}>
+      <SliderButton onClick={nextSlide}>
         <ArrowRightIcon />
       </SliderButton>
     </div>
   )
 }
 
-function ProductPictureSlide({ url, isActive = null, onClick }) {
-  const outlined = isActive
-    ? 'outline-[3px] outline outline-silkway-orange'
-    : ''
+function ProductPictureSlide({ idx }) {
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+  const setActiveIdx = useProductInfoStore((state) => state.setActiveIdx)
+  const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
+
+  const outlined =
+    idx == activeIdx ? 'outline-[3px] outline outline-silkway-orange' : ''
 
   return (
     <div className="aspect-square h-[100px] w-[100px] max-[1100px]:h-[75px] max-[1100px]:w-[75px] max-[400px]:h-[50px] max-[400px]:w-[50px]">
       <img
         draggable={false}
-        onClick={onClick}
-        src={imagesUrlPrefix + url}
+        onClick={() => setActiveIdx(idx)}
+        src={imagesUrlPrefix + pictureUrls[idx]}
         className={`aspect-square object-cover rounded cursor-pointer ${outlined}`}
       />
     </div>
@@ -173,31 +206,30 @@ function PictureSliderAllContainer({ children, orientation = 'vertical' }) {
   }
 }
 
-export function PictureSlider({
-  pictureUrls,
-  orientation = 'vertical',
-  onChange,
-}) {
-  const { innerRef, outerRef, activeIdx, setActiveIdx, prevSlide, nextSlide } =
-    useSlider(pictureUrls.length, orientation, onChange)
+function SliderButtons({ orientation = 'vertical' }) {
+  return (
+    <>
+      {orientation == 'vertical' && <SliderUpButton />}
+      {orientation == 'vertical' && <SliderDownButton />}
+      {orientation == 'horizontal' && <SliderLeftButton />}
+      {orientation == 'horizontal' && <SliderRightButton />}
+    </>
+  )
+}
+
+export function PictureSlider({ orientation = 'vertical' }) {
+  const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
+  const activeIdx = useProductInfoStore((state) => state.activeIdx)
+
+  const { innerRef, outerRef } = useSlider(
+    pictureUrls.length,
+    activeIdx,
+    orientation
+  )
 
   return (
     <PictureSliderAllContainer orientation={orientation}>
-      {orientation == 'vertical' && activeIdx > 0 && (
-        <SliderUpButton onClick={prevSlide} />
-      )}
-
-      {orientation == 'vertical' && activeIdx < pictureUrls.length - 1 && (
-        <SliderDownButton onClick={nextSlide} />
-      )}
-
-      {orientation == 'horizontal' && activeIdx > 0 && (
-        <SliderLeftButton onClick={prevSlide} />
-      )}
-
-      {orientation == 'horizontal' && activeIdx < pictureUrls.length - 1 && (
-        <SliderRightButton onClick={nextSlide} />
-      )}
+      <SliderButtons orientation={orientation} />
 
       <PictureSliderContainerOuter
         selfRef={outerRef}
@@ -209,10 +241,8 @@ export function PictureSlider({
         >
           {pictureUrls.map((url, idx) => (
             <ProductPictureSlide
-              onClick={() => setActiveIdx(idx)}
-              isActive={activeIdx == idx}
+              idx={idx}
               key={url + idx}
-              url={url}
             />
           ))}
         </PictureSliderContainerInner>

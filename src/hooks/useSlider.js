@@ -42,9 +42,7 @@ const getScrollTo = (value, orientation = 'vertical') => {
   }
 }
 
-export function useSlider(picturesTotal, orientation = 'vertical', onChange) {
-  const [activeIdx, setActiveIdx] = useState(0)
-
+export function useSlider(picturesTotal, activeIdx, orientation = 'vertical') {
   const outerRef = useRef(null)
   const innerRef = useRef(null)
 
@@ -69,16 +67,7 @@ export function useSlider(picturesTotal, orientation = 'vertical', onChange) {
     }
 
     scrollToActive()
-    onChange(activeIdx)
   }, [activeIdx])
 
-  const prevSlide = () => {
-    setActiveIdx((old) => old - 1)
-  }
-
-  const nextSlide = () => {
-    setActiveIdx((old) => old + 1)
-  }
-
-  return { innerRef, outerRef, activeIdx, setActiveIdx, prevSlide, nextSlide }
+  return { innerRef, outerRef }
 }
