@@ -12,23 +12,23 @@ function MainPicture() {
 
   return (
     <img
-      className="aspect-square object-cover rounded w-[300px] h-[300px] min-[500px]:w-[400px] min-[400px]:h-[400px] min-[1100px]:w-[640px] min-[1100px]:h-[640px]"
+      className="aspect-square object-cover rounded w-[300px] h-[300px] min-[500px]:w-[400px] min-[500px]:h-[400px] min-[1350px]:w-[640px] min-[1350px]:h-[640px]"
       src={imagesUrlPrefix + pictureUrls[activeIdx]}
     />
   )
 }
 
 function VerticalSliderContainer({ children }) {
-  return <div className="max-[500px]:hidden">{children}</div>
+  return <div className="max-[550px]:hidden">{children}</div>
 }
 
 function HorizontalSliderContainer({ children }) {
-  return <div className="min-[500px]:hidden">{children}</div>
+  return <div className="min-[550px]:hidden">{children}</div>
 }
 
-function ProductInfoContainer({ children }) {
+function SliderMainPicContainer({ children }) {
   return (
-    <div className="mb-[60px] flex flex-nowrap justify-start flex-row max-[850px]:flex-col max-[500px]:flex-col gap-[5px] min-[400px]:gap-[15px] min-[1100px]:gap-[30px]">
+    <div className="flex flex-nowrap justify-start flex-row max-[550px]:flex-col max-[500px]:flex-col gap-[5px] min-[400px]:gap-[15px] min-[1100px]:gap-[30px]">
       {children}
     </div>
   )
@@ -107,7 +107,7 @@ function ProductCharacteristics() {
 
 function ProductDetails() {
   return (
-    <div className="flex flex-nowrap flex-col">
+    <div className="flex flex-nowrap flex-col max-w-[400px]">
       <ProductTitle />
       <ProductQty />
       <ProductPrice />
@@ -117,20 +117,30 @@ function ProductDetails() {
   )
 }
 
+function ProductInfoContainer({ children }) {
+  return (
+    <div className="mb-[60px] flex flex-wrap flex-row justify-start gap-[30px]">
+      {children}
+    </div>
+  )
+}
+
 export function ProductInfo() {
   return (
     <SectionContainer variant="white">
       <SectionInnerContainer>
         <ProductInfoContainer>
-          <VerticalSliderContainer>
-            <PictureSlider orientation="vertical" />
-          </VerticalSliderContainer>
+          <SliderMainPicContainer>
+            <VerticalSliderContainer>
+              <PictureSlider orientation="vertical" />
+            </VerticalSliderContainer>
 
-          <MainPicture />
+            <MainPicture />
 
-          <HorizontalSliderContainer>
-            <PictureSlider orientation="horizontal" />
-          </HorizontalSliderContainer>
+            <HorizontalSliderContainer>
+              <PictureSlider orientation="horizontal" />
+            </HorizontalSliderContainer>
+          </SliderMainPicContainer>
 
           <ProductDetails />
         </ProductInfoContainer>

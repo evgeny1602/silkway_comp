@@ -44,7 +44,7 @@ function SliderButton({ children, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="bg-silkway-dark-milk rounded-[50%] flex flex-nowrap justify-center items-center cursor-pointer opacity-90 hover:opacity-100 shadow-sm transition-all z-10 m-[10px] w-[20px] h-[20px] min-[400px]:w-[40px] min-[400px]:h-[40px] min-[1100px]:w-[60px] min-[1100px]:h-[60px]"
+      className="bg-silkway-dark-milk rounded-[50%] flex flex-nowrap justify-center items-center cursor-pointer opacity-90 hover:opacity-100 shadow-sm transition-all z-10 m-[10px] w-[20px] h-[20px] min-[400px]:w-[40px] min-[400px]:h-[40px] min-[1350px]:w-[60px] min-[1350px]:h-[60px]"
     >
       {children}
     </div>
@@ -130,7 +130,7 @@ function ProductPictureSlide({ idx }) {
     idx == activeIdx ? 'outline-[3px] outline outline-silkway-orange' : ''
 
   return (
-    <div className="aspect-square h-[100px] w-[100px] max-[1100px]:h-[75px] max-[1100px]:w-[75px] max-[400px]:h-[50px] max-[400px]:w-[50px]">
+    <div className="aspect-square h-[100px] w-[100px] max-[1350px]:h-[75px] max-[1350px]:w-[75px] max-[400px]:h-[50px] max-[400px]:w-[50px]">
       <img
         draggable={false}
         onClick={() => setActiveIdx(idx)}
@@ -151,7 +151,7 @@ function PictureSliderContainerOuter({
       <div
         style={{ scrollbarWidth: 'none' }}
         ref={selfRef}
-        className="overflow-y-scroll w-[56px] h-[300px] min-[400px]:w-[81px] min-[1100px]:w-[106px] min-[500px]:h-[400px] min-[1100px]:h-[640px]"
+        className="overflow-y-scroll w-[56px] h-[300px] min-[400px]:w-[81px] min-[1350px]:w-[106px] min-[500px]:h-[400px] min-[1350px]:h-[640px]"
       >
         {children}
       </div>
@@ -163,7 +163,7 @@ function PictureSliderContainerOuter({
       <div
         style={{ scrollbarWidth: 'none' }}
         ref={selfRef}
-        className="overflow-x-scroll h-[56px] w-[300px] min-[400px]:h-[81px] min-[1100px]:h-[106px] min-[500px]:w-[400px] min-[1100px]:w-[640px]"
+        className="overflow-x-scroll h-[56px] w-[300px] min-[400px]:h-[81px] min-[1350px]:h-[106px] min-[500px]:w-[400px] min-[1350px]:w-[640px]"
       >
         {children}
       </div>
@@ -181,7 +181,7 @@ function PictureSliderContainerInner({
   return (
     <div
       ref={selfRef}
-      className={`flex flex-nowrap p-[3px] justify-start transition-all items-center gap-[5px] min-[400px]:gap-[10px] min-[1100px]:gap-[15px] ${flexDir}`}
+      className={`flex flex-nowrap p-[3px] justify-start transition-all items-center gap-[5px] min-[400px]:gap-[10px] min-[1350px]:gap-[15px] ${flexDir}`}
     >
       {children}
     </div>
@@ -191,7 +191,7 @@ function PictureSliderContainerInner({
 function PictureSliderAllContainer({ children, orientation = 'vertical' }) {
   if (orientation == 'vertical') {
     return (
-      <div className="relative h-[300px] min-[400px]:h-[400px] min-[1100px]:h-[640px] w-[56px] min-[400px]:w-[81px] min-[1100px]:w-[106px]">
+      <div className="relative h-[300px] min-[400px]:h-[400px] min-[1350px]:h-[640px] w-[56px] min-[400px]:w-[81px] min-[1350px]:w-[106px]">
         {children}
       </div>
     )
@@ -199,7 +199,7 @@ function PictureSliderAllContainer({ children, orientation = 'vertical' }) {
 
   if (orientation == 'horizontal') {
     return (
-      <div className="relative w-[300px] min-[500px]:w-[400px] min-[1100px]:w-[640px] h-[56px] min-[400px]:h-[81px] min-[1100px]:h-[106px]">
+      <div className="relative w-[300px] min-[500px]:w-[400px] min-[1350px]:w-[640px] h-[56px] min-[400px]:h-[81px] min-[1350px]:h-[106px]">
         {children}
       </div>
     )
