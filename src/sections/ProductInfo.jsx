@@ -14,17 +14,27 @@ export function ProductInfo() {
   return (
     <SectionContainer variant="white">
       <SectionInnerContainer>
-        <div className="flex flex-nowrap gap-[30px] justify-start">
-          <PictureSlider
-            onChange={(idx) => setPictureIdx(idx)}
-            pictureUrls={productInfo.picture_urls}
-            orientation="vertical"
-          />
+        <div className="flex flex-nowrap justify-start flex-row max-[500px]:flex-col gap-[5px] min-[400px]:gap-[15px] min-[1100px]:gap-[30px]">
+          <div className="max-[500px]:hidden">
+            <PictureSlider
+              onChange={(idx) => setPictureIdx(idx)}
+              pictureUrls={productInfo.picture_urls}
+              orientation="vertical"
+            />
+          </div>
 
           <img
-            className="h-[640px] w-[640px] aspect-square object-cover rounded"
+            className="aspect-square object-cover rounded w-[300px] h-[300px] min-[500px]:w-[400px] min-[400px]:h-[400px] min-[1100px]:w-[640px] min-[1100px]:h-[640px]"
             src={imagesUrlPrefix + productInfo.picture_urls[pictureIdx]}
           />
+
+          <div className="min-[500px]:hidden">
+            <PictureSlider
+              onChange={(idx) => setPictureIdx(idx)}
+              pictureUrls={productInfo.picture_urls}
+              orientation="horizontal"
+            />
+          </div>
         </div>
       </SectionInnerContainer>
     </SectionContainer>

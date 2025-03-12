@@ -8,7 +8,7 @@ function ArrowUpIcon() {
   return (
     <img
       src={arrowRightIcon}
-      className="-rotate-90"
+      className="-rotate-90 w-[35%] h-[35%]"
     />
   )
 }
@@ -17,7 +17,7 @@ function ArrowDownIcon() {
   return (
     <img
       src={arrowRightIcon}
-      className="rotate-90"
+      className="rotate-90 w-[35%] h-[35%]"
     />
   )
 }
@@ -26,20 +26,25 @@ function ArrowLeftIcon() {
   return (
     <img
       src={arrowRightIcon}
-      className="-rotate-180"
+      className="-rotate-180 w-[35%] h-[35%]"
     />
   )
 }
 
 function ArrowRightIcon() {
-  return <img src={arrowRightIcon} />
+  return (
+    <img
+      src={arrowRightIcon}
+      className="w-[35%] h-[35%]"
+    />
+  )
 }
 
 function SliderButton({ children, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="h-[60px] w-[60px] bg-silkway-dark-milk rounded-[50%] flex flex-nowrap justify-center items-center cursor-pointer opacity-90 hover:opacity-100 shadow-sm transition-all"
+      className="bg-silkway-dark-milk rounded-[50%] flex flex-nowrap justify-center items-center cursor-pointer opacity-90 hover:opacity-100 shadow-sm transition-all z-10 m-[10px] w-[20px] h-[20px] min-[400px]:w-[40px] min-[400px]:h-[40px] min-[1100px]:w-[60px] min-[1100px]:h-[60px]"
     >
       {children}
     </div>
@@ -48,7 +53,7 @@ function SliderButton({ children, onClick }) {
 
 function SliderUpButton({ onClick }) {
   return (
-    <div className="absolute top-0 left-0 translate-x-[40%] z-10 mt-[10px]">
+    <div className="absolute top-0 left-[50%] -translate-x-[50%]">
       <SliderButton onClick={onClick}>
         <ArrowUpIcon />
       </SliderButton>
@@ -58,7 +63,7 @@ function SliderUpButton({ onClick }) {
 
 function SliderDownButton({ onClick }) {
   return (
-    <div className="absolute bottom-0 left-0 translate-x-[40%] z-10 mb-[10px]">
+    <div className="absolute bottom-0 left-[50%] -translate-x-[50%]">
       <SliderButton onClick={onClick}>
         <ArrowDownIcon />
       </SliderButton>
@@ -68,7 +73,7 @@ function SliderDownButton({ onClick }) {
 
 function SliderLeftButton({ onClick }) {
   return (
-    <div className="absolute top-0 left-0 translate-y-[40%] z-10 ml-[10px]">
+    <div className="absolute top-[50%] left-0 -translate-y-[50%]">
       <SliderButton onClick={onClick}>
         <ArrowLeftIcon />
       </SliderButton>
@@ -78,7 +83,7 @@ function SliderLeftButton({ onClick }) {
 
 function SliderRightButton({ onClick }) {
   return (
-    <div className="absolute top-0 right-0 translate-y-[40%] z-10 mr-[10px]">
+    <div className="absolute top-[50%] right-0 -translate-y-[50%]">
       <SliderButton onClick={onClick}>
         <ArrowRightIcon />
       </SliderButton>
@@ -87,16 +92,19 @@ function SliderRightButton({ onClick }) {
 }
 
 function ProductPictureSlide({ url, isActive = null, onClick }) {
+  const outlined = isActive
+    ? 'outline-[3px] outline outline-silkway-orange'
+    : ''
+
   return (
-    <img
-      draggable={false}
-      onClick={onClick}
-      src={imagesUrlPrefix + url}
-      className={
-        'h-[100px] w-[100px] aspect-square object-cover rounded cursor-pointer hover:opacity-100' +
-        (isActive ? ' outline-[3px] outline outline-silkway-orange' : '')
-      }
-    />
+    <div className="aspect-square h-[100px] w-[100px] max-[1100px]:h-[75px] max-[1100px]:w-[75px] max-[400px]:h-[50px] max-[400px]:w-[50px]">
+      <img
+        draggable={false}
+        onClick={onClick}
+        src={imagesUrlPrefix + url}
+        className={`aspect-square object-cover rounded cursor-pointer ${outlined}`}
+      />
+    </div>
   )
 }
 
@@ -105,19 +113,27 @@ function PictureSliderContainerOuter({
   selfRef,
   orientation = 'vertical',
 }) {
-  return (
-    <div
-      ref={selfRef}
-      className={
-        orientation == 'vertical'
-          ? 'overflow-y-scroll w-[106px] h-[640px]'
-          : 'overflow-x-scroll h-[106px] w-[640px]'
-      }
-      style={{ scrollbarWidth: 'none' }}
-    >
-      {children}
-    </div>
-  )
+  if (orientation == 'vertical') {
+    return (
+      <div
+        ref={selfRef}
+        className="overflow-y-scroll no-scrollbar w-[56px] h-[300px] min-[400px]:w-[81px] min-[1100px]:w-[106px] min-[500px]:h-[400px] min-[1100px]:h-[640px]"
+      >
+        {children}
+      </div>
+    )
+  }
+
+  if (orientation == 'horizontal') {
+    return (
+      <div
+        ref={selfRef}
+        className="overflow-x-scroll no-scrollbar h-[56px] w-[300px] min-[400px]:h-[81px] min-[1100px]:h-[106px] min-[500px]:w-[400px] min-[1100px]:w-[640px]"
+      >
+        {children}
+      </div>
+    )
+  }
 }
 
 function PictureSliderContainerInner({
@@ -125,13 +141,12 @@ function PictureSliderContainerInner({
   selfRef,
   orientation = 'vertical',
 }) {
+  const flexDir = orientation == 'vertical' ? 'flex-col' : 'flex-row'
+
   return (
     <div
       ref={selfRef}
-      className={
-        'flex flex-nowrap gap-[15px] p-[3px] transition-all items-center ' +
-        (orientation == 'vertical' ? 'flex-col' : 'flex-row')
-      }
+      className={`flex flex-nowrap p-[3px] transition-all items-center gap-[5px] ${flexDir}`}
     >
       {children}
     </div>
@@ -139,18 +154,21 @@ function PictureSliderContainerInner({
 }
 
 function PictureSliderAllContainer({ children, orientation = 'vertical' }) {
-  return (
-    <div
-      className={
-        'relative ' +
-        (orientation == 'vertical'
-          ? 'w-[106px] h-[640px]'
-          : 'w-[640px] h-[106px]')
-      }
-    >
-      {children}
-    </div>
-  )
+  if (orientation == 'vertical') {
+    return (
+      <div className="relative h-[300px] min-[400px]:h-[400px] min-[1100px]:h-[640px] w-[56px] min-[400px]:w-[81px] min-[1100px]:w-[106px]">
+        {children}
+      </div>
+    )
+  }
+
+  if (orientation == 'horizontal') {
+    return (
+      <div className="relative w-[300px] min-[500px]:w-[400px] min-[1100px]:w-[640px] h-[56px] min-[400px]:h-[81px] min-[1100px]:h-[106px]">
+        {children}
+      </div>
+    )
+  }
 }
 
 export function PictureSlider({
@@ -167,8 +185,16 @@ export function PictureSlider({
         <SliderUpButton onClick={prevSlide} />
       )}
 
+      {orientation == 'vertical' && activeIdx < pictureUrls.length - 1 && (
+        <SliderDownButton onClick={nextSlide} />
+      )}
+
       {orientation == 'horizontal' && activeIdx > 0 && (
         <SliderLeftButton onClick={prevSlide} />
+      )}
+
+      {orientation == 'horizontal' && activeIdx < pictureUrls.length - 1 && (
+        <SliderRightButton onClick={nextSlide} />
       )}
 
       <PictureSliderContainerOuter
@@ -189,14 +215,6 @@ export function PictureSlider({
           ))}
         </PictureSliderContainerInner>
       </PictureSliderContainerOuter>
-
-      {orientation == 'vertical' && activeIdx < pictureUrls.length - 1 && (
-        <SliderDownButton onClick={nextSlide} />
-      )}
-
-      {orientation == 'horizontal' && activeIdx < pictureUrls.length - 1 && (
-        <SliderRightButton onClick={nextSlide} />
-      )}
     </PictureSliderAllContainer>
   )
 }
