@@ -148,7 +148,7 @@ function PictureSliderContainerInner({
   return (
     <div
       ref={selfRef}
-      className={`flex flex-nowrap p-[3px] transition-all items-center gap-[5px] min-[400px]:gap-[10px] min-[1100px]:gap-[15px] ${flexDir}`}
+      className={`flex flex-nowrap p-[3px] justify-start transition-all items-center gap-[5px] min-[400px]:gap-[10px] min-[1100px]:gap-[15px] ${flexDir}`}
     >
       {children}
     </div>
