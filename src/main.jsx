@@ -188,6 +188,19 @@ const initProductInfo = async () => {
   )
 }
 
+const initFeaturesSection = async () => {
+  const el = document.getElementById('features-section')
+  if (!el) {
+    return
+  }
+  const { FeaturesSection } = await import('./sections/FeaturesSection')
+  createRoot(el).render(
+    <StrictMode>
+      <FeaturesSection />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intProductBreadcrumbs()
@@ -202,3 +215,4 @@ initCategoryItems()
 initCatalogItems()
 initCategoryTitle()
 initProductInfo()
+initFeaturesSection()
