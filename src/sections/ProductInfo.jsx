@@ -203,6 +203,14 @@ function ProductVariants() {
   const productOptions = useProductInfoStore((state) => state.productOptions)
   const optionCodes = Object.keys(productOptions)
 
+  if (empty(optionCodes)) {
+    return null
+  }
+
+  if (optionCodes.length == 1 && optionCodes[0] == '') {
+    return null
+  }
+
   return (
     <div className="flex flex-col flex-wrap justify-start gap-[30px]">
       {optionCodes.map((optionCode) => (
