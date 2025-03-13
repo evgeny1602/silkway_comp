@@ -119,7 +119,7 @@ function ProductCharacteristics() {
 }
 
 function OptionValueButton({ children, onClick, variant = 'enabled' }) {
-  let classes = 'rounded font-sans text-sm px-[8px] py-[4px]'
+  let classes = 'rounded font-sans text-sm px-[8px] py-[4px] min-w-[50px]'
 
   if (variant == 'enabled') {
     classes +=
