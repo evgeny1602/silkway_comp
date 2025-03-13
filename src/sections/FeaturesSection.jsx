@@ -60,7 +60,7 @@ function OtherFeatureContainer({ children }) {
 
 function OtherTitleTextContainer({ children }) {
   return (
-    <div className="flex flex-nowrap flex-col justify-start min-w-[176px]">
+    <div className="flex flex-nowrap flex-col justify-start min-w-[190px]">
       {children}
     </div>
   )
