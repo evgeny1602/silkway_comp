@@ -60,7 +60,7 @@ function OtherFeatureContainer({ children }) {
 
 function OtherTitleTextContainer({ children }) {
   return (
-    <div className="flex flex-nowrap flex-col justify-start min-w-[180px]">
+    <div className="flex flex-nowrap flex-col justify-start min-w-[176px]">
       {children}
     </div>
   )
@@ -75,9 +75,6 @@ function OtherFeature({ icon, children }) {
       />
 
       <OtherTitleTextContainer>{children}</OtherTitleTextContainer>
-      <OtherTitleTextContainer>
-        <FeatureTitleTextContainer>{children}</FeatureTitleTextContainer>
-      </OtherTitleTextContainer>
     </OtherFeatureContainer>
   )
 }
