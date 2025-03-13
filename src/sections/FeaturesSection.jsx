@@ -73,7 +73,11 @@ function OtherFeature({ icon, children }) {
         src={icon}
         className="h-[60px] aspect-square"
       />
+
       <OtherTitleTextContainer>{children}</OtherTitleTextContainer>
+      <OtherTitleTextContainer>
+        <FeatureTitleTextContainer>{children}</FeatureTitleTextContainer>
+      </OtherTitleTextContainer>
     </OtherFeatureContainer>
   )
 }
