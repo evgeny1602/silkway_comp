@@ -182,11 +182,11 @@ function OptionValues({ code }) {
   const values = productOptions[code].values
 
   return (
-    <div className="flex flex-col flex-nowrap flex-start gap-[10px]">
+    <div className="flex flex-col flex-nowrap justify-start gap-[10px]">
       <div className="font-sans font-bold text-base text-silkway-dark-chocolate">
         {name}:
       </div>
-      <div className="flex flex-row flex-nowrap flex-start gap-[10px]">
+      <div className="flex flex-row flex-nowrap justify-start gap-[10px]">
         {values.map((value) => (
           <OptionValueCheckbox
             code={code}
