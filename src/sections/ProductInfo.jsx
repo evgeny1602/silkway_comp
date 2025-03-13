@@ -203,7 +203,7 @@ function ProductVariants() {
   const productOptions = useProductInfoStore((state) => state.productOptions)
   const optionCodes = Object.keys(productOptions)
 
-  if (empty(optionCodes)) {
+  if (optionCodes.length == 0) {
     return null
   }
 
