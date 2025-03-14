@@ -6,6 +6,9 @@ import { PictureSlider } from '../ui/PictureSlider'
 import { imagesUrlPrefix } from '../config'
 import { getGlobalData } from '../utils'
 
+import { Button } from '../ui/Button'
+import { useEffect, useState } from 'react'
+
 function MainPicture() {
   const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
   const activeIdx = useProductInfoStore((state) => state.activeIdx)
@@ -212,7 +215,7 @@ function ProductVariants() {
   }
 
   return (
-    <div className="flex flex-col flex-wrap justify-start gap-[30px]">
+    <div className="flex flex-col flex-wrap justify-start gap-[30px] mb-[30px]">
       {optionCodes.map((optionCode) => (
         <OptionValues
           code={optionCode}
@@ -223,6 +226,127 @@ function ProductVariants() {
   )
 }
 
+function AddToCartCountButton({ children, onClick, hoverState = 'standart' }) {
+  let classes =
+    'h-full transition-colors w-[48px] flex flex-nowrap flex-row justify-center items-center text-2xl text-silkway-light-chocolate'
+
+  classes += {
+    standart: ' hover:bg-silkway-light-orange',
+    none: ' cursor-default',
+  }[hoverState]
+
+  return (
+    <div
+      onClick={onClick}
+      className={classes}
+    >
+      {children}
+    </div>
+  )
+}
+
+function AddToCartMainButton({ text, onClick, hoverState = 'standart' }) {
+  let classes =
+    'px-[10px] border-l border-r border-silkway-dark-orange h-full grow flex flex-nowrap flex-col justify-center items-center font-sans font-light text-sm'
+
+  classes += {
+    standart: ' hover:bg-silkway-light-orange transition-colors',
+    none: ' cursor-default',
+  }[hoverState]
+
+  return (
+    <div
+      onClick={onClick}
+      className={classes}
+    >
+      {text}
+    </div>
+  )
+}
+
+function AddToCartButton({ onMinusClick, onPlusClick, onMainClick, count }) {
+  const { price } = getGlobalData('productData')
+
+  let text = 'Добавить в корзину'
+  if (count > 0) {
+    text += ` ${count} шт. на ${count * price} ₽`
+  }
+
+  return (
+    <Button
+      hoverState="none"
+      paddingX="px-0"
+      paddingY="py-0"
+      className={count > 0 ? null : 'opacity-50'}
+    >
+      <div className="flex flex-nowrap flex-row justify-between items-center w-full h-full">
+        <AddToCartCountButton
+          onClick={count > 0 ? onMinusClick : null}
+          hoverState={count > 0 ? 'standart' : 'none'}
+        >
+          -
+        </AddToCartCountButton>
+
+        <AddToCartMainButton
+          onClick={count > 0 ? onMainClick : null}
+          text={text}
+          hoverState={count > 0 ? 'standart' : 'none'}
+        />
+
+        <AddToCartCountButton
+          onClick={count > 0 ? onPlusClick : null}
+          hoverState={count > 0 ? 'standart' : 'none'}
+        >
+          +
+        </AddToCartCountButton>
+      </div>
+    </Button>
+  )
+}
+
+function AddToCartButtonSmart() {
+  const selectedOptions = useProductInfoStore((state) => state.selectedOptions)
+  const areAllOptionsSelected = useProductInfoStore(
+    (state) => state.areAllOptionsSelected
+  )
+  const getSelectedVariantQty = useProductInfoStore(
+    (state) => state.getSelectedVariantQty
+  )
+
+  const [count, setCount] = useState(0)
+  const [maxCount, setMaxCount] = useState(1)
+
+  useEffect(() => {
+    let maxVariantQty = getSelectedVariantQty()
+    if (maxVariantQty < 0) {
+      maxVariantQty = getGlobalData('productData').quantity
+    }
+    setMaxCount(maxVariantQty)
+    setCount(areAllOptionsSelected() ? 1 : 0)
+  }, [selectedOptions])
+
+  const decCount = () => {
+    setCount((old) => Math.max(1, old - 1))
+  }
+
+  const incCount = () => {
+    setCount((old) => Math.min(maxCount, old + 1))
+  }
+
+  const addToCart = () => {
+    console.log('Add cart')
+  }
+
+  return (
+    <AddToCartButton
+      count={count}
+      onMinusClick={decCount}
+      onPlusClick={incCount}
+      onMainClick={addToCart}
+    />
+  )
+}
+
 function ProductDetails() {
   return (
     <div className="flex flex-nowrap flex-col max-w-[400px] justify-start">
@@ -230,6 +354,7 @@ function ProductDetails() {
       <ProductQty />
       <ProductPrice />
       <ProductVariants />
+      <AddToCartButtonSmart />
       <ProductDescription />
       <ProductCharacteristics />
     </div>

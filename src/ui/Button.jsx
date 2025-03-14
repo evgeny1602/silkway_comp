@@ -6,6 +6,7 @@ export function Button({
   paddingX = null,
   paddingY = null,
   height = 'standart',
+  hoverState = 'standart',
 }) {
   const basePaddingX = 'px-[15px]'
   const basePaddingY = 'py-[5px]'
@@ -14,14 +15,30 @@ export function Button({
 
   const variantClasses = {
     primary:
-      'bg-silkway-orange hover:bg-silkway-light-orange border-silkway-dark-orange shadow-inner shadow-white/45',
+      'bg-silkway-orange border-silkway-dark-orange shadow-inner shadow-white/45',
     'primary-dark':
-      'border-silkway-dark-chocolate bg-silkway-dark-chocolate hover:bg-silkway-light-chocolate text-white shadow-inner shadow-white/45',
-    ghost:
-      'bg-transparent hover:bg-silkway-light-gray border-silkway-light-gray',
+      'border-silkway-dark-chocolate bg-silkway-dark-chocolate text-white shadow-inner shadow-white/45',
+    ghost: 'bg-transparent border-silkway-light-gray',
   }
 
-  let classes = [baseClasses, variantClasses[variant]].join(' ')
+  const variantHoverClasses = {
+    standart: {
+      primary: 'hover:bg-silkway-light-orange',
+      'primary-dark': 'hover:bg-silkway-light-chocolate',
+      ghost: 'hover:bg-silkway-light-gray',
+    },
+    none: {
+      primary: '',
+      'primary-dark': '',
+      ghost: '',
+    },
+  }
+
+  let classes = [
+    baseClasses,
+    variantClasses[variant],
+    variantHoverClasses[hoverState][variant],
+  ].join(' ')
 
   const heights = {
     standart: 'h-[48px]',

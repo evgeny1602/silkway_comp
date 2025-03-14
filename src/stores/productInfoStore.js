@@ -69,6 +69,9 @@ export const useProductInfoStore = create((set, get) => ({
     : {},
   selectedOptions: {},
 
+  areAllOptionsSelected: () =>
+    Object.keys(get().selectedOptions).length ==
+    Object.keys(get().productOptions).length,
   getSelectedVariantQty: () => {
     let codeValues = []
     for (const selectedOption in get().selectedOptions) {
@@ -121,11 +124,12 @@ export const useProductInfoStore = create((set, get) => ({
     return false
   },
 
-  selectOption: (optionCode, optionValue) =>
+  selectOption: (optionCode, optionValue) => {
     set((state) => ({
       ...state,
       selectedOptions: { ...state.selectedOptions, [optionCode]: optionValue },
-    })),
+    }))
+  },
   setActiveIdx: (idx) => set((state) => ({ ...state, activeIdx: idx })),
   nextSlide: () =>
     set((state) => ({
