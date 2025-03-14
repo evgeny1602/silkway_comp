@@ -228,7 +228,7 @@ function ProductVariants() {
 
 function AddToCartCountButton({ children, onClick, hoverState = 'standart' }) {
   let classes =
-    'h-full transition-colors w-[48px] flex flex-nowrap flex-row justify-center items-center text-2xl text-silkway-light-chocolate'
+    'h-full transition-colors w-[48px] max-[400px]:w-[36px] flex flex-nowrap flex-row justify-center items-center text-2xl text-silkway-light-chocolate'
 
   classes += {
     standart: ' hover:bg-silkway-light-orange',
@@ -247,7 +247,7 @@ function AddToCartCountButton({ children, onClick, hoverState = 'standart' }) {
 
 function AddToCartMainButton({ text, onClick, hoverState = 'standart' }) {
   let classes =
-    'px-[10px] border-l border-r border-silkway-dark-orange h-full grow flex flex-nowrap flex-col justify-center items-center font-sans font-light text-sm'
+    'px-[10px] border-l border-r border-silkway-dark-orange h-full grow flex flex-nowrap flex-col justify-center items-center font-sans font-light text-sm max-[400px]:text-xs'
 
   classes += {
     standart: ' hover:bg-silkway-light-orange transition-colors',
