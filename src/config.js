@@ -15,7 +15,7 @@ export const imagesUrlPrefix = 'https://xn--b1aobdqivh2b8ap4c.xn--p1acf/'
 
 export const delFromCartUrl =
   '/ajax.php?act=deleteCartItem&cart_item_id={{cart_item_id}}'
-export const clearCartUrl = '/ajax.php?act=clearCart'
-export const addToCartUrl = '/ajax.php?act=addToCart'
+export const clearCartUrl = '/ajax2.php'
+export const addToCartUrl = '/ajax2.php'
 
 export const productsPostifixVariants = ['товар', 'товара', 'товаров']
