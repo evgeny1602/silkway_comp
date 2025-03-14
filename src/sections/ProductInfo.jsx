@@ -5,6 +5,7 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { PictureSlider } from '../ui/PictureSlider'
 import { imagesUrlPrefix } from '../config'
 import { getGlobalData } from '../utils'
+import { addToCart } from '../api/cart'
 
 import { Button } from '../ui/Button'
 import { useEffect, useState } from 'react'
@@ -325,24 +326,21 @@ function AddToCartButtonSmart() {
     setCount(areAllOptionsSelected() ? 1 : 0)
   }, [selectedOptions])
 
-  const decCount = () => {
-    setCount((old) => Math.max(1, old - 1))
-  }
-
-  const incCount = () => {
-    setCount((old) => Math.min(maxCount, old + 1))
-  }
-
-  const addToCart = () => {
-    console.log('Add cart')
+  const handleAddToCart = async () => {
+    const data = {
+      productId: getGlobalData('productData').id,
+      qty: count,
+      options: JSON.stringify(selectedOptions),
+    }
+    console.log('Add to cart: ', await addToCart(data))
   }
 
   return (
     <AddToCartButton
       count={count}
-      onMinusClick={decCount}
-      onPlusClick={incCount}
-      onMainClick={addToCart}
+      onMinusClick={() => setCount((old) => Math.max(1, old - 1))}
+      onPlusClick={() => setCount((old) => Math.min(maxCount, old + 1))}
+      onMainClick={handleAddToCart}
     />
   )
 }
