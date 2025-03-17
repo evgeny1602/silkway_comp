@@ -362,3 +362,8 @@ function textTranslitInner(text) {
 
   return text
 }
+
+export const filterCartItemProperties = (properties) =>
+  Object.values(properties)
+    .filter((item) => item.value)
+    .filter((item) => item.code.substring(0, 4) != 'CML2')

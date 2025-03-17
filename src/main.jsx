@@ -201,6 +201,19 @@ const initFeaturesSection = async () => {
   )
 }
 
+const initCartItemsSection = async () => {
+  const el = document.getElementById('cart-items-section')
+  if (!el) {
+    return
+  }
+  const { CartItemsSection } = await import('./sections/CartItemsSection')
+  createRoot(el).render(
+    <StrictMode>
+      <CartItemsSection />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intProductBreadcrumbs()
@@ -216,3 +229,4 @@ initCatalogItems()
 initCategoryTitle()
 initProductInfo()
 initFeaturesSection()
+initCartItemsSection()

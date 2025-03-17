@@ -7,7 +7,8 @@ import menuIconImg from '@/assets/menu_icon.svg'
 import crossIconImg from '@/assets/cross_icon.svg'
 import dollyIconImg from '@/assets/dolly_icon.svg'
 import walletIconImg from '@/assets/wallet_icon.svg'
-import trashIconImg from '@/assets/trash_icon.svg'
+
+import { CartItemDeleteButton } from '../ui/CartItemDeleteButton'
 import { ModalOverlay } from '@/ui/ModalOverlay'
 import { Modal } from '@/ui/Modal'
 import {
@@ -18,7 +19,7 @@ import {
   disableDocumentScroll,
   enableDocumentScroll,
   cartSum,
-} from '@/utils'
+} from '../utils'
 import { useRef, useState } from 'react'
 import { Button } from '@/ui/Button'
 import { SearchAutocomplete } from '@/ui/SearchAutocomplete'
@@ -32,6 +33,7 @@ import { clearCart, delFromCart } from '../api/cart'
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { useCartStore } from '../stores/cartStore'
+import { filterCartItemProperties } from '../utils'
 
 function HeaderLogo() {
   return (
@@ -801,17 +803,6 @@ function CartItemRightContainer({ children }) {
   )
 }
 
-function CartItemDeleteButton({ onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="hover:bg-silkway-light-orange/40 p-[8px] rounded transition-all"
-    >
-      <img src={trashIconImg} />
-    </button>
-  )
-}
-
 function CartItem({ item, onDeleteClick }) {
   const handleClick = (e) => {
     location.href = item.url
@@ -829,7 +820,9 @@ function CartItem({ item, onDeleteClick }) {
         <CartItemHeaderContainer onClick={handleClick}>
           {item.name}
         </CartItemHeaderContainer>
-        <CartItemProperties properties={Object.values(item.properties)} />
+        <CartItemProperties
+          properties={filterCartItemProperties(item.properties)}
+        />
         <div className="text-base max-[540px]:text-xs font-normal text-silkway-orange">
           <span className="hidden max-[540px]:inline">
             Количество: {item.quantity}
