@@ -28,9 +28,10 @@ import { autocomplete as productAutocomplete } from '@/api/product'
 import { searchProductRedirectUrl, imagesUrlPrefix } from '@/config'
 import { useFetch } from '@/hooks/useFetch'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
-import { clearCart, delFromCart } from '@/api/cart'
+import { clearCart, delFromCart } from '../api/cart'
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
+import { useCartStore } from '../stores/cartStore'
 
 function HeaderLogo() {
   return (
@@ -681,7 +682,9 @@ function CheckoutButton() {
   )
 }
 
-function CartDropdownTotal({ cartItems }) {
+function CartDropdownTotal() {
+  const cartItems = useCartStore((state) => state.items)
+
   return (
     <div className="font-sans text-silkway-dark-chocolate">
       <div className="text-sm">Итого:</div>
@@ -778,7 +781,7 @@ function CartItemProperties({ properties }) {
       {properties.map((item) => (
         <div
           className="text-xs"
-          key={item.id}
+          key={item.code}
         >
           <span className="font-light">{item.name}: </span>
           <span className="font-normal underline decoration-1 decoration-silkway-dark-chocolate/50">
@@ -810,15 +813,9 @@ function CartItemDeleteButton({ onClick }) {
 }
 
 function CartItem({ item, onDeleteClick }) {
-  const excludeCodes = ['CML2_ATTRIBUTES', 'CML2_BAR_CODE']
-
   const handleClick = (e) => {
     location.href = item.url
   }
-
-  const properties = Object.values(item.properties)
-    .filter((item) => item.value_id)
-    .filter((item) => !excludeCodes.includes(item.code))
 
   return (
     <CartItemContainer>
@@ -832,7 +829,7 @@ function CartItem({ item, onDeleteClick }) {
         <CartItemHeaderContainer onClick={handleClick}>
           {item.name}
         </CartItemHeaderContainer>
-        <CartItemProperties properties={properties} />
+        <CartItemProperties properties={Object.values(item.properties)} />
         <div className="text-base max-[540px]:text-xs font-normal text-silkway-orange">
           <span className="hidden max-[540px]:inline">
             Количество: {item.quantity}
@@ -855,7 +852,9 @@ function CartItem({ item, onDeleteClick }) {
   )
 }
 
-function CartDropdownItemsContainer({ cartItems, onDeleteClick }) {
+function CartDropdownItemsContainer({ onDeleteClick }) {
+  const cartItems = useCartStore((state) => state.items)
+
   return (
     <div className="pt-[8px] h-[250px] overflow-y-auto">
       {cartItems.map((item) => (
@@ -871,7 +870,6 @@ function CartDropdownItemsContainer({ cartItems, onDeleteClick }) {
 
 function CartItemsDropdown({
   triggerRef,
-  cartItems,
   onClear,
   onDelete,
   isClearing,
@@ -890,14 +888,15 @@ function CartItemsDropdown({
             disabled={isClearing}
           />
         </CartDropdownHeaderContainer>
-        <CartDropdownItemsContainer
-          cartItems={cartItems}
-          onDeleteClick={onDelete}
-        />
+
+        <CartDropdownItemsContainer onDeleteClick={onDelete} />
       </CartDropdownTopContainer>
+
       <CartDropdownFooterContainer>
-        <CartDropdownTotal cartItems={cartItems} />
+        <CartDropdownTotal />
+
         <ToCartButton />
+
         <CheckoutButton />
       </CartDropdownFooterContainer>
     </CartDropdownContainer>
@@ -905,9 +904,9 @@ function CartItemsDropdown({
 }
 
 function CartWithDropdown() {
-  const { cartItems: initCartItems } = getGlobalData('headerData')
+  const cartItems = useCartStore((state) => state.items)
+  const setCartItems = useCartStore((state) => state.setItems)
 
-  const [cartItems, setCartItems] = useState(initCartItems)
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
   const [isClearing, setIsClearing] = useState(false)
 
@@ -946,7 +945,6 @@ function CartWithDropdown() {
       {isDropdownVisible && (
         <CartItemsDropdown
           triggerRef={cartButtonRef}
-          cartItems={cartItems}
           isClearing={isClearing}
           onOutsideClick={() => setIsDropdownVisible(false)}
           onDelete={handleDelete}
@@ -997,7 +995,9 @@ export function Header() {
 
           <HeaderRightButtonsSection>
             <LoginAccountButton />
+
             <CartWithDropdown />
+
             <MobileMenu />
           </HeaderRightButtonsSection>
         </HeaderContainer>

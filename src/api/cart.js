@@ -1,7 +1,12 @@
 import { clearCartUrl, delFromCartUrl, addToCartUrl } from '../config'
 
-export const clearCart = async () => {
-  const resp = await fetch(clearCartUrl)
+export const clearCart = async (userId = null) => {
+  const body = new FormData()
+  body.append('action', 'clear_cart')
+  if (userId) {
+    body.append('user_id', userId)
+  }
+  const resp = await fetch(clearCartUrl, { method: 'POST', body })
   if (!resp.ok) {
     throw new Error(resp.statusText)
   }
@@ -27,5 +32,6 @@ export const addToCart = async (data) => {
   if (!resp.ok) {
     throw new Error(resp.statusText)
   }
-  return true
+  const resultData = await resp.json()
+  return resultData
 }

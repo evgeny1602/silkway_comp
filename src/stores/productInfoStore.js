@@ -124,6 +124,9 @@ export const useProductInfoStore = create((set, get) => ({
     return false
   },
 
+  resetSelectedOptions: () =>
+    set((state) => ({ ...state, selectedOptions: {} })),
+
   selectOption: (optionCode, optionValue) => {
     set((state) => ({
       ...state,

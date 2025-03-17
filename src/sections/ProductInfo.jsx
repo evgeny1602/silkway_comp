@@ -9,6 +9,7 @@ import { addToCart } from '../api/cart'
 
 import { Button } from '../ui/Button'
 import { useEffect, useState } from 'react'
+import { useCartStore } from '../stores/cartStore'
 
 function MainPicture() {
   const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
@@ -314,6 +315,12 @@ function AddToCartButtonSmart() {
     (state) => state.getSelectedVariantQty
   )
 
+  const resetSelectedOptions = useProductInfoStore(
+    (state) => state.resetSelectedOptions
+  )
+
+  const setItems = useCartStore((state) => state.setItems)
+
   const [count, setCount] = useState(0)
   const [maxCount, setMaxCount] = useState(1)
 
@@ -327,12 +334,17 @@ function AddToCartButtonSmart() {
   }, [selectedOptions])
 
   const handleAddToCart = async () => {
-    const data = {
+    const data = await addToCart({
       productId: getGlobalData('productData').id,
       qty: count,
       options: JSON.stringify(selectedOptions),
-    }
-    console.log('Add to cart: ', await addToCart(data))
+    })
+
+    resetSelectedOptions()
+
+    setCount(0)
+
+    setItems(data.items)
   }
 
   return (
