@@ -183,7 +183,18 @@ function CartPageItemButtonsContainer({ children, className }) {
 }
 
 function CartPageItem({ item, onClick }) {
-  //   console.log(item)
+  // console.log(item)
+  const cartItems = useCartStore((state) => state.items)
+  const setCartItems = useCartStore((state) => state.setItems)
+
+  const handleDeleteClick = async () => {
+    const success = await delFromCart(item.cart_id)
+    if (success) {
+      setCartItems(
+        cartItems.filter((cartItem) => cartItem.cart_id != item.cart_id)
+      )
+    }
+  }
 
   return (
     <CartPageItemContainer className="@container/item">
@@ -240,7 +251,7 @@ function CartPageItem({ item, onClick }) {
         </CartPageItemTotalContainer>
 
         <CartItemDeleteButtonContainer className="items-end @[550px]/item:items-center order-first @[550px]/item:order-last">
-          <CartItemDeleteButton />
+          <CartItemDeleteButton onClick={handleDeleteClick} />
         </CartItemDeleteButtonContainer>
       </CartPageItemButtonsContainer>
     </CartPageItemContainer>
