@@ -9,21 +9,31 @@ import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { CartItemDeleteButton } from '../ui/CartItemDeleteButton'
 import { Button } from '../ui/Button'
 
-function CartPageItemImg({ src, name, onClick }) {
+function CartPageItemImg({ src, name, onClick, className }) {
+  let classes =
+    'cursor-pointer aspect-square object-cover rounded bg-silkway-orange/50'
+
+  classes += className ? ` ${className}` : ''
+
   return (
     <img
       onClick={onClick}
       alt={name}
-      className="cursor-pointer w-[100px] aspect-square object-cover rounded bg-silkway-orange/50"
+      className={classes}
       src={`${imagesUrlPrefix}${src}`}
     />
   )
 }
 
-function CartPageItemTitleContainer({ children, onClick }) {
+function CartPageItemTitleContainer({ children, onClick, className }) {
+  let classes =
+    'flex flex-nowrap flex-row justify-start font-sans text-silkway-dark-chocolate cursor-pointer'
+
+  classes += className ? ` ${className}` : ''
+
   return (
     <div
-      className="flex flex-nowrap flex-row justify-start font-sans text-base text-silkway-dark-chocolate cursor-pointer"
+      className={classes}
       onClick={onClick}
     >
       {children}
@@ -31,17 +41,18 @@ function CartPageItemTitleContainer({ children, onClick }) {
   )
 }
 
-function CartPageItemContainer({ children }) {
-  return (
-    <div className="w-full bg-white rounded p-[15px] flex flex-row flex-nowrap justify-between items-stretch gap-[15px]">
-      {children}
-    </div>
-  )
+function CartPageItemContainer({ children, className }) {
+  let classes =
+    'w-full bg-white rounded p-[15px] flex flex-row flex-nowrap justify-between items-stretch gap-[15px]'
+
+  classes += className ? ` ${className}` : ''
+
+  return <div className={classes}>{children}</div>
 }
 
 function CartPageItemInfoContainer({ children }) {
   return (
-    <div className="flex flex-col flex-nowrap justify-between items-start grow">
+    <div className="flex flex-col flex-nowrap justify-between max-[1400px]:justify-start items-start grow">
       {children}
     </div>
   )
@@ -49,19 +60,23 @@ function CartPageItemInfoContainer({ children }) {
 
 function CartPageItemPropertiesContainer({ children }) {
   return (
-    <div className="flex flex-col flex-nowrap grow justify-end">{children}</div>
+    <div className="flex flex-col flex-nowrap grow max-[1300px]:grow-0 justify-end">
+      {children}
+    </div>
   )
 }
 
-function CartPageItemProp({ prop }) {
+function CartPageItemProp({ prop, className }) {
+  let classes1 = 'font-sans font-light text-silkway-gray'
+  let classes2 = 'font-sans text-silkway-green underline'
+
+  classes1 += className ? ` ${className}` : ''
+  classes2 += className ? ` ${className}` : ''
+
   return (
     <div>
-      <span className="font-sans font-light text-silkway-gray text-sm">
-        {prop.name}:{' '}
-      </span>
-      <span className="font-sans text-silkway-green text-sm underline">
-        {prop.value}
-      </span>
+      <span className={classes1}>{prop.name}</span>
+      <span className={classes2}>{prop.value}</span>
     </div>
   )
 }
@@ -97,8 +112,10 @@ function CartPageItemChangeQtyButton({ children, className, onClick }) {
   )
 }
 
-function CartPageItemQty({ item }) {
-  console.log({ item })
+function CartPageItemQty({ item, className }) {
+  let classes = 'flex-row flex-nowrap items-center'
+
+  classes += className ? ` ${className}` : ''
 
   const handleMinusClick = () => {
     console.log('Minus')
@@ -109,7 +126,7 @@ function CartPageItemQty({ item }) {
   }
 
   return (
-    <div className="flex flex-row flex-nowrap items-center">
+    <div className={classes}>
       <CartPageItemChangeQtyButton
         className="rounded-tl rounded-bl"
         onClick={handleMinusClick}
@@ -131,51 +148,64 @@ function CartPageItemQty({ item }) {
   )
 }
 
-function CartPageItemPriceContainer({ children }) {
-  return (
-    <span className="flex flex-col flex-nowrap justify-center items-center font-sans text-base text-silkway-dark-chocolate">
-      {children} ₽
-    </span>
-  )
+function CartPageItemPriceContainer({ children, className }) {
+  let classes =
+    'flex-col flex-nowrap justify-center items-center font-sans text-base text-silkway-dark-chocolate min-w-[100px]'
+
+  classes += className ? ` ${className}` : ''
+
+  return <span className={classes}>{children} ₽</span>
 }
 
-function CartPageItemTotalContainer({ children }) {
-  return (
-    <span className="flex flex-col flex-nowrap justify-center items-center font-sans text-base text-silkway-dark-chocolate">
-      {children} ₽
-    </span>
-  )
+function CartPageItemTotalContainer({ children, className }) {
+  let classes =
+    'flex flex-col flex-nowrap justify-center font-sans text-base text-silkway-dark-chocolate min-w-[80px]'
+
+  classes += className ? ` ${className}` : ''
+
+  return <span className={classes}>{children} ₽</span>
 }
 
-function CartItemDeleteButtonContainer({ children }) {
-  return (
-    <div className="flex flex-col flex-nowrap justify-center items-center">
-      {children}
-    </div>
-  )
+function CartItemDeleteButtonContainer({ children, className }) {
+  let classes = 'flex flex-col flex-nowrap justify-center w-full'
+
+  classes += className ? ` ${className}` : ''
+
+  return <div className={classes}>{children}</div>
 }
 
-function CartPageItemButtonsContainer({ children }) {
-  return (
-    <div className="flex flex-row flex-nowrap items-center justify-between gap-[40px] px-[20px]">
-      {children}
-    </div>
-  )
+function CartPageItemButtonsContainer({ children, className }) {
+  let classes = 'flex flex-nowrap justify-between gap-[40px]'
+
+  classes += className ? ` ${className}` : ''
+
+  return <div className={classes}>{children}</div>
 }
 
 function CartPageItem({ item, onClick }) {
   //   console.log(item)
 
   return (
-    <CartPageItemContainer>
+    <CartPageItemContainer className="@container/item">
       <CartPageItemImg
         src={item.picture}
         name={item.name}
         onClick={onClick}
+        className="hidden @[350px]/item:block w-[60px] h-[60px] @[950px]/item:w-[100px] @[950px]/item:h-[100px]"
       />
 
       <CartPageItemInfoContainer>
-        <CartPageItemTitleContainer onClick={onClick}>
+        <CartPageItemImg
+          src={item.picture}
+          name={item.name}
+          onClick={onClick}
+          className="block @[350px]/item:hidden w-[60px] h-[60px] mb-[10px]"
+        />
+
+        <CartPageItemTitleContainer
+          onClick={onClick}
+          className="text-xs @[320px]/item:text-sm @[950px]/item:text-base"
+        >
           {item.name}
         </CartPageItemTitleContainer>
 
@@ -184,23 +214,32 @@ function CartPageItem({ item, onClick }) {
             <CartPageItemProp
               prop={prop}
               key={prop.code}
+              className="text-xs @[950px]/item:text-sm"
             />
           ))}
         </CartPageItemPropertiesContainer>
+
+        <CartPageItemQty
+          item={item}
+          className="mt-[15px] flex @[950px]/item:hidden"
+        />
       </CartPageItemInfoContainer>
 
-      <CartPageItemButtonsContainer>
-        <CartPageItemQty item={item} />
+      <CartPageItemButtonsContainer className="items-center px-0 @[550px]/item:px-[20px] flex-col @[550px]/item:flex-row">
+        <CartPageItemQty
+          item={item}
+          className="hidden @[950px]/item:flex"
+        />
 
-        <CartPageItemPriceContainer>
+        <CartPageItemPriceContainer className="hidden @[950px]/item:flex">
           {formatMoney(item.price)}
         </CartPageItemPriceContainer>
 
-        <CartPageItemTotalContainer>
+        <CartPageItemTotalContainer className="items-end @[550px]/item:items-center">
           {formatMoney(item.quantity * item.price)}
         </CartPageItemTotalContainer>
 
-        <CartItemDeleteButtonContainer>
+        <CartItemDeleteButtonContainer className="items-end @[550px]/item:items-center order-first @[550px]/item:order-last">
           <CartItemDeleteButton />
         </CartItemDeleteButtonContainer>
       </CartPageItemButtonsContainer>
@@ -208,12 +247,13 @@ function CartPageItem({ item, onClick }) {
   )
 }
 
-function CartPageItemsContainer({ children }) {
-  return (
-    <div className="flex flex-col flex-nowrap justify-start gap-[15px] grow">
-      {children}
-    </div>
-  )
+function CartPageItemsContainer({ children, className }) {
+  let classes =
+    'flex flex-col flex-nowrap justify-start gap-[15px] grow w-full max-w-[1200px] min-w-[300px]'
+
+  classes += className ? ` ${className}` : ''
+
+  return <div className={classes}>{children}</div>
 }
 
 function CartPageClearCartButton({ onClick }) {
@@ -227,19 +267,19 @@ function CartPageClearCartButton({ onClick }) {
   )
 }
 
-function CartPageClearCartButtonContainer({ children }) {
-  return (
-    <div className="w-full flex flex-row flex-nowrap items-center justify-end">
-      {children}
-    </div>
-  )
+function CartPageClearCartButtonContainer({ children, className }) {
+  let classes = 'w-full flex flex-row flex-nowrap items-center'
+
+  classes += className ? ` ${className}` : ''
+
+  return <div className={classes}>{children}</div>
 }
 
 function CartPageTotalSum() {
   const cartItems = useCartStore((state) => state.items)
 
   return (
-    <div className="flex flex-row flex-nowrap justify-between items-center font-sans text-xl font-bold text-silkway-dark-chocolate">
+    <div className="flex flex-row flex-nowrap justify-between items-center font-sans text-base @[300px]/total:text-xl font-bold text-silkway-dark-chocolate">
       <span>Сумма заказа</span>
       <span>{formatMoney(cartSum(cartItems))} ₽</span>
     </div>
@@ -250,7 +290,7 @@ function CartPageTotalDiscount() {
   let totalDiscount = 0
 
   return (
-    <div className="flex flex-row flex-nowrap justify-between items-center font-sans text-sm text-silkway-dark-chocolate mb-[5px]">
+    <div className="flex flex-row flex-nowrap justify-between items-center font-sans @[300px]/total:text-sm text-xs text-silkway-dark-chocolate mb-[10px]">
       <span>Ваша скидка:</span>
       <span>{formatMoney(totalDiscount)} ₽</span>
     </div>
@@ -259,7 +299,7 @@ function CartPageTotalDiscount() {
 
 function CartPageTotalContainer({ children }) {
   return (
-    <div className="flex flex-col flex-nowrap justify-start gap-[5px] rounded bg-white w-[370px] max-[600px]:w-[320px] p-[30px] max-[600px]:p-[10px]">
+    <div className="flex flex-col flex-nowrap justify-start gap-[5px] rounded bg-white w-full grow min-w-[300px] max-w-[370px] max-[1100px]:max-w-[100%] p-[30px] max-[600px]:p-[10px] @container/total">
       {children}
     </div>
   )
@@ -267,9 +307,11 @@ function CartPageTotalContainer({ children }) {
 
 function CartPageTotalDeliveryInfo() {
   return (
-    <div className="font-sans text-silkway-dark-chocolate text-left flex flex-col flex-nowrap justify-start items-start gap-[5px]">
-      <div className="text-base max-[600px]:text-sm font-medium">Доставка</div>
-      <div className="text-sm max-[600px]:text-xs mb-[5px]">
+    <div className="font-sans text-silkway-dark-chocolate text-left flex flex-col flex-nowrap justify-start items-start gap-[5px] mb-[10px]">
+      <div className="@[300px]/total:text-base text-sm font-medium">
+        Доставка
+      </div>
+      <div className="@[300px]/total:text-sm text-xs mb-[5px]">
         Стоимость доставки зависит от веса и габаритов отправления, а также от
         тарифов службы доставки. Точную стоимость доставки вам объявит менеджер
         после оформления заказа.
@@ -279,23 +321,34 @@ function CartPageTotalDeliveryInfo() {
 }
 
 function CartPageTotalCheckoutButton() {
+  const text = 'Оформить заказ'
+
   const handleCheckoutClick = () => {
     console.log('Checkout click')
   }
 
   return (
-    <Button
-      onClick={handleCheckoutClick}
-      className="max-[600px]:h-[36px] text-base max-[600px]:text-xs"
-    >
-      Оформить заказ
-    </Button>
+    <>
+      <Button
+        onClick={handleCheckoutClick}
+        className="text-xs @[300px]/total:hidden"
+        height="small"
+      >
+        {text}
+      </Button>
+      <Button
+        onClick={handleCheckoutClick}
+        className="text-base hidden @[300px]/total:flex"
+      >
+        {text}
+      </Button>
+    </>
   )
 }
 
 function CartPageTotalCheckoutInfo() {
   return (
-    <div className="text-xs text-silkway-gray font-light">
+    <div className="text-xs text-silkway-gray font-light text-center">
       Нажимая кнопку “Оформить заказ” вы также соглашаесесь с&nbsp;
       <button className="font-normal text-silkway-green hover:underline">
         Условиями конфиденциальности
@@ -322,7 +375,7 @@ function CartPageTotal() {
 
 function CartPageLayout({ children }) {
   return (
-    <div className="flex flex-row flex-nowrap justify-between items-start gap-[30px] max-[600px]:gap-[10px]">
+    <div className="flex flex-row max-[1100px]:flex-col flex-nowrap justify-between items-start gap-[30px] max-[1100px]:gap-[10px]">
       {children}
     </div>
   )
@@ -347,7 +400,7 @@ export function CartItemsSection() {
               />
             ))}
 
-            <CartPageClearCartButtonContainer>
+            <CartPageClearCartButtonContainer className="justify-end max-[1100px]:justify-center max-[1100px]:mb-[20px]">
               <CartPageClearCartButton onClick={handleClearCartClick} />
             </CartPageClearCartButtonContainer>
           </CartPageItemsContainer>
