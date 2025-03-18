@@ -69,9 +69,11 @@ export const useProductInfoStore = create((set, get) => ({
     : {},
   selectedOptions: {},
 
+  getSelectedOptionsCount: () => Object.keys(get().selectedOptions).length,
+  getOptionsCount: () =>
+    Object.keys(get().productOptions).filter((k) => k).length,
   areAllOptionsSelected: () =>
-    Object.keys(get().selectedOptions).length ==
-    Object.keys(get().productOptions).length,
+    get().getSelectedOptionsCount() == get().getOptionsCount(),
   getSelectedVariantQty: () => {
     let codeValues = []
     for (const selectedOption in get().selectedOptions) {

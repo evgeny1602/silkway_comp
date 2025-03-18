@@ -307,6 +307,7 @@ function AddToCartButton({ onMinusClick, onPlusClick, onMainClick, count }) {
 }
 
 function AddToCartButtonSmart() {
+  const getOptionsCount = useProductInfoStore((state) => state.getOptionsCount)
   const selectedOptions = useProductInfoStore((state) => state.selectedOptions)
   const areAllOptionsSelected = useProductInfoStore(
     (state) => state.areAllOptionsSelected
@@ -321,7 +322,7 @@ function AddToCartButtonSmart() {
 
   const setItems = useCartStore((state) => state.setItems)
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(getOptionsCount() == 0 ? 1 : 0)
   const [maxCount, setMaxCount] = useState(1)
 
   useEffect(() => {
