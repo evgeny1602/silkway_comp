@@ -145,7 +145,7 @@ function CartPageItemQty({ item, className }) {
   }
 
   const handlePlusClick = async () => {
-    await setNewQty(Math.max(0, item.quantity + 1))
+    await setNewQty(item.quantity + 1)
   }
 
   return (
