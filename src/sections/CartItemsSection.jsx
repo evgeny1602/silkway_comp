@@ -423,7 +423,7 @@ function CartPageLayout({ children }) {
 
 function CartPageEmpty() {
   return (
-    <div className="w-full h-full flex flex-row flex-nowrap justify-center items-center text-silkway-gray text-base font-light">
+    <div className="rounded bg-silkway-light-gray/20 w-full h-full flex flex-row flex-nowrap justify-center items-center text-silkway-gray/80 text-xs font-light p-[40px] text-center">
       Вы пока ничего не добавили в свою корзину
     </div>
   )
