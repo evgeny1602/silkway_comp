@@ -364,7 +364,7 @@ function CartPageTotalCheckoutButton({ disabled = false }) {
 function CartPageTotalCheckoutInfo() {
   return (
     <div className="text-xs text-silkway-gray font-light text-center">
-      Нажимая кнопку “Оформить заказ” вы также соглашаесесь с&nbsp;
+      Нажимая кнопку "Оформить заказ" вы также соглашаесесь с&nbsp;
       <button className="font-normal text-silkway-green hover:underline">
         Условиями конфиденциальности
       </button>
