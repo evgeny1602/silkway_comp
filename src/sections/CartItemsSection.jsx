@@ -118,7 +118,7 @@ function CartPageItemChangeQtyButton({ children, className, onClick }) {
 }
 
 function CartPageItemQty({ item, className }) {
-  const setCartItems = useCartStore((state) => state.sitItems)
+  const setCartItems = useCartStore((state) => state.setItems)
 
   let classes = 'flex-row flex-nowrap items-center'
 
