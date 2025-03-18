@@ -17,5 +17,7 @@ export const delFromCartUrl =
   '/ajax.php?act=deleteCartItem&cart_item_id={{cart_item_id}}'
 export const clearCartUrl = '/ajax2.php'
 export const addToCartUrl = '/ajax2.php'
+export const setCartItemQtyUrl = '/ajax2.php'
+export const delFromCartByOfferIdUrl = '/ajax2.php'
 
 export const productsPostifixVariants = ['товар', 'товара', 'товаров']

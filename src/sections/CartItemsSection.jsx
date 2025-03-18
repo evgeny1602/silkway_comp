@@ -1,4 +1,9 @@
-import { clearCart, delFromCart } from '../api/cart'
+import {
+  clearCart,
+  delFromCart,
+  delFromCartByOfferId,
+  setCartItemQty,
+} from '../api/cart'
 import { cartSum, filterCartItemProperties, formatMoney } from '../utils'
 import { imagesUrlPrefix } from '../config'
 import { useCartStore } from '../stores/cartStore'
@@ -113,16 +118,34 @@ function CartPageItemChangeQtyButton({ children, className, onClick }) {
 }
 
 function CartPageItemQty({ item, className }) {
+  const setCartItems = useCartStore((state) => state.sitItems)
+
   let classes = 'flex-row flex-nowrap items-center'
 
   classes += className ? ` ${className}` : ''
 
-  const handleMinusClick = () => {
-    console.log('Minus')
+  const setNewQty = async (qty) => {
+    if (item.quantity == qty) {
+      return
+    }
+    let data
+    if (qty > 0) {
+      data = await setCartItemQty(item.user_id, item.offer_id, qty)
+    }
+    if (qty <= 0) {
+      data = await delFromCartByOfferId(item.user_id, item.offer_id)
+    }
+    if (data.ok) {
+      setCartItems(data.items)
+    }
   }
 
-  const handlePlusClick = () => {
-    console.log('Plus')
+  const handleMinusClick = async () => {
+    await setNewQty(Math.max(0, item.quantity - 1))
+  }
+
+  const handlePlusClick = async () => {
+    await setNewQty(Math.max(0, item.quantity + 1))
   }
 
   return (
