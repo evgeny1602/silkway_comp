@@ -141,11 +141,11 @@ function CartPageItemQty({ item, className }) {
   }
 
   const handleMinusClick = async () => {
-    await setNewQty(Math.max(0, item.quantity - 1))
+    await setNewQty(Math.max(0, parseInt(item.quantity) - 1))
   }
 
   const handlePlusClick = async () => {
-    await setNewQty(item.quantity + 1)
+    await setNewQty(parseInt(item.quantity) + 1)
   }
 
   return (
