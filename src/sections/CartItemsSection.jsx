@@ -1,13 +1,13 @@
+import { clearCart, delFromCart } from '../api/cart'
 import { cartSum, filterCartItemProperties, formatMoney } from '../utils'
-
 import { imagesUrlPrefix } from '../config'
-
 import { useCartStore } from '../stores/cartStore'
 
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { CartItemDeleteButton } from '../ui/CartItemDeleteButton'
 import { Button } from '../ui/Button'
+import { useState } from 'react'
 
 function CartPageItemImg({ src, name, onClick, className }) {
   let classes =
@@ -249,7 +249,7 @@ function CartPageItem({ item, onClick }) {
 
 function CartPageItemsContainer({ children, className }) {
   let classes =
-    'flex flex-col flex-nowrap justify-start gap-[15px] grow w-full max-w-[1200px] min-w-[300px]'
+    'flex flex-col flex-nowrap justify-start gap-[15px] grow w-full self-stretch max-w-[1200px] min-w-[300px]'
 
   classes += className ? ` ${className}` : ''
 
@@ -320,25 +320,29 @@ function CartPageTotalDeliveryInfo() {
   )
 }
 
-function CartPageTotalCheckoutButton() {
+function CartPageTotalCheckoutButton({ disabled = false }) {
   const text = 'Оформить заказ'
 
   const handleCheckoutClick = () => {
     console.log('Checkout click')
   }
 
+  const opacityClass = disabled ? ' opacity-50 cursor-default' : ''
+
   return (
     <>
       <Button
         onClick={handleCheckoutClick}
-        className="text-xs @[300px]/total:hidden"
+        className={'text-xs @[300px]/total:hidden' + opacityClass}
         height="small"
+        hoverState={disabled ? 'none' : 'standart'}
       >
         {text}
       </Button>
       <Button
         onClick={handleCheckoutClick}
-        className="text-base hidden @[300px]/total:flex"
+        className={'text-base hidden @[300px]/total:flex' + opacityClass}
+        hoverState={disabled ? 'none' : 'standart'}
       >
         {text}
       </Button>
@@ -358,6 +362,8 @@ function CartPageTotalCheckoutInfo() {
 }
 
 function CartPageTotal() {
+  const cartItems = useCartStore((state) => state.items)
+
   return (
     <CartPageTotalContainer>
       <CartPageTotalSum />
@@ -366,7 +372,7 @@ function CartPageTotal() {
 
       <CartPageTotalDeliveryInfo />
 
-      <CartPageTotalCheckoutButton />
+      <CartPageTotalCheckoutButton disabled={cartItems.length == 0} />
 
       <CartPageTotalCheckoutInfo />
     </CartPageTotalContainer>
@@ -381,11 +387,30 @@ function CartPageLayout({ children }) {
   )
 }
 
+function CartPageEmpty() {
+  return (
+    <div className="w-full h-full flex flex-row flex-nowrap justify-center items-center text-silkway-gray text-base font-light">
+      Вы пока ничего не добавили в свою корзину
+    </div>
+  )
+}
+
 export function CartItemsSection() {
   const cartItems = useCartStore((state) => state.items)
+  const setCartItems = useCartStore((state) => state.setItems)
 
-  const handleClearCartClick = () => {
-    console.log('Clear cart')
+  const [isClearing, setIsClearing] = useState(false)
+
+  const handleClearCartClick = async () => {
+    if (isClearing) {
+      return
+    }
+    setIsClearing(true)
+    const success = await clearCart()
+    if (success) {
+      setCartItems([])
+    }
+    setIsClearing(false)
   }
 
   return (
@@ -400,9 +425,13 @@ export function CartItemsSection() {
               />
             ))}
 
-            <CartPageClearCartButtonContainer className="justify-end max-[1100px]:justify-center max-[1100px]:mb-[20px]">
-              <CartPageClearCartButton onClick={handleClearCartClick} />
-            </CartPageClearCartButtonContainer>
+            {cartItems.length == 0 && <CartPageEmpty />}
+
+            {cartItems.length > 0 && (
+              <CartPageClearCartButtonContainer className="justify-end max-[1100px]:justify-center max-[1100px]:mb-[20px]">
+                <CartPageClearCartButton onClick={handleClearCartClick} />
+              </CartPageClearCartButtonContainer>
+            )}
           </CartPageItemsContainer>
 
           <CartPageTotal />
