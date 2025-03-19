@@ -10,7 +10,7 @@ export function InfoPageSection() {
   }, [])
 
   return (
-    <SectionContainer>
+    <SectionContainer className="mb-[30px]">
       <SectionInnerContainer>
         <div
           className="text-silkway-dark-chocolate text-sm"
