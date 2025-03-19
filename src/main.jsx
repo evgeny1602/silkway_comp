@@ -214,6 +214,19 @@ const initCartItemsSection = async () => {
   )
 }
 
+const initInfoPageSection = async () => {
+  const el = document.getElementById('info-page-section')
+  if (!el) {
+    return
+  }
+  const { InfoPageSection } = await import('./sections/InfoPageSection')
+  createRoot(el).render(
+    <StrictMode>
+      <InfoPageSection />
+    </StrictMode>
+  )
+}
+
 intHeader()
 intBreadcrumbs()
 intProductBreadcrumbs()
@@ -230,3 +243,4 @@ initCategoryTitle()
 initProductInfo()
 initFeaturesSection()
 initCartItemsSection()
+initInfoPageSection()
