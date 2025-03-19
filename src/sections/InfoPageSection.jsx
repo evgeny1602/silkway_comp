@@ -1,21 +1,30 @@
 import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
-import { useEffect, useRef } from 'react'
+
+import { InfoPageAbout } from '../sections/InfoPageAbout'
+import { InfoPageOpt } from '../sections/InfoPageOpt'
+import { InfoPageDelivery } from '../sections/InfoPageDelivery'
+import { InfoPageReviews } from '../sections/InfoPageReviews'
+import { InfoPageNews } from '../sections/InfoPageNews'
+import { InfoPageContacts } from '../sections/InfoPageContacts'
 
 export function InfoPageSection() {
-  const textRef = useRef(null)
+  const path = window.infoPageData?.path || null
 
-  useEffect(() => {
-    textRef.current.innerHTML = window.infoPageData?.html || ''
-  }, [])
+  if (!path) {
+    return
+  }
 
   return (
-    <SectionContainer className="mb-[30px]">
+    <SectionContainer className="pb-[30px]">
       <SectionInnerContainer>
-        <div
-          className="text-silkway-dark-chocolate text-sm"
-          ref={textRef}
-        ></div>
+        {path == 'about' && <InfoPageAbout />}
+        {path == 'about/optovie-uslovia' && <InfoPageOpt />}
+        {path == 'about/optovie-uslovia' && <InfoPageOpt />}
+        {path == 'about/delivery' && <InfoPageDelivery />}
+        {path == 'reviews' && <InfoPageReviews />}
+        {path == 'news' && <InfoPageNews />}
+        {path == 'contacts' && <InfoPageContacts />}
       </SectionInnerContainer>
     </SectionContainer>
   )
