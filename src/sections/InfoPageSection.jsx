@@ -24,7 +24,7 @@ export function InfoPageSection() {
         {path == 'about/delivery' && <InfoPageDelivery />}
         {path == 'reviews' && <InfoPageReviews />}
         {path == 'news' && <InfoPageNews />}
-        {path == 'contacts' && <InfoPageContacts />}
+        {path == 'about/contacts' && <InfoPageContacts />}
       </SectionInnerContainer>
     </SectionContainer>
   )
