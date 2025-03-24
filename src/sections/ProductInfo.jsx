@@ -11,6 +11,8 @@ import { Button } from '../ui/Button'
 import { useEffect, useState } from 'react'
 import { useCartStore } from '../stores/cartStore'
 
+import { ToastContainer, toast } from 'react-toastify'
+
 function MainPicture() {
   const pictureUrls = useProductInfoStore((state) => state.pictureUrls)
   const activeIdx = useProductInfoStore((state) => state.activeIdx)
@@ -306,24 +308,6 @@ function AddToCartButton({ onMinusClick, onPlusClick, onMainClick, count }) {
   )
 }
 
-function ErrorMsg({ error }) {
-  return (
-    <div className="text-xs rounded bg-silkway-red text-white p-[10px]">
-      {error}
-    </div>
-  )
-}
-
-function ErrorsContainer({ errors }) {
-  return (
-    <div className="mt-[10px]">
-      {errors.map((err) => (
-        <ErrorMsg error={err} />
-      ))}
-    </div>
-  )
-}
-
 function AddToCartButtonSmart() {
   const getOptionsCount = useProductInfoStore((state) => state.getOptionsCount)
   const selectedOptions = useProductInfoStore((state) => state.selectedOptions)
@@ -342,7 +326,6 @@ function AddToCartButtonSmart() {
 
   const [count, setCount] = useState(getOptionsCount() == 0 ? 1 : 0)
   const [maxCount, setMaxCount] = useState(1)
-  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     let maxVariantQty = getSelectedVariantQty()
@@ -366,11 +349,10 @@ function AddToCartButtonSmart() {
 
     setItems(data.items)
 
-    if (!data.ok) {
-      setErrors(data.error)
-      setTimeout(() => {
-        setErrors([])
-      }, 5000)
+    if (data.ok) {
+      toast.success('Товар добавлен в корзину')
+    } else {
+      toast.error('Товар в корзину не добавлен. Недостаточно товара на складе.')
     }
   }
 
@@ -382,14 +364,10 @@ function AddToCartButtonSmart() {
         onPlusClick={() => setCount((old) => Math.min(maxCount, old + 1))}
         onMainClick={handleAddToCart}
       />
-
-      {errors.length > 0 && (
-        <ErrorsContainer
-          errors={[
-            'Товар в корзину не добавлен. Недостаточно товара на складе.',
-          ]}
-        />
-      )}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+      />
     </>
   )
 }
