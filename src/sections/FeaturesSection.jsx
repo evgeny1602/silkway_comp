@@ -2,7 +2,7 @@ import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 
 import truckIcon from '../assets/truck_icon.svg'
-import chatIcon from '../assets/chat_icon.svg'
+import chatIcon from '../assets/chat_icon.png'
 import giftIcon from '../assets/gift_icon.svg'
 import piggyIcon from '../assets/piggy_icon.svg'
 import smileIcon from '../assets/smile_icon.svg'

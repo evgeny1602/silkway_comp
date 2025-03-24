@@ -1,4 +1,4 @@
-import { AccordionFilters } from '@/ui/AccordionFilters'
+import { AccordionFilters } from '../ui/AccordionFilters'
 
 export function Sidebar() {
   return (
