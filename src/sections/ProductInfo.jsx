@@ -306,6 +306,24 @@ function AddToCartButton({ onMinusClick, onPlusClick, onMainClick, count }) {
   )
 }
 
+function ErrorMsg({ error }) {
+  return (
+    <div className="text-xs rounded bg-silkway-red text-white p-[10px]">
+      {error}
+    </div>
+  )
+}
+
+function ErrorsContainer({ errors }) {
+  return (
+    <div className="mt-[10px]">
+      {errors.map((err) => (
+        <ErrorMsg error={err} />
+      ))}
+    </div>
+  )
+}
+
 function AddToCartButtonSmart() {
   const getOptionsCount = useProductInfoStore((state) => state.getOptionsCount)
   const selectedOptions = useProductInfoStore((state) => state.selectedOptions)
@@ -324,6 +342,7 @@ function AddToCartButtonSmart() {
 
   const [count, setCount] = useState(getOptionsCount() == 0 ? 1 : 0)
   const [maxCount, setMaxCount] = useState(1)
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     let maxVariantQty = getSelectedVariantQty()
@@ -346,15 +365,32 @@ function AddToCartButtonSmart() {
     setCount(0)
 
     setItems(data.items)
+
+    if (!data.ok) {
+      setErrors(data.error)
+      setTimeout(() => {
+        setErrors([])
+      }, 5000)
+    }
   }
 
   return (
-    <AddToCartButton
-      count={count}
-      onMinusClick={() => setCount((old) => Math.max(1, old - 1))}
-      onPlusClick={() => setCount((old) => Math.min(maxCount, old + 1))}
-      onMainClick={handleAddToCart}
-    />
+    <>
+      <AddToCartButton
+        count={count}
+        onMinusClick={() => setCount((old) => Math.max(1, old - 1))}
+        onPlusClick={() => setCount((old) => Math.min(maxCount, old + 1))}
+        onMainClick={handleAddToCart}
+      />
+
+      {errors.length > 0 && (
+        <ErrorsContainer
+          errors={[
+            'Товар в корзину не добавлен. Недостаточно товара на складе.',
+          ]}
+        />
+      )}
+    </>
   )
 }
 
