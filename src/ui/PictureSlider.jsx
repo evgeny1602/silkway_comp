@@ -135,7 +135,7 @@ function ProductPictureSlide({ idx }) {
         draggable={false}
         onClick={() => setActiveIdx(idx)}
         src={imagesUrlPrefix + pictureUrls[idx]}
-        className={`aspect-square object-cover rounded cursor-pointer ${outlined}`}
+        className={`w-[100px] max-[1350px]:w-[75px] max-[400px]:w-[50px] aspect-square object-cover rounded cursor-pointer ${outlined}`}
       />
     </div>
   )
