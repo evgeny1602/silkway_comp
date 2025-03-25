@@ -96,7 +96,7 @@ function CatalogButtonContainer({ children, onClick }) {
   return (
     <a
       onClick={onClick}
-      className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap"
+      className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap cursor-pointer"
     >
       {children}
     </a>
@@ -992,8 +992,10 @@ export function Header() {
 
           <HeaderCenterSection>
             <TopMenu />
+
             <HeaderCenterSubSection>
               <CatalogButton />
+
               <SearchFormContainer>
                 <SearchForm />
               </SearchFormContainer>
@@ -1002,6 +1004,7 @@ export function Header() {
 
           <HeaderRightSection>
             <CitySelect />
+
             <HeaderPhone className="text-white" />
           </HeaderRightSection>
 
