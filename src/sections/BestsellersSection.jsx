@@ -54,7 +54,7 @@ function BestsellerCard({ item }) {
   )
 }
 
-export function BestsellersSection({ itemsCount = 6 }) {
+export function BestsellersSection({ itemsCount = 6, ShowMoreButton = false }) {
   const { items, pageUrl } = getGlobalData('bestsellersSectionData')
 
   const goPageUrl = () => {
@@ -66,24 +66,27 @@ export function BestsellersSection({ itemsCount = 6 }) {
       <SectionInnerContainer>
         <CardsGroupContainer>
           <CardsGroupHeader>Хиты продаж</CardsGroupHeader>
-          <CardListContainer>
+          <CardListContainer ShowMoreButton={ShowMoreButton}>
             {items.slice(0, itemsCount).map((item) => (
               <BestsellerCard
                 item={item}
                 key={item.URL}
               />
             ))}
-            <ShowMoreButtonContainer>
-              <MoreButton
-                className="min-[1210px]:hidden"
-                onClick={goPageUrl}
-                text="Показать еще"
-              />
-              <MoreButtonSmall
-                className="max-[1210px]:hidden"
-                onClick={goPageUrl}
-              />
-            </ShowMoreButtonContainer>
+
+            {ShowMoreButton && (
+              <ShowMoreButtonContainer>
+                <MoreButton
+                  className="min-[1210px]:hidden"
+                  onClick={goPageUrl}
+                  text="Показать еще"
+                />
+                <MoreButtonSmall
+                  className="max-[1210px]:hidden"
+                  onClick={goPageUrl}
+                />
+              </ShowMoreButtonContainer>
+            )}
           </CardListContainer>
         </CardsGroupContainer>
       </SectionInnerContainer>

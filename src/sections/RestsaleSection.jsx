@@ -50,7 +50,7 @@ function RestsaleCard({ item }) {
   )
 }
 
-export function RestsaleSection({ itemsCount = 6 }) {
+export function RestsaleSection({ itemsCount = 6, showMoreButton = false }) {
   const { items, pageUrl } = getGlobalData('restSaleSectionData')
 
   const goPageUrl = () => {
@@ -62,24 +62,27 @@ export function RestsaleSection({ itemsCount = 6 }) {
       <SectionInnerContainer>
         <CardsGroupContainer>
           <CardsGroupHeader>Распродажа остатков</CardsGroupHeader>
-          <CardListContainer>
+          <CardListContainer showMoreButton={showMoreButton}>
             {items.slice(0, itemsCount).map((item) => (
               <RestsaleCard
                 item={item}
                 key={item.URL}
               />
             ))}
-            <ShowMoreButtonContainer>
-              <MoreButton
-                className="min-[1210px]:hidden"
-                onClick={goPageUrl}
-                text="Показать еще"
-              />
-              <MoreButtonSmall
-                className="max-[1210px]:hidden"
-                onClick={goPageUrl}
-              />
-            </ShowMoreButtonContainer>
+
+            {showMoreButton && (
+              <ShowMoreButtonContainer>
+                <MoreButton
+                  className="min-[1210px]:hidden"
+                  onClick={goPageUrl}
+                  text="Показать еще"
+                />
+                <MoreButtonSmall
+                  className="max-[1210px]:hidden"
+                  onClick={goPageUrl}
+                />
+              </ShowMoreButtonContainer>
+            )}
           </CardListContainer>
         </CardsGroupContainer>
       </SectionInnerContainer>

@@ -1,6 +1,8 @@
-import { SectionContainer } from '@/ui/SectionContainer'
-import { SectionInnerContainer } from '@/ui/SectionInnerContainer'
-import { MoreButton } from '@/ui/MoreButton'
+import { SectionContainer } from '../ui/SectionContainer'
+import { SectionInnerContainer } from '../ui/SectionInnerContainer'
+import { MoreButton } from '../ui/MoreButton'
+import { ReactPortal } from '../ui/ReactPortal'
+
 import { getGlobalData, getSlugFromUrl } from '@/utils'
 import { BannerSlider } from '@/ui/BannerSlider'
 import showcaseIcon from '@/assets/showcase_icon.svg'
@@ -11,6 +13,7 @@ import tiktokIcon from '@/assets/tiktok_icon.svg'
 import bigCloseIcon from '@/assets/big_close_icon.svg'
 import { imagesUrlPrefix } from '@/config'
 import { useState } from 'react'
+import { useModalStore } from '../stores/modalStore'
 
 function WhiteOrangeDot({ onClick, isActive = false }) {
   let classes = 'min-w-[21px] min-h-[8px] rounded'
@@ -187,7 +190,7 @@ function HeroSectionGridContainer({ children }) {
 
 function HeroSectionCategoriesPopoverContainer({ children }) {
   return (
-    <div className="w-full h-full absolute top-0 left-0 px-[10px] header-4:px-[50px] header-9:px-[20px] header-5:px-[50px]">
+    <div className="w-full max-w-[1600px] h-auto absolute top-[210px] max-[1187px]:top-[80px] left-[50%] -translate-x-[50%] p-[15px]">
       <div className="gap-[35px] flex flex-nowrap flex-col bg-silkway-green/90 rounded shadow-md w-full h-full p-[30px] max-[1200px]:p-[20px] max-[650px]:p-[10px]">
         {children}
       </div>
@@ -263,8 +266,10 @@ function HeroSectionCategoriesPopover({ onClose }) {
         <div className="font-sans text-5xl max-[1200px]:text-4xl max-[470px]:text-2xl text-white">
           КАТАЛОГ ТОВАРОВ
         </div>
+
         <PopoverCloseButton onClick={onClose} />
       </PopoverTopSectionContainer>
+
       <PopoverContentContainer>
         {categories.map((item) => (
           <PopoverCategoryTile
@@ -278,7 +283,17 @@ function HeroSectionCategoriesPopover({ onClose }) {
 }
 
 export function HeroSection() {
-  const [isPopoverVisible, setIsPopoverVisible] = useState(false)
+  const showModal = useModalStore((state) => state.showModal)
+  const hideModal = useModalStore((state) => state.hideModal)
+  const visibleModals = useModalStore((state) => state.visibleModals)
+
+  const handleMoreCategoriesClick = () => {
+    if (visibleModals.includes('categoriesPopover')) {
+      hideModal('categoriesPopover')
+    } else {
+      showModal('categoriesPopover')
+    }
+  }
 
   return (
     <SectionContainer className="pt-[50px] pb-[70px] max-[874px]:pt-[20px] max-[874px]:pb-[50px]">
@@ -293,13 +308,15 @@ export function HeroSection() {
             <SocialButtonsContainer />
           </HeroSectionButtonsContainer>
 
-          <MoreCategoriesContainer onClick={() => setIsPopoverVisible(true)} />
+          <MoreCategoriesContainer onClick={handleMoreCategoriesClick} />
         </HeroSectionGridContainer>
 
-        {isPopoverVisible && (
-          <HeroSectionCategoriesPopover
-            onClose={() => setIsPopoverVisible(false)}
-          />
+        {visibleModals.includes('categoriesPopover') && (
+          <ReactPortal>
+            <HeroSectionCategoriesPopover
+              onClose={() => hideModal('categoriesPopover')}
+            />
+          </ReactPortal>
         )}
       </SectionInnerContainer>
     </SectionContainer>

@@ -7,7 +7,7 @@ export function FavoritesViewedSection(props) {
   return (
     <SectionContainer className="pb-[70px] max-[874px]:pb-[50px]">
       <SectionInnerContainer>
-        <div className="flex flex-nowrap max-[1150px]:flex-wrap gap-[30px]">
+        <div className="flex flex-nowrap justify-center max-[1150px]:flex-wrap gap-[30px]">
           <FavoritesSection />
           <ViewedSection />
         </div>

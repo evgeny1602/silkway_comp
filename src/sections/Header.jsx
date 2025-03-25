@@ -34,6 +34,7 @@ import { SectionContainer } from '../ui/SectionContainer'
 import { SectionInnerContainer } from '../ui/SectionInnerContainer'
 import { useCartStore } from '../stores/cartStore'
 import { filterCartItemProperties } from '../utils'
+import { useModalStore } from '../stores/modalStore'
 
 function HeaderLogo() {
   return (
@@ -91,21 +92,39 @@ function TopMenu() {
   )
 }
 
-function CatalogButton() {
-  const { catalogUrl } = getGlobalData('headerData')
-
+function CatalogButtonContainer({ children, onClick }) {
   return (
     <a
-      href={catalogUrl}
+      onClick={onClick}
       className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap"
     >
+      {children}
+    </a>
+  )
+}
+
+function CatalogButton() {
+  const showModal = useModalStore((state) => state.showModal)
+  const hideModal = useModalStore((state) => state.hideModal)
+  const visibleModals = useModalStore((state) => state.visibleModals)
+
+  const handleCatalogClick = () => {
+    if (visibleModals.includes('categoriesPopover')) {
+      hideModal('categoriesPopover')
+    } else {
+      showModal('categoriesPopover')
+    }
+  }
+
+  return (
+    <CatalogButtonContainer onClick={handleCatalogClick}>
       <img
         src={catalogIconImg}
         alt="Каталог товаров"
         className="block w-[21px] h-[21px]"
       />
       Каталог товаров
-    </a>
+    </CatalogButtonContainer>
   )
 }
 
