@@ -36,6 +36,10 @@ import { useCartStore } from '../stores/cartStore'
 import { filterCartItemProperties } from '../utils'
 import { useModalStore } from '../stores/modalStore'
 
+import { ReactPortal } from '../ui/ReactPortal'
+
+import { HeroSectionCategoriesPopover } from '../ui/HeroSectionCategoriesPopover'
+
 function HeaderLogo() {
   return (
     <a href="/">
@@ -96,7 +100,7 @@ function CatalogButtonContainer({ children, onClick }) {
   return (
     <a
       onClick={onClick}
-      className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap cursor-pointer"
+      className="h-[36px] w-[190px] header-4:h-[48px] text-sm header-4:text-base font-medium hidden header-4:flex items-center gap-[6px] header-4:gap-[12px] p-[6px] header-4:p-[12px] text-silkway-dark-chocolate bg-silkway-dark-orange rounded shadow-inner shadow-white/45 border border-silkway-dark-orange hover:bg-silkway-orange hover:border-silkway-orange transition-all duration-200 whitespace-nowrap hover:cursor-pointer"
     >
       {children}
     </a>
@@ -294,7 +298,7 @@ function ProductSearchAutocomplete({
       <SearchAutocomplete
         fetcher={productAutocomplete}
         inputClassname={inputClasses}
-        dropdownClassname="h-[200px] w-full left-0 top-[55px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap"
+        dropdownClassname="h-[200px] w-full left-0 top-[55px] bg-white overflow-y-auto rounded shadow-md p-2 z-10 absolute flex flex-col flex-nowrap justify-start"
         dropdownItemClassname="cursor-pointer px-2 py-1 w-full rounded hover:bg-silkway-orange hover:text-white"
         onItemClick={handleItemClick}
         onEnter={handleEnter}
@@ -984,6 +988,18 @@ function SearchFormContainer({ children }) {
 }
 
 export function Header() {
+  const showModal = useModalStore((state) => state.showModal)
+  const hideModal = useModalStore((state) => state.hideModal)
+  const visibleModals = useModalStore((state) => state.visibleModals)
+
+  const handleMoreCategoriesClick = () => {
+    if (visibleModals.includes('categoriesPopover')) {
+      hideModal('categoriesPopover')
+    } else {
+      showModal('categoriesPopover')
+    }
+  }
+
   return (
     <SectionContainer variant="green">
       <SectionInnerContainer>
@@ -1016,6 +1032,14 @@ export function Header() {
             <MobileMenu />
           </HeaderRightButtonsSection>
         </HeaderContainer>
+
+        {visibleModals.includes('categoriesPopover') && (
+          <ReactPortal>
+            <HeroSectionCategoriesPopover
+              onClose={() => hideModal('categoriesPopover')}
+            />
+          </ReactPortal>
+        )}
       </SectionInnerContainer>
     </SectionContainer>
   )
