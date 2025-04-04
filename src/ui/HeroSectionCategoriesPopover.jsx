@@ -73,7 +73,7 @@ function PopoverCategoryTile({ item }) {
 }
 
 export function HeroSectionCategoriesPopover({ onClose }) {
-  const { categories } = window.heroSectionData
+  const { categories } = window.headerData
 
   return (
     <HeroSectionCategoriesPopoverContainer>
